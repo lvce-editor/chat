@@ -3,4 +3,6 @@ export interface WebView {
   readonly url: string
   readonly port: any
   readonly apiKey: string
+  readonly modelId: string
+  readonly anthropicVersion: string
 }

@@ -50,8 +50,18 @@ const setError = (message) => {
   output?.append(message)
 }
 
+const clear = () => {
+  const input = document.querySelector('.Input')
+  if (!input) {
+    return
+  }
+  // @ts-ignore
+  input.value = ''
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
   setError,
+  clear,
 })

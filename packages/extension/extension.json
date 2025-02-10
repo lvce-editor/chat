@@ -21,6 +21,7 @@
       "selector": [".chat"],
       "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
       "allow": [],
+      "sandbox": ["allow-forms"],
       "elements": [
         {
           "type": "title",

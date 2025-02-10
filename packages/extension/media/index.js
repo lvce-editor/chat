@@ -49,6 +49,7 @@ const addMessage = (message) => {
   const $Message = document.createElement('div')
   $Message.className = 'Message'
   $Message.textContent = message
+  output?.append($Message)
   if (!output || !(output instanceof HTMLElement)) {
     return
   }

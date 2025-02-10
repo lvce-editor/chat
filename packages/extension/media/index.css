@@ -1,5 +1,5 @@
 :root {
-  --AppBackground: #1e2324;
+  --AppBackground: white;
 }
 
 html,
@@ -19,21 +19,4 @@ body {
   align-items: center;
   contain: strict;
   background: var(--AppBackground);
-}
-
-.Error {
-  background: red;
-  color: white;
-  padding: 30px;
-  font-size: 25px;
-  font-family: sans-serif;
-}
-
-.VideoContent {
-  contain: content;
-}
-
-.VideoElement {
-  contain: content;
-  max-width: 100%;
 }

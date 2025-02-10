@@ -30,6 +30,7 @@ body {
   gap: 20px;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .Input {
@@ -44,4 +45,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-y: auto;
+  margin-bottom: 20px;
 }

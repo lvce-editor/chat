@@ -19,4 +19,18 @@ body {
   align-items: center;
   contain: strict;
   background: var(--AppBackground);
+  flex-direction: column;
+}
+
+.Form {
+  margin-top: auto;
+  margin-bottom: 20px;
+  width: 80%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.Input {
 }

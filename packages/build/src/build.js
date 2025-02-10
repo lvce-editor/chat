@@ -4,7 +4,7 @@ import path, { join } from 'node:path'
 import { root } from './root.js'
 
 const extension = path.join(root, 'packages', 'extension')
-const videoPreviewWorker = path.join(root, 'packages', 'video-preview-worker')
+const videoPreviewWorker = path.join(root, 'packages', 'chat-worker')
 
 fs.rmSync(join(root, 'dist'), { recursive: true, force: true })
 
@@ -27,29 +27,29 @@ fs.cpSync(join(extension, 'media'), join(root, 'dist', 'media'), {
   recursive: true,
 })
 
-fs.cpSync(join(videoPreviewWorker, 'src'), join(root, 'dist', 'video-preview-worker', 'src'), {
+fs.cpSync(join(videoPreviewWorker, 'src'), join(root, 'dist', 'chat-worker', 'src'), {
   recursive: true,
 })
 
 await replace({
   path: join(root, 'dist', 'extension.json'),
-  occurrence: 'src/videoPreviewMain.ts',
-  replacement: 'dist/videoPreviewMain.js',
+  occurrence: 'src/chatMain.ts',
+  replacement: 'dist/chatMain.js',
 })
 
 await replace({
   path: join(root, 'dist', 'extension.json'),
-  occurrence: '../video-preview-worker/src/videoPreviewWorkerMain.ts',
-  replacement: './video-preview-worker/dist/videoPreviewWorkerMain.js',
+  occurrence: '../chat-worker/src/chatWorkerMain.ts',
+  replacement: './chat-worker/dist/chatWorkerMain.js',
 })
 
 await bundleJs(
-  join(root, 'dist', 'video-preview-worker', 'src', 'videoPreviewWorkerMain.ts'),
-  join(root, 'dist', 'video-preview-worker', 'dist', 'videoPreviewWorkerMain.js'),
+  join(root, 'dist', 'chat-worker', 'src', 'chatWorkerMain.ts'),
+  join(root, 'dist', 'chat-worker', 'dist', 'chatWorkerMain.js'),
   false,
 )
 
-await bundleJs(join(root, 'dist', 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'), false)
+await bundleJs(join(root, 'dist', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
 
 await packageExtension({
   highestCompression: true,

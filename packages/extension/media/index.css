@@ -1,0 +1,39 @@
+:root {
+  --AppBackground: #1e2324;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  contain: strict;
+  margin: 0;
+  background: var(--AppBackground);
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  contain: strict;
+  background: var(--AppBackground);
+}
+
+.Error {
+  background: red;
+  color: white;
+  padding: 30px;
+  font-size: 25px;
+  font-family: sans-serif;
+}
+
+.VideoContent {
+  contain: content;
+}
+
+.VideoElement {
+  contain: content;
+  max-width: 100%;
+}

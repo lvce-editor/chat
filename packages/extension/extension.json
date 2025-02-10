@@ -1,0 +1,40 @@
+{
+  "id": "builtin.chat",
+  "name": "Chat View",
+  "description": "Chat View",
+  "browser": "src/chatMain.ts",
+  "activation": ["onWebView:builtin.chat-view"],
+  "languages": [],
+  "rpc": [
+    {
+      "id": "builtin.chat.chat-worker",
+      "type": "web-worker",
+      "name": "Chat Worker",
+      "url": "../chat-worker/src/chatWorkerMain.ts",
+      "contentSecurityPolicy": ["default-src 'none'"]
+    }
+  ],
+  "webViews": [
+    {
+      "id": "builtin.chat-view",
+      "rpc": "builtin.chat.chat-worker",
+      "selector": [".chat"],
+      "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
+      "allow": [],
+      "elements": [
+        {
+          "type": "title",
+          "value": "Chat"
+        },
+        {
+          "type": "script",
+          "path": "media/index.js"
+        },
+        {
+          "type": "css",
+          "path": "media/index.css"
+        }
+      ]
+    }
+  ]
+}

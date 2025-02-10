@@ -5,9 +5,9 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const webView: WebView = {
     url: '',
     time: 0,
+    port,
   }
   WebViewStates.set(id, webView)
-  console.log('create chat')
   await port.invoke('initialize')
 
   return {}

@@ -17,8 +17,5 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     await port.invoke('setError', 'Missing Api Key')
   }
 
-  console.log(globalThis.rpc)
-  console.log({ savedState, webView, uri, id })
-
   return {}
 }

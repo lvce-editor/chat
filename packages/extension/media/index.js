@@ -3,6 +3,7 @@
 const initialize = async () => {
   const app = document.createElement('div')
   app.className = 'App'
+  app.textContent = 'hello world'
 
   document.body.append(app)
   return {}

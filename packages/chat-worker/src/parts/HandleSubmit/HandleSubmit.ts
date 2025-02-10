@@ -5,6 +5,7 @@ export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
   // TODO race condition
   await webView.port.invoke('addMessage', input)
+  await webView.port.invoke('clear')
   const response = await GetChatResponse.getChatResponse(
     input,
     webView.apiKey,
@@ -12,7 +13,6 @@ export const handleSubmit = async (id, input) => {
     webView.url,
     webView.anthropicVersion,
   )
-  console.log({ response })
   await webView.port.invoke('addMessage', response)
   return undefined
 }

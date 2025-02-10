@@ -1,12 +1,21 @@
 // TODO use virtual dom in  worker
 
-const handleSubmit = async (event) => {
-  event.preventDefault()
-  const { target } = event
+const submitForm = async (target) => {
   const formData = new FormData(target)
   const input = formData.get('Input')
   // @ts-ignore
   await rpc.invoke('handleSubmit', input)
+}
+
+const handleSubmit = async (event) => {
+  event.preventDefault()
+  await submitForm(event.target)
+}
+
+const handleKeyDown = async (event) => {
+  if (event.ctrlKey && event.key === 'Enter') {
+    await submitForm(event.target.parentNode)
+  }
 }
 
 const initialize = async () => {
@@ -22,6 +31,7 @@ const initialize = async () => {
   const input = document.createElement('textarea')
   input.className = 'Input'
   input.name = 'Input'
+  input.addEventListener('keydown', handleKeyDown)
 
   const button = document.createElement('button')
   button.type = 'submit'

@@ -34,6 +34,15 @@ const initialize = async () => {
   return {}
 }
 
+const addMessage = (message) => {
+  const output = document.querySelector('.Output')
+  const $Message = document.createElement('div')
+  $Message.className = 'Message'
+  $Message.textContent = message
+  output?.append($Message)
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
+  addMessage,
 })

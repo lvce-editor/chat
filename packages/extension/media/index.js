@@ -1,7 +1,12 @@
 // TODO use virtual dom in  worker
 
-const handleSubmit = () => {
-  console.log('submit')
+const handleSubmit = async (event) => {
+  event.preventDefault()
+  const { target } = event
+  const formData = new FormData(target)
+  const input = formData.get('Input')
+  // @ts-ignore
+  await rpc.invoke('handleSubmit', input)
 }
 
 const initialize = async () => {

@@ -1,4 +1,4 @@
-export const name = 'video-preview'
+export const name = 'chat'
 
 export const skip = true
 

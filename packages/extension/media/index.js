@@ -42,7 +42,16 @@ const addMessage = (message) => {
   output?.append($Message)
 }
 
+const setError = (message) => {
+  const output = document.querySelector('.Output')
+  const $Message = document.createElement('div')
+  $Message.className = 'Message'
+  $Message.textContent = message
+  output?.append(message)
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
+  setError,
 })

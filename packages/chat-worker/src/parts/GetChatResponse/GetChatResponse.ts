@@ -1,3 +1,5 @@
+import * as GetResponseString from '../GetResponseString/GetResponseString.ts'
+
 export const getChatResponse = async (message, apiKey, modelId, url, anthropicVersion) => {
   // TODO move networking into separate web worker
   try {
@@ -22,10 +24,9 @@ export const getChatResponse = async (message, apiKey, modelId, url, anthropicVe
       throw new Error(response.statusText)
     }
     const result = await response.json()
-    const content = result.content
-    console.log({ content })
+    const responseString = GetResponseString.getResponseString(result)
+    return responseString
   } catch (error) {
     return `${error}`
   }
-  return 'test'
 }

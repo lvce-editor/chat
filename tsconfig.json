@@ -2,9 +2,10 @@
   "files": [],
   "include": [],
   "references": [
-    { "path": "./packages/extension" },
-    { "path": "./packages/e2e" },
+    { "path": "./packages/build" },
     { "path": "./packages/chat-worker" },
-    { "path": "./packages/build" }
+    { "path": "./packages/e2e" },
+    { "path": "./packages/extension" },
+    { "path": "./packages/network-worker" }
   ]
 }

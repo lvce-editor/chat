@@ -5,4 +5,5 @@ export interface WebView {
   readonly apiKey: string
   readonly modelId: string
   readonly anthropicVersion: string
+  readonly stream: boolean
 }

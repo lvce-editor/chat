@@ -32,6 +32,7 @@ cd packages/e2e                  && updateDependencies && cd ../../ &&
 cd packages/extension            && updateDependencies && cd ../../ &&
 cd packages/server               && updateDependencies && cd ../../ &&
 cd packages/chat-worker          && updateDependencies && cd ../../ &&
+cd packages/network-worker       && updateDependencies && cd ../../ &&
 
 echo "Great Success!"
 

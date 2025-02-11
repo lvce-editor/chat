@@ -72,9 +72,9 @@ const appendMessage = (partialMessage) => {
 const setError = (message) => {
   const output = document.querySelector('.Output')
   const $Message = document.createElement('div')
-  $Message.className = 'Message'
+  $Message.className = 'Message Error'
   $Message.textContent = message
-  output?.append(message)
+  output?.append($Message)
 }
 
 const clear = () => {

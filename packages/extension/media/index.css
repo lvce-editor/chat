@@ -49,3 +49,8 @@ body {
   overflow-y: auto;
   margin-bottom: 20px;
 }
+
+.Error {
+  color: red;
+  border: 1px solid red;
+}

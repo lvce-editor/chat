@@ -30,9 +30,8 @@ function updateDependencies {
 cd packages/build                && updateDependencies && cd ../../ &&
 cd packages/e2e                  && updateDependencies && cd ../../ &&
 cd packages/extension            && updateDependencies && cd ../../ &&
-cd packages/integration          && updateDependencies && cd ../../ &&
 cd packages/server               && updateDependencies && cd ../../ &&
-cd packages/video-preview-worker && updateDependencies && cd ../../ &&
+cd packages/chat-worker          && updateDependencies && cd ../../ &&
 
 echo "Great Success!"
 

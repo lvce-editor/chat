@@ -16,6 +16,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     modelId,
     url,
     anthropicVersion,
+    stream: true,
   }
   WebViewStates.set(id, webView)
   await port.invoke('initialize')

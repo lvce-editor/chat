@@ -38,5 +38,8 @@
         "lines": 0
       }
     }
+  },
+  "devDependencies": {
+    "@lvce-editor/extension-host-sub-worker": "^3.12.0"
   }
 }

@@ -44,6 +44,10 @@ const initialize = async () => {
   return {}
 }
 
+const fixScroll = (output) => {
+  output.scrollTop = output.scrollHeight
+}
+
 const addMessage = (message) => {
   const output = document.querySelector('.Output')
   const $Message = document.createElement('div')
@@ -53,7 +57,16 @@ const addMessage = (message) => {
   if (!output || !(output instanceof HTMLElement)) {
     return
   }
-  output.scrollTop = output.scrollHeight
+  fixScroll(output)
+}
+
+const appendMessage = (partialMessage) => {
+  const output = document.querySelector('.Output')
+  const last = output?.lastElementChild
+  if (last) {
+    last.textContent += partialMessage
+  }
+  fixScroll(output)
 }
 
 const setError = (message) => {
@@ -76,6 +89,7 @@ const clear = () => {
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
+  appendMessage,
   setError,
   clear,
 })

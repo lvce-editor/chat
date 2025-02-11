@@ -8,6 +8,6 @@
   "license": "MIT",
   "description": "",
   "dependencies": {
-    "@lvce-editor/server": "^0.45.18"
+    "@lvce-editor/server": "^0.45.19"
   }
 }

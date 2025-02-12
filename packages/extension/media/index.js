@@ -14,7 +14,7 @@ const handleSubmit = async (event) => {
 
 const handleKeyDown = async (event) => {
   if (event.ctrlKey && event.key === 'Enter') {
-    await submitForm(event.target.parentNode)
+    await submitForm(event.target.closest('form'))
   }
 }
 
@@ -28,18 +28,26 @@ const initialize = async () => {
   const form = document.createElement('form')
   form.className = 'Form'
   form.addEventListener('submit', handleSubmit)
+
+  const formContent = document.createElement('div')
+  formContent.className = 'FormContent'
+
   const input = document.createElement('textarea')
   input.className = 'Input'
   input.name = 'Input'
+  input.placeholder = 'Message...'
   input.addEventListener('keydown', handleKeyDown)
+  input.addEventListener('input', adjustHeight)
 
   const button = document.createElement('button')
   button.type = 'submit'
+  button.className = 'Button'
   button.textContent = 'Send'
   button.name = 'Submit'
-  form.append(input, button)
-  app.append(output, form)
 
+  formContent.append(input, button)
+  form.append(formContent)
+  app.append(output, form)
   document.body.append(app)
   return {}
 }
@@ -48,10 +56,10 @@ const fixScroll = (output) => {
   output.scrollTop = output.scrollHeight
 }
 
-const addMessage = (message) => {
+const addMessage = (message, isHuman = false) => {
   const output = document.querySelector('.Output')
   const $Message = document.createElement('div')
-  $Message.className = 'Message'
+  $Message.className = `Message ${isHuman ? 'human' : 'ai'}`
   $Message.textContent = message
   output?.append($Message)
   if (!output || !(output instanceof HTMLElement)) {
@@ -84,6 +92,12 @@ const clear = () => {
   }
   // @ts-ignore
   input.value = ''
+}
+
+const adjustHeight = (event) => {
+  const textarea = event.target
+  textarea.style.height = 'auto'
+  textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
 }
 
 const rpc = globalThis.lvceRpc({

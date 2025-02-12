@@ -52,8 +52,15 @@ const initialize = async () => {
   return {}
 }
 
+const isAtBottom = (output) => {
+  const { scrollTop, scrollHeight, clientHeight } = output
+  return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
+}
+
 const fixScroll = (output) => {
-  output.scrollTop = output.scrollHeight
+  if (isAtBottom(output)) {
+    output.scrollTop = output.scrollHeight
+  }
 }
 
 const renderMessage = (message, role) => {

@@ -14,7 +14,7 @@ const handleSubmit = async (event) => {
 
 const handleKeyDown = async (event) => {
   if (event.ctrlKey && event.key === 'Enter') {
-    await submitForm(event.target.parentNode)
+    await submitForm(event.target.closest('form'))
   }
 }
 
@@ -28,31 +28,70 @@ const initialize = async () => {
   const form = document.createElement('form')
   form.className = 'Form'
   form.addEventListener('submit', handleSubmit)
+
+  const formContent = document.createElement('div')
+  formContent.className = 'FormContent'
+
   const input = document.createElement('textarea')
   input.className = 'Input'
   input.name = 'Input'
+  input.placeholder = 'Message...'
   input.addEventListener('keydown', handleKeyDown)
+  input.addEventListener('input', adjustHeight)
 
   const button = document.createElement('button')
   button.type = 'submit'
+  button.className = 'Button'
   button.textContent = 'Send'
   button.name = 'Submit'
-  form.append(input, button)
-  app.append(output, form)
 
+  formContent.append(input, button)
+  form.append(formContent)
+  app.append(output, form)
   document.body.append(app)
   return {}
 }
 
-const fixScroll = (output) => {
-  output.scrollTop = output.scrollHeight
+const isAtBottom = (output) => {
+  const { scrollTop, scrollHeight, clientHeight } = output
+  return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
 }
 
-const addMessage = (message) => {
-  const output = document.querySelector('.Output')
+const fixScroll = (output) => {
+  if (isAtBottom(output)) {
+    output.scrollTop = output.scrollHeight
+  }
+}
+
+const renderMessage = (message, role) => {
   const $Message = document.createElement('div')
-  $Message.className = 'Message'
-  $Message.textContent = message
+  $Message.className = `Message ${role}`
+
+  if (role === 'human') {
+    $Message.textContent = message
+    return $Message
+  }
+
+  for (const block of message) {
+    if (block.type === 'code') {
+      const pre = document.createElement('pre')
+      pre.className = `code-block language-${block.language}`
+      const code = document.createElement('code')
+      code.textContent = block.content
+      pre.appendChild(code)
+      $Message.appendChild(pre)
+    } else {
+      const p = document.createElement('p')
+      p.textContent = block.content
+      $Message.appendChild(p)
+    }
+  }
+  return $Message
+}
+
+const addMessage = (message, role = 'ai') => {
+  const output = document.querySelector('.Output')
+  const $Message = renderMessage(message, role)
   output?.append($Message)
   if (!output || !(output instanceof HTMLElement)) {
     return
@@ -60,11 +99,12 @@ const addMessage = (message) => {
   fixScroll(output)
 }
 
-const appendMessage = (partialMessage) => {
+const updateMessage = (blocks) => {
   const output = document.querySelector('.Output')
   const last = output?.lastElementChild
   if (last) {
-    last.textContent += partialMessage
+    const newMessage = renderMessage(blocks, 'ai')
+    last.replaceWith(newMessage)
   }
   fixScroll(output)
 }
@@ -86,10 +126,16 @@ const clear = () => {
   input.value = ''
 }
 
+const adjustHeight = (event) => {
+  const textarea = event.target
+  textarea.style.height = 'auto'
+  textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
-  appendMessage,
+  updateMessage,
   setError,
   clear,
 })

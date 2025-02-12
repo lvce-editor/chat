@@ -56,11 +56,35 @@ const fixScroll = (output) => {
   output.scrollTop = output.scrollHeight
 }
 
-const addMessage = (message, isHuman = false) => {
-  const output = document.querySelector('.Output')
+const renderMessage = (message, role) => {
   const $Message = document.createElement('div')
-  $Message.className = `Message ${isHuman ? 'human' : 'ai'}`
-  $Message.textContent = message
+  $Message.className = `Message ${role}`
+
+  if (role === 'human') {
+    $Message.textContent = message
+    return $Message
+  }
+
+  for (const block of message) {
+    if (block.type === 'code') {
+      const pre = document.createElement('pre')
+      pre.className = `code-block language-${block.language}`
+      const code = document.createElement('code')
+      code.textContent = block.content
+      pre.appendChild(code)
+      $Message.appendChild(pre)
+    } else {
+      const p = document.createElement('p')
+      p.textContent = block.content
+      $Message.appendChild(p)
+    }
+  }
+  return $Message
+}
+
+const addMessage = (message, role = 'ai') => {
+  const output = document.querySelector('.Output')
+  const $Message = renderMessage(message, role)
   output?.append($Message)
   if (!output || !(output instanceof HTMLElement)) {
     return
@@ -68,11 +92,12 @@ const addMessage = (message, isHuman = false) => {
   fixScroll(output)
 }
 
-const appendMessage = (partialMessage) => {
+const updateMessage = (blocks) => {
   const output = document.querySelector('.Output')
   const last = output?.lastElementChild
   if (last) {
-    last.textContent += partialMessage
+    const newMessage = renderMessage(blocks, 'ai')
+    last.replaceWith(newMessage)
   }
   fixScroll(output)
 }
@@ -103,7 +128,7 @@ const adjustHeight = (event) => {
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
-  appendMessage,
+  updateMessage,
   setError,
   clear,
 })

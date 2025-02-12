@@ -1,20 +1,23 @@
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 
 export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
-  // TODO race condition
-  await webView.port.invoke('addMessage', input)
+  await webView.port.invoke('addMessage', input, 'human')
   await webView.port.invoke('clear')
 
+  let currentMessage = ''
   const acc = new WritableStream({
     async start() {
-      await webView.port.invoke('addMessage', '')
+      await webView.port.invoke('addMessage', '', 'ai')
     },
 
     async write(message) {
-      await webView.port.invoke('appendMessage', message)
+      currentMessage += message
+      const blocks = FormatMessage.formatMessage(currentMessage)
+      await webView.port.invoke('updateMessage', blocks)
     },
   })
 

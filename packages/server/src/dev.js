@@ -31,6 +31,24 @@ const main = () => {
       cwd: root,
     },
   )
+  const child3 = spawn(
+    esbuildPath,
+    [
+      '--format=esm',
+      '--bundle',
+      '--external:node:buffer',
+      '--external:electron',
+      '--external:ws',
+      '--external:node:worker_threads',
+      '--bundle',
+      '--watch',
+      'packages/network-worker/src/networkWorkerMain.ts',
+      '--outfile=packages/network-worker/dist/networkWorkerMain.js',
+    ],
+    {
+      cwd: root,
+    },
+  )
   // child.stdout.pipe(process.stdout)
 }
 

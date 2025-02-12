@@ -10,14 +10,14 @@
       "id": "builtin.chat.chat-worker",
       "type": "web-worker",
       "name": "Chat Worker",
-      "url": "../chat-worker/src/chatWorkerMain.ts",
+      "url": "../chat-worker/dist/chatWorkerMain.js",
       "contentSecurityPolicy": ["default-src 'none'"]
     },
     {
       "id": "builtin.chat.network-worker",
       "type": "web-worker",
       "name": "Chat Network Worker",
-      "url": "../network-worker/src/networkWorkerMain.ts",
+      "url": "../network-worker/dist/networkWorkerMain.js",
       "contentSecurityPolicy": ["default-src 'none'"]
     }
   ],

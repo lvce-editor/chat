@@ -1,60 +1,109 @@
 :root {
-  --AppBackground: white;
+  --AppBackground: #ffffff;
+  --MessageHumanBackground: #f9fafb;
+  --MessageAiBackground: #ffffff;
+  --MessageBorder: #e5e7eb;
+  --InputBackground: #ffffff;
+  --InputBorder: #e5e7eb;
+  --InputFocusBorder: #2563eb;
+  --ButtonBackground: #2563eb;
+  --ButtonHoverBackground: #1d4ed8;
+  --ButtonText: #ffffff;
+  --MaxWidth: 768px;
+  --MessagePadding: 24px;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
-  contain: strict;
   margin: 0;
   background: var(--AppBackground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .App {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  contain: strict;
-  background: var(--AppBackground);
   flex-direction: column;
-}
-
-.Form {
-  margin-top: auto;
-  margin-bottom: 20px;
-  width: 80%;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.Input {
-  resize: none;
-}
-
-.Message {
-  border: 1px solid black;
-  padding: 7px;
-  white-space: pre;
+  background: var(--AppBackground);
 }
 
 .Output {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  contain: strict;
   flex: 1;
-  width: 80%;
+  overflow-y: auto;
+  padding: 20px 0;
+}
+
+.Message {
+  padding: var(--MessagePadding);
+  max-width: var(--MaxWidth);
+  margin: 0 auto;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  border-bottom: 1px solid var(--MessageBorder);
+}
+
+.Message.human {
+  background: var(--MessageHumanBackground);
+}
+
+.Message.ai {
+  background: var(--MessageAiBackground);
+}
+
+.Form {
+  border-top: 1px solid var(--MessageBorder);
+  padding: 24px;
+  background: var(--AppBackground);
+}
+
+.FormContent {
+  max-width: var(--MaxWidth);
+  margin: 0 auto;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.Input {
+  flex: 1;
+  min-height: 24px;
+  max-height: 200px;
+  padding: 12px 16px;
+  border: 1px solid var(--InputBorder);
+  border-radius: 6px;
+  background: var(--InputBackground);
+  font-family: inherit;
+  font-size: 16px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.Input:focus {
+  outline: none;
+  border-color: var(--InputFocusBorder);
+}
+
+.Button {
+  padding: 12px 16px;
+  background: var(--ButtonBackground);
+  color: var(--ButtonText);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.Button:hover {
+  background: var(--ButtonHoverBackground);
 }
 
 .Error {
-  color: red;
-  border: 1px solid red;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  background: #fef2f2;
 }

@@ -39,7 +39,7 @@ await replace({
 
 await replace({
   path: join(root, 'dist', 'extension.json'),
-  occurrence: '../chat-worker/src/chatWorkerMain.ts',
+  occurrence: '../chat-worker/dist/chatWorkerMain.js',
   replacement: './chat-worker/dist/chatWorkerMain.js',
 })
 

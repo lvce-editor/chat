@@ -34,6 +34,7 @@ body {
 }
 
 .Input {
+  resize: none;
 }
 
 .Message {

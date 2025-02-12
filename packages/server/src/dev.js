@@ -29,6 +29,7 @@ const main = () => {
     ],
     {
       cwd: root,
+      stdio: 'inherit',
     },
   )
   const child3 = spawn(

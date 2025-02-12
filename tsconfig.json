@@ -6,6 +6,7 @@
     { "path": "./packages/chat-worker" },
     { "path": "./packages/e2e" },
     { "path": "./packages/extension" },
-    { "path": "./packages/network-worker" }
+    { "path": "./packages/network-worker" },
+    { "path": "./packages/server" }
   ]
 }

@@ -6,5 +6,6 @@ export const saveState = (): SavedState => {
   const webView = WebViewStates.get(id)
   return {
     messages: webView.messages,
+    scrollOffset: webView.scrollOffset || 0,
   }
 }

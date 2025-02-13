@@ -10,4 +10,5 @@ export interface WebView {
   readonly stream: boolean
   readonly maxTokens: number
   readonly messages: readonly Message[]
+  readonly scrollOffset: number
 }

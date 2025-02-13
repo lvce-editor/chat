@@ -29,7 +29,7 @@ await bundleJs(
   false,
 )
 
-await bundleJs(join(root, 'extension', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
+await bundleJs(join(root, 'packages', 'extension', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
 
 await replace({
   path: join(root, 'dist', 'extension.json'),

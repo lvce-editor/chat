@@ -7,6 +7,7 @@ export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
 
   // Add human message to state
+  // @ts-ignore
   webView.messages.push({
     role: 'human',
     content: input,
@@ -29,6 +30,7 @@ export const handleSubmit = async (id, input) => {
 
     async close() {
       // Add AI message to state once complete
+      // @ts-ignore
       webView.messages.push({
         role: 'ai',
         content: FormatMessage.formatMessage(currentMessage),

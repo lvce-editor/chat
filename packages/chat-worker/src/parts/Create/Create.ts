@@ -8,6 +8,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const modelId = 'claude-3-5-haiku-20241022'
   const url = 'https://api.anthropic.com/v1/messages'
   const anthropicVersion = '2023-06-01'
+  const maxTokens = 1024
 
   const webView: WebView = {
     time: 0,
@@ -17,6 +18,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     url,
     anthropicVersion,
     stream: true,
+    maxTokens,
     messages: savedState?.messages || [],
   }
   WebViewStates.set(id, webView)

@@ -18,10 +18,12 @@ const shouldSubmit = (event) => {
   return (event.ctrlKey && event.key === 'Enter') || (event.key === 'Enter' && !event.shiftKey)
 }
 
-const handleKeyDown = async (event) => {
+const handleKeyDown = (event) => {
   if (shouldSubmit(event)) {
     event.preventDefault()
-    await submitForm(event.target.closest('form'))
+    const form = document.querySelector('.Form')
+    // @ts-ignore
+    form?.submit()
   }
 }
 

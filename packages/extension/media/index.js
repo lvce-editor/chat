@@ -61,6 +61,7 @@ const initialize = async () => {
   form.append(formContent)
   app.append(header, output, form)
   document.body.append(app)
+  updateNewChatButtonState()
   return {}
 }
 
@@ -109,6 +110,7 @@ const addMessage = (message, role = 'ai') => {
     return
   }
   fixScroll(output)
+  updateNewChatButtonState()
 }
 
 const updateMessage = (blocks) => {
@@ -150,6 +152,17 @@ const clearMessages = () => {
     return
   }
   output.innerHTML = ''
+  updateNewChatButtonState()
+}
+
+const updateNewChatButtonState = () => {
+  const output = document.querySelector('.Output')
+  const newChatButton = document.querySelector('.NewChatButton')
+  if (!output || !newChatButton) {
+    return
+  }
+  // @ts-ignore
+  newChatButton.disabled = output.children.length === 0
 }
 
 const rpc = globalThis.lvceRpc({

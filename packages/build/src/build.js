@@ -4,7 +4,6 @@ import path, { join } from 'node:path'
 import { root } from './root.js'
 
 const extension = path.join(root, 'packages', 'extension')
-const videoPreviewWorker = path.join(root, 'packages', 'chat-worker')
 
 fs.rmSync(join(root, 'dist'), { recursive: true, force: true })
 
@@ -24,10 +23,6 @@ fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
   recursive: true,
 })
 fs.cpSync(join(extension, 'media'), join(root, 'dist', 'media'), {
-  recursive: true,
-})
-
-fs.cpSync(join(videoPreviewWorker, 'src'), join(root, 'dist', 'chat-worker', 'src'), {
   recursive: true,
 })
 

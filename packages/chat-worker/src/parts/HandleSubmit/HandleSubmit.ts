@@ -46,8 +46,13 @@ export const handleSubmit = async (id, input) => {
     },
   })
 
+  const formattedMessages = webView.messages.map((message) => ({
+    role: message.role === 'human' ? 'user' : 'assistant',
+    content: Array.isArray(message.content) ? message.content.map((block) => block.content).join('\n') : message.content,
+  }))
+
   const body = await GetChatResponse.getChatResponse(
-    input,
+    formattedMessages,
     webView.apiKey,
     webView.modelId,
     webView.url,
@@ -57,5 +62,4 @@ export const handleSubmit = async (id, input) => {
   )
   const stream = GetChatResponseStream.getChatResponseStream(body)
   await stream.pipeThrough(messageStream).pipeTo(acc)
-  return undefined
 }

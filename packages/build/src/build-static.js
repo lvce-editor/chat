@@ -43,7 +43,7 @@ await replace({
 })
 await replace({
   path: path.join(root, 'dist', commitHash, 'config', 'extensions.json'),
-  occurrence: '../chat-worker/src/chatWorkerMain.ts',
+  occurrence: './chat-worker/dist/chatWorkerMain.js',
   replacement: './chat-worker/dist/chatWorkerMain.js',
 })
 const pathPrefix = '/chat'

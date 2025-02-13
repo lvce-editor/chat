@@ -1,5 +1,5 @@
 export const getChatResponse = async (
-  message: string,
+  formattedMessages: any[],
   apiKey: string,
   modelId: string,
   url: string,
@@ -7,7 +7,6 @@ export const getChatResponse = async (
   stream: boolean,
   maxTokens: number,
 ): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> => {
-  // TODO move networking into separate web worker
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -19,7 +18,7 @@ export const getChatResponse = async (
     body: JSON.stringify({
       model: modelId,
       max_tokens: maxTokens,
-      messages: [{ role: 'user', content: message }],
+      messages: formattedMessages,
       stream,
     }),
   })

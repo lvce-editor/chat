@@ -1,5 +1,3 @@
-import type { Message } from '../Message/Message.ts'
-
 export const getChatResponse = async (
   formattedMessages: any[],
   apiKey: string,

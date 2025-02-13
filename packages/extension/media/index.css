@@ -1,16 +1,20 @@
 :root {
-  --AppBackground: #ffffff;
-  --MessageHumanBackground: #f9fafb;
-  --MessageAiBackground: #ffffff;
-  --MessageBorder: #e5e7eb;
-  --InputBackground: #ffffff;
-  --InputBorder: #e5e7eb;
-  --InputFocusBorder: #2563eb;
-  --ButtonBackground: #2563eb;
-  --ButtonHoverBackground: #1d4ed8;
+  --AppBackground: #1e1e1e;
+  --MessageHumanBackground: #252526;
+  --MessageAiBackground: #1e1e1e;
+  --MessageBorder: #3c3c3c;
+  --InputBackground: #3c3c3c;
+  --InputBorder: #3c3c3c;
+  --InputFocusBorder: #007acc;
+  --ButtonBackground: #007acc;
+  --ButtonHoverBackground: #0098ff;
   --ButtonText: #ffffff;
-  --MaxWidth: 768px;
-  --MessagePadding: 24px;
+  --MaxWidth: 100%;
+  --MessagePadding: 16px;
+  --TextColor: #d4d4d4;
+  --ScrollbarBackground: #1e1e1e;
+  --ScrollbarThumb: #424242;
+  --ScrollbarThumbHover: #4f4f4f;
 }
 
 html,
@@ -20,6 +24,7 @@ body {
   margin: 0;
   background: var(--AppBackground);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--TextColor);
 }
 
 .App {
@@ -33,13 +38,14 @@ body {
 .Output {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 0;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
 }
 
 .Message {
   padding: var(--MessagePadding);
   max-width: var(--MaxWidth);
-  margin: 0 auto;
   line-height: 1.6;
   white-space: pre-wrap;
   border-bottom: 1px solid var(--MessageBorder);
@@ -55,7 +61,7 @@ body {
 
 .Form {
   border-top: 1px solid var(--MessageBorder);
-  padding: 24px;
+  padding: 16px;
   background: var(--AppBackground);
 }
 
@@ -63,7 +69,7 @@ body {
   max-width: var(--MaxWidth);
   margin: 0 auto;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: flex-start;
 }
 
@@ -71,14 +77,17 @@ body {
   flex: 1;
   min-height: 24px;
   max-height: 200px;
-  padding: 12px 16px;
+  padding: 8px 12px;
   border: 1px solid var(--InputBorder);
-  border-radius: 6px;
+  border-radius: 3px;
   background: var(--InputBackground);
   font-family: inherit;
-  font-size: 16px;
+  font-size: 14px;
+  color: var(--TextColor);
   resize: none;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
 }
 
 .Input:focus {
@@ -87,12 +96,12 @@ body {
 }
 
 .Button {
-  padding: 12px 16px;
+  padding: 8px 12px;
   background: var(--ButtonBackground);
   color: var(--ButtonText);
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 3px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -103,24 +112,24 @@ body {
 }
 
 .Error {
-  color: #dc2626;
-  border: 1px solid #dc2626;
-  background: #fef2f2;
+  color: #f48771;
+  border: 1px solid #f48771;
+  background: #5a1d1d;
 }
 
 .Header {
-  padding: 12px 24px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--MessageBorder);
   background: var(--AppBackground);
 }
 
 .NewChatButton {
-  padding: 8px 16px;
+  padding: 6px 12px;
   background: var(--ButtonBackground);
   color: var(--ButtonText);
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 3px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -138,4 +147,60 @@ body {
 
 .NewChatButton:disabled:hover {
   background: var(--MessageBorder);
+}
+
+/* Code block styling */
+.code-block {
+  background: #1e1e1e;
+  border: 1px solid var(--MessageBorder);
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin: 8px 0;
+}
+
+code {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+}
+
+/* Firefox */
+.Output {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.Output::-webkit-scrollbar {
+  width: 10px;
+}
+
+.Output::-webkit-scrollbar-track {
+  background: var(--ScrollbarBackground);
+}
+
+.Output::-webkit-scrollbar-thumb {
+  background: var(--ScrollbarThumb);
+  border-radius: 3px;
+}
+
+.Output::-webkit-scrollbar-thumb:hover {
+  background: var(--ScrollbarThumbHover);
+}
+
+/* Input scrollbar */
+.Input::-webkit-scrollbar {
+  width: 10px;
+}
+
+.Input::-webkit-scrollbar-track {
+  background: var(--ScrollbarBackground);
+}
+
+.Input::-webkit-scrollbar-thumb {
+  background: var(--ScrollbarThumb);
+  border-radius: 3px;
+}
+
+.Input::-webkit-scrollbar-thumb:hover {
+  background: var(--ScrollbarThumbHover);
 }

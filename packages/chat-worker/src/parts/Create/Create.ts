@@ -17,12 +17,20 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     url,
     anthropicVersion,
     stream: true,
+    messages: savedState?.messages || [],
   }
   WebViewStates.set(id, webView)
   await port.invoke('initialize')
 
   if (!apiKey) {
     await port.invoke('setError', 'Missing Api Key')
+  }
+
+  // Restore saved messages if they exist
+  if (webView.messages.length > 0) {
+    for (const message of webView.messages) {
+      await port.invoke('addMessage', message.content, message.role)
+    }
   }
 
   return {}

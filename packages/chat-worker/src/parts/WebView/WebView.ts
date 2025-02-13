@@ -6,4 +6,14 @@ export interface WebView {
   readonly modelId: string
   readonly anthropicVersion: string
   readonly stream: boolean
+  readonly messages: Array<{
+    role: 'human' | 'ai'
+    content:
+      | string
+      | Array<{
+          type: 'text' | 'code'
+          content: string
+          language?: string
+        }>
+  }>
 }

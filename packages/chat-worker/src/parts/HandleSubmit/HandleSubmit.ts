@@ -5,6 +5,13 @@ import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 
 export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
+
+  // Add human message to state
+  webView.messages.push({
+    role: 'human',
+    content: input,
+  })
+
   await webView.port.invoke('addMessage', input, 'human')
   await webView.port.invoke('clear')
 
@@ -18,6 +25,14 @@ export const handleSubmit = async (id, input) => {
       currentMessage += message
       const blocks = FormatMessage.formatMessage(currentMessage)
       await webView.port.invoke('updateMessage', blocks)
+    },
+
+    async close() {
+      // Add AI message to state once complete
+      webView.messages.push({
+        role: 'ai',
+        content: FormatMessage.formatMessage(currentMessage),
+      })
     },
   })
 

@@ -1,5 +1,5 @@
 export const getResponseString = (result) => {
-  const content = result.content
+  const {content} = result
 
   if (content.length === 0) {
     return 'empty'

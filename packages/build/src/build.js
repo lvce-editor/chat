@@ -43,12 +43,6 @@ await replace({
   replacement: './chat-worker/dist/chatWorkerMain.js',
 })
 
-await bundleJs(
-  join(root, 'packages', 'chat-worker', 'src', 'chatWorkerMain.ts'),
-  join(root, 'dist', 'chat-worker', 'dist', 'chatWorkerMain.js'),
-  false,
-)
-
 await bundleJs(join(root, 'extension', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
 
 await packageExtension({

@@ -36,6 +36,16 @@ await replace({
   replacement: './chat-worker/dist/chatWorkerMain.js',
 })
 
+await replace({
+  path: path.join(root, 'dist', commitHash, 'config', 'extensions.json'),
+  occurrence: 'src/chatMain.ts',
+  replacement: 'dist/chatMain.js',
+})
+await replace({
+  path: path.join(root, 'dist', commitHash, 'config', 'extensions.json'),
+  occurrence: '../chat-worker/src/chatWorkerMain.ts',
+  replacement: './chat-worker/dist/chatWorkerMain.js',
+})
 const pathPrefix = '/chat'
 const webViewsPath = join(root, 'dist', commitHash, 'config', 'webViews.json')
 const extensionJsonPath = join(root, 'dist', commitHash, 'extensions', 'builtin.chat', 'extension.json')

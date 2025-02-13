@@ -126,14 +126,8 @@ const renderMessage = (message, role) => {
 
 const addMessage = (message, role = 'ai') => {
   const output = document.querySelector('.Output')
-  const contentWrapper = document.querySelector('.ContentWrapper')
   const $Message = renderMessage(message, role)
   output?.append($Message)
-  if (!contentWrapper || !(contentWrapper instanceof HTMLElement)) {
-    return
-  }
-  fixScroll(contentWrapper)
-  updateNewChatButtonState()
 }
 
 const updateMessage = (blocks) => {

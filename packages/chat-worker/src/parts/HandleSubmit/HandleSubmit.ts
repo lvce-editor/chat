@@ -53,6 +53,7 @@ export const handleSubmit = async (id, input) => {
     webView.url,
     webView.anthropicVersion,
     webView.stream,
+    webView.maxTokens,
   )
   const stream = GetChatResponseStream.getChatResponseStream(body)
   await stream.pipeThrough(messageStream).pipeTo(acc)

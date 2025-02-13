@@ -8,5 +8,6 @@ export interface WebView {
   readonly modelId: string
   readonly anthropicVersion: string
   readonly stream: boolean
+  readonly maxTokens: number
   readonly messages: readonly Message[]
 }

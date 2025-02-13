@@ -91,7 +91,10 @@ const isAtBottom = (element) => {
 
 const fixScroll = (wrapper) => {
   if (isScrolledToBottom) {
-    wrapper.scrollTop = wrapper.scrollHeight
+    const contentWrapper = document.querySelector('.ContentWrapper')
+    if (contentWrapper) {
+      contentWrapper.scrollTop = contentWrapper.scrollHeight
+    }
   }
 }
 
@@ -123,23 +126,25 @@ const renderMessage = (message, role) => {
 
 const addMessage = (message, role = 'ai') => {
   const output = document.querySelector('.Output')
+  const contentWrapper = document.querySelector('.ContentWrapper')
   const $Message = renderMessage(message, role)
   output?.append($Message)
-  if (!output || !(output instanceof HTMLElement)) {
+  if (!contentWrapper || !(contentWrapper instanceof HTMLElement)) {
     return
   }
-  fixScroll(output)
+  fixScroll(contentWrapper)
   updateNewChatButtonState()
 }
 
 const updateMessage = (blocks) => {
   const output = document.querySelector('.Output')
+  const contentWrapper = document.querySelector('.ContentWrapper')
   const last = output?.lastElementChild
   if (last) {
     const newMessage = renderMessage(blocks, 'ai')
     last.replaceWith(newMessage)
   }
-  fixScroll(output)
+  fixScroll(contentWrapper)
 }
 
 const setError = (message) => {

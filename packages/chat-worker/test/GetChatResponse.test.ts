@@ -17,8 +17,14 @@ test('getChatResponse - successful response', async () => {
     body: mockResponse,
   })
 
+  const formattedMessages = [
+    { role: 'user', content: 'Hello' },
+    { role: 'assistant', content: 'Hi there!' },
+    { role: 'user', content: 'How are you?' },
+  ]
+
   const result = await GetChatResponse.getChatResponse(
-    'test message',
+    formattedMessages,
     'test-api-key',
     'test-model',
     'https://test.url',
@@ -39,7 +45,7 @@ test('getChatResponse - successful response', async () => {
     body: JSON.stringify({
       model: 'test-model',
       max_tokens: 2048,
-      messages: [{ role: 'user', content: 'test message' }],
+      messages: formattedMessages,
       stream: true,
     }),
   })
@@ -52,8 +58,10 @@ test('getChatResponse - invalid api key', async () => {
     status: 401,
   })
 
+  const formattedMessages = [{ role: 'user', content: 'test message' }]
+
   await expect(
-    GetChatResponse.getChatResponse('test message', 'invalid-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
+    GetChatResponse.getChatResponse(formattedMessages, 'invalid-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
   ).rejects.toThrow('invalid api key')
 })
 
@@ -65,8 +73,18 @@ test('getChatResponse - other error', async () => {
     statusText: 'Internal Server Error',
   })
 
+  const formattedMessages = [{ role: 'user', content: 'test message' }]
+
   await expect(
-    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
+    GetChatResponse.getChatResponse(
+      formattedMessages,
+      'test-api-key',
+      'test-model',
+      'https://test.url',
+      '2023-06-01',
+      true,
+      2048,
+    ),
   ).rejects.toThrow('Internal Server Error')
 })
 
@@ -77,7 +95,17 @@ test('getChatResponse - no response body', async () => {
     body: null,
   })
 
+  const formattedMessages = [{ role: 'user', content: 'test message' }]
+
   await expect(
-    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
+    GetChatResponse.getChatResponse(
+      formattedMessages,
+      'test-api-key',
+      'test-model',
+      'https://test.url',
+      '2023-06-01',
+      true,
+      2048,
+    ),
   ).rejects.toThrow('no response body')
 })

@@ -1,4 +1,4 @@
-import { WebView } from '../WebView/WebView.ts'
+import type { WebView } from '../WebView/WebView.ts'
 
 const webViews = Object.create(null)
 

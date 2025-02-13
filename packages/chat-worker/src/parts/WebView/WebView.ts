@@ -1,3 +1,5 @@
+import type { Message } from '../Message/Message.ts'
+
 export interface WebView {
   readonly time: number
   readonly url: string
@@ -6,14 +8,5 @@ export interface WebView {
   readonly modelId: string
   readonly anthropicVersion: string
   readonly stream: boolean
-  readonly messages: Array<{
-    role: 'human' | 'ai'
-    content:
-      | string
-      | Array<{
-          type: 'text' | 'code'
-          content: string
-          language?: string
-        }>
-  }>
+  readonly messages: readonly Message[]
 }

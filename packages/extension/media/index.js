@@ -23,6 +23,15 @@ const handleKeyDown = async (event) => {
   }
 }
 
+const handleWheel = () => {
+  const output = document.querySelector('.Output')
+  if (!output) {
+    return
+  }
+  // @ts-ignore
+  rpc.invoke('handleScroll', output.scrollTop)
+}
+
 const initialize = async () => {
   const app = document.createElement('div')
   app.className = 'App'
@@ -41,6 +50,7 @@ const initialize = async () => {
 
   const output = document.createElement('div')
   output.className = 'Output'
+  output.addEventListener('wheel', handleWheel)
 
   const form = document.createElement('form')
   form.className = 'Form'
@@ -170,6 +180,14 @@ const updateNewChatButtonState = () => {
   newChatButton.disabled = output.children.length === 0
 }
 
+const setScrollPosition = (scrollOffset) => {
+  const output = document.querySelector('.Output')
+  if (!output) {
+    return
+  }
+  output.scrollTop = scrollOffset
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
@@ -177,4 +195,5 @@ const rpc = globalThis.lvceRpc({
   setError,
   clear,
   clearMessages,
+  setScrollPosition,
 })

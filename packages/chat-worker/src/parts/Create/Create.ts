@@ -20,6 +20,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     stream: true,
     maxTokens,
     messages: savedState?.messages || [],
+    scrollOffset: savedState?.scrollOffset || 0,
   }
   WebViewStates.set(id, webView)
   await port.invoke('initialize')
@@ -32,6 +33,10 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   if (webView.messages.length > 0) {
     for (const message of webView.messages) {
       await port.invoke('addMessage', message.content, message.role)
+    }
+    // Restore scroll position after messages are added
+    if (webView.scrollOffset) {
+      await port.invoke('setScrollPosition', webView.scrollOffset)
     }
   }
 

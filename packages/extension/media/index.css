@@ -15,6 +15,7 @@
   --ScrollbarBackground: #1e1e1e;
   --ScrollbarThumb: #424242;
   --ScrollbarThumbHover: #4f4f4f;
+  --FontFamily: system-ui, Ubuntu, 'Droid Sans', sans-serif;
 }
 
 html,
@@ -23,7 +24,7 @@ body {
   height: 100%;
   margin: 0;
   background: var(--AppBackground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: var(--FontFamily);
   color: var(--TextColor);
 }
 
@@ -85,7 +86,7 @@ body {
   border: 1px solid var(--InputBorder);
   border-radius: 3px;
   background: var(--InputBackground);
-  font-family: inherit;
+  font-family: var(--FontFamily);
   font-size: 14px;
   color: var(--TextColor);
   resize: none;

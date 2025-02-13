@@ -10,5 +10,8 @@
   "description": "",
   "dependencies": {
     "@lvce-editor/server": "^0.45.21"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.2"
   }
 }

@@ -1,5 +1,7 @@
 // TODO use virtual dom in  worker
 
+let isScrolledToBottom = true
+
 const submitForm = async (target) => {
   const formData = new FormData(target)
   const input = formData.get('Input')
@@ -28,6 +30,7 @@ const handleScroll = () => {
   if (!output) {
     return
   }
+  isScrolledToBottom = isAtBottom(output)
   // @ts-ignore
   rpc.invoke('handleScroll', output.scrollTop)
 }
@@ -86,7 +89,7 @@ const isAtBottom = (output) => {
 }
 
 const fixScroll = (output) => {
-  if (isAtBottom(output)) {
+  if (isScrolledToBottom) {
     output.scrollTop = output.scrollHeight
   }
 }

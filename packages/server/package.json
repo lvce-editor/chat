@@ -9,6 +9,6 @@
   "type": "module",
   "description": "",
   "dependencies": {
-    "@lvce-editor/server": "^0.45.20"
+    "@lvce-editor/server": "^0.45.21"
   }
 }

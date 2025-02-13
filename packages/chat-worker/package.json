@@ -2,15 +2,15 @@
   "name": "chat-worker",
   "version": "0.0.0-dev",
   "description": "",
-  "main": "src/chatWorkerMain.ts",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
   "type": "module",
+  "main": "src/chatWorkerMain.ts",
   "scripts": {
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ../../node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ../../node_modules/jest/bin/jest.js --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "jest": {
     "injectGlobals": false,
     "extensionsToTreatAsEsm": [
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
-    "@lvce-editor/extension-host-sub-worker": "^3.13.0",
+    "@lvce-editor/extension-host-sub-worker": "^3.14.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5"
   }

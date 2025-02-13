@@ -44,7 +44,7 @@ await replace({
 })
 
 await bundleJs(
-  join(root, 'dist', 'chat-worker', 'src', 'chatWorkerMain.ts'),
+  join(root, 'packages', 'chat-worker', 'src', 'chatWorkerMain.ts'),
   join(root, 'dist', 'chat-worker', 'dist', 'chatWorkerMain.js'),
   false,
 )

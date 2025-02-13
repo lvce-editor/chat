@@ -23,7 +23,7 @@ const handleKeyDown = async (event) => {
   }
 }
 
-const handleWheel = () => {
+const handleScroll = () => {
   const output = document.querySelector('.Output')
   if (!output) {
     return
@@ -50,7 +50,7 @@ const initialize = async () => {
 
   const output = document.createElement('div')
   output.className = 'Output'
-  output.addEventListener('wheel', handleWheel, { passive: true })
+  output.addEventListener('scroll', handleScroll, { passive: true })
 
   const form = document.createElement('form')
   form.className = 'Form'

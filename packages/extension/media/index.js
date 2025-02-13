@@ -26,13 +26,13 @@ const handleKeyDown = async (event) => {
 }
 
 const handleScroll = () => {
-  const output = document.querySelector('.Output')
-  if (!output) {
+  const wrapper = document.querySelector('.ContentWrapper')
+  if (!wrapper) {
     return
   }
-  isScrolledToBottom = isAtBottom(output)
+  isScrolledToBottom = isAtBottom(wrapper)
   // @ts-ignore
-  rpc.invoke('handleScroll', output.scrollTop)
+  rpc.invoke('handleScroll', wrapper.scrollTop)
 }
 
 const initialize = async () => {
@@ -51,9 +51,14 @@ const initialize = async () => {
 
   header.append(newChatButton)
 
+  const contentWrapper = document.createElement('div')
+  contentWrapper.className = 'ContentWrapper'
+
   const output = document.createElement('div')
   output.className = 'Output'
-  output.addEventListener('scroll', handleScroll, { passive: true })
+
+  contentWrapper.append(output)
+  contentWrapper.addEventListener('scroll', handleScroll, { passive: true })
 
   const form = document.createElement('form')
   form.className = 'Form'
@@ -77,20 +82,20 @@ const initialize = async () => {
 
   formContent.append(input, button)
   form.append(formContent)
-  app.append(header, output, form)
+  app.append(header, contentWrapper, form)
   document.body.append(app)
   updateNewChatButtonState()
   return {}
 }
 
-const isAtBottom = (output) => {
-  const { scrollTop, scrollHeight, clientHeight } = output
+const isAtBottom = (element) => {
+  const { scrollTop, scrollHeight, clientHeight } = element
   return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
 }
 
-const fixScroll = (output) => {
+const fixScroll = (wrapper) => {
   if (isScrolledToBottom) {
-    output.scrollTop = output.scrollHeight
+    wrapper.scrollTop = wrapper.scrollHeight
   }
 }
 

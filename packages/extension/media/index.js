@@ -21,9 +21,11 @@ const shouldSubmit = (event) => {
 const handleKeyDown = (event) => {
   if (shouldSubmit(event)) {
     event.preventDefault()
-    const form = document.querySelector('.Form')
-    // @ts-ignore
-    form?.submit()
+    const form = event.target.closest('.Form')
+    if (form) {
+      const submitEvent = new Event('submit', { cancelable: true })
+      form.dispatchEvent(submitEvent)
+    }
   }
 }
 

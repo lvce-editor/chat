@@ -41,7 +41,7 @@ await bundleJs(
   false,
 )
 
-await bundleJs(join(root, 'dist', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
+await bundleJs(join(root, 'extension', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
 
 await packageExtension({
   highestCompression: true,

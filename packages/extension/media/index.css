@@ -34,11 +34,13 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--AppBackground);
+  align-items: center;
 }
 
 .Output {
+  width: 100%;
+  max-width: var(--MaxWidth);
   flex: 1;
-  overflow-y: auto;
   padding: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
@@ -61,6 +63,8 @@ body {
 }
 
 .Form {
+  width: 100%;
+  max-width: var(--MaxWidth);
   border-top: 1px solid var(--MessageBorder);
   padding: 16px;
   background: var(--AppBackground);
@@ -119,6 +123,8 @@ body {
 }
 
 .Header {
+  width: 100%;
+  max-width: var(--MaxWidth);
   padding: 8px 16px;
   border-bottom: 1px solid var(--MessageBorder);
   background: var(--AppBackground);
@@ -203,5 +209,33 @@ code {
 }
 
 .Input::-webkit-scrollbar-thumb:hover {
+  background: var(--ScrollbarThumbHover);
+}
+
+/* Firefox */
+.ContentWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
+  overflow: scroll;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.ContentWrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.ContentWrapper::-webkit-scrollbar-track {
+  background: var(--ScrollbarBackground);
+}
+
+.ContentWrapper::-webkit-scrollbar-thumb {
+  background: var(--ScrollbarThumb);
+  border-radius: 3px;
+}
+
+.ContentWrapper::-webkit-scrollbar-thumb:hover {
   background: var(--ScrollbarThumbHover);
 }

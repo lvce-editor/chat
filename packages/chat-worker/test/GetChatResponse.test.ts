@@ -24,6 +24,7 @@ test('getChatResponse - successful response', async () => {
     'https://test.url',
     '2023-06-01',
     true,
+    2048,
   )
 
   expect(result).toBe(mockResponse)
@@ -37,7 +38,7 @@ test('getChatResponse - successful response', async () => {
     },
     body: JSON.stringify({
       model: 'test-model',
-      max_tokens: 1024,
+      max_tokens: 2048,
       messages: [{ role: 'user', content: 'test message' }],
       stream: true,
     }),
@@ -52,7 +53,7 @@ test('getChatResponse - invalid api key', async () => {
   })
 
   await expect(
-    GetChatResponse.getChatResponse('test message', 'invalid-key', 'test-model', 'https://test.url', '2023-06-01', true),
+    GetChatResponse.getChatResponse('test message', 'invalid-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
   ).rejects.toThrow('invalid api key')
 })
 
@@ -65,7 +66,7 @@ test('getChatResponse - other error', async () => {
   })
 
   await expect(
-    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true),
+    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
   ).rejects.toThrow('Internal Server Error')
 })
 
@@ -77,6 +78,6 @@ test('getChatResponse - no response body', async () => {
   })
 
   await expect(
-    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true),
+    GetChatResponse.getChatResponse('test message', 'test-api-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
   ).rejects.toThrow('no response body')
 })

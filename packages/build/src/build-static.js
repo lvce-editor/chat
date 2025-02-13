@@ -56,6 +56,9 @@ extensionJson.webViews[0].remotePath = `${pathPrefix}/${commitHash}/extensions/$
 await writeFile(webViewsPath, JSON.stringify(extensionJson.webViews, null, 2) + '\n')
 
 await writeFile(join(root, 'dist', commitHash, 'playground', 'sample.chat'), '')
-const dirents = await readdir(join(root, 'dist', commitHash, 'playground'))
-const fileMap = dirents.map((dirent) => `/playground/${dirent}`)
+const dirents = await readdir(join(root, 'dist', commitHash, 'playground'), { withFileTypes: true })
+const fileMap = dirents
+  .filter((dirent) => dirent.isFile())
+  .map((dirent) => dirent.name)
+  .map((dirent) => `/playground/${dirent}`)
 await writeFile(join(root, 'dist', commitHash, 'config', 'fileMap.json'), JSON.stringify(fileMap, null, 2) + '\n')

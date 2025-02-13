@@ -50,7 +50,7 @@ const initialize = async () => {
 
   const output = document.createElement('div')
   output.className = 'Output'
-  output.addEventListener('wheel', handleWheel)
+  output.addEventListener('wheel', handleWheel, { passive: true })
 
   const form = document.createElement('form')
   form.className = 'Form'

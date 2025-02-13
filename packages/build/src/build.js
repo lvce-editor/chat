@@ -26,6 +26,14 @@ fs.cpSync(join(extension, 'media'), join(root, 'dist', 'media'), {
   recursive: true,
 })
 
+await bundleJs(
+  join(root, 'packages', 'chat-worker', 'src', 'chatWorkerMain.ts'),
+  join(root, 'dist', 'chat-worker', 'dist', 'chatWorkerMain.js'),
+  false,
+)
+
+await bundleJs(join(root, 'dist', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
+
 await replace({
   path: join(root, 'dist', 'extension.json'),
   occurrence: 'src/chatMain.ts',
@@ -37,14 +45,6 @@ await replace({
   occurrence: '../chat-worker/dist/chatWorkerMain.js',
   replacement: './chat-worker/dist/chatWorkerMain.js',
 })
-
-await bundleJs(
-  join(root, 'packages', 'chat-worker', 'src', 'chatWorkerMain.ts'),
-  join(root, 'dist', 'chat-worker', 'dist', 'chatWorkerMain.js'),
-  false,
-)
-
-await bundleJs(join(root, 'dist', 'src', 'chatMain.ts'), join(root, 'dist', 'dist', 'chatMain.js'), false)
 
 await packageExtension({
   highestCompression: true,

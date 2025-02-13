@@ -74,13 +74,7 @@ const initialize = async () => {
   input.addEventListener('keydown', handleKeyDown)
   input.addEventListener('input', adjustHeight)
 
-  const button = document.createElement('button')
-  button.type = 'submit'
-  button.className = 'Button'
-  button.textContent = 'Send'
-  button.name = 'Submit'
-
-  formContent.append(input, button)
+  formContent.append(input)
   form.append(formContent)
   app.append(header, contentWrapper, form)
   document.body.append(app)

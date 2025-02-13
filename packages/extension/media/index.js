@@ -22,6 +22,18 @@ const initialize = async () => {
   const app = document.createElement('div')
   app.className = 'App'
 
+  const header = document.createElement('div')
+  header.className = 'Header'
+
+  const newChatButton = document.createElement('button')
+  newChatButton.className = 'NewChatButton'
+  newChatButton.textContent = 'New Chat'
+  newChatButton.addEventListener('click', async () => {
+    await rpc.invoke('handleNewChat')
+  })
+
+  header.append(newChatButton)
+
   const output = document.createElement('div')
   output.className = 'Output'
 
@@ -47,7 +59,7 @@ const initialize = async () => {
 
   formContent.append(input, button)
   form.append(formContent)
-  app.append(output, form)
+  app.append(header, output, form)
   document.body.append(app)
   return {}
 }
@@ -132,10 +144,19 @@ const adjustHeight = (event) => {
   textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
 }
 
+const clearMessages = () => {
+  const output = document.querySelector('.Output')
+  if (!output) {
+    return
+  }
+  output.innerHTML = ''
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
   updateMessage,
   setError,
   clear,
+  clearMessages,
 })

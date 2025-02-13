@@ -107,3 +107,25 @@ body {
   border: 1px solid #dc2626;
   background: #fef2f2;
 }
+
+.Header {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--MessageBorder);
+  background: var(--AppBackground);
+}
+
+.NewChatButton {
+  padding: 8px 16px;
+  background: var(--ButtonBackground);
+  color: var(--ButtonText);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.NewChatButton:hover {
+  background: var(--ButtonHoverBackground);
+}

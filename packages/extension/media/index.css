@@ -184,6 +184,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  contain: content;
 }
 
 .NewChatButton:hover {
@@ -267,8 +268,8 @@ body {
   /* width: 100%; */
   /* display: flex; */
   /* justify-content: center; */
-  /* flex: 1; */
-  /* contain: strict; */
+  flex: 1;
+  contain: strict;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */

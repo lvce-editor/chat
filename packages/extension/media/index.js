@@ -198,6 +198,18 @@ const setScrollTop = () => {
   }
 }
 
+const updateForm = (vdom) => {
+  const oldForm = document.querySelector('.FormContent')
+  const newForm = createDomElement(vdom)
+  if (oldForm) {
+    oldForm.replaceWith(newForm)
+  }
+}
+
+const commandHandlers = {
+  updateForm,
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   appendMessage,

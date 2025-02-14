@@ -112,8 +112,9 @@ const renderMessage = (message, role) => {
   for (const block of message) {
     if (block.type === 'code') {
       const pre = document.createElement('pre')
-      pre.className = `code-block language-${block.language}`
+      pre.className = `CodeBlock language-${block.language}`
       const code = document.createElement('code')
+      code.className = 'CodeText'
       code.textContent = block.content
       pre.appendChild(code)
       $Message.appendChild(pre)

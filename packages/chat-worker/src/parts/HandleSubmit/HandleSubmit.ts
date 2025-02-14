@@ -51,7 +51,6 @@ export const handleSubmit = async (id, input) => {
     content: Array.isArray(message.content) ? message.content.map((block) => block.content).join('\n') : message.content,
   }))
 
-  console.log('before')
   const body = await GetChatResponse.getChatResponse(
     formattedMessages,
     webView.apiKey,
@@ -61,7 +60,6 @@ export const handleSubmit = async (id, input) => {
     webView.stream,
     webView.maxTokens,
   )
-  console.log({ body })
   const stream = GetChatResponseStream.getChatResponseStream(body)
   await stream.pipeThrough(messageStream).pipeTo(acc)
 }

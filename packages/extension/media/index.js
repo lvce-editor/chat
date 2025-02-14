@@ -10,7 +10,6 @@ const submitForm = async (target) => {
 }
 
 const handleSubmit = async (event) => {
-  console.log('HANDLE SUBMIT')
   event.preventDefault()
   await submitForm(event.target)
 }

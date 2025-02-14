@@ -6,8 +6,7 @@ export const handleImageUpload = async (id: number, file: File | undefined) => {
   if (!file) {
     return
   }
-  const blob = file
-  const blobUrl = URL.createObjectURL(blob)
+  const blobUrl = await webView.port.invoke('createObjectUrl', file)
   const formContent = createFormContent(blobUrl)
   await webView.port.invoke('updateForm', formContent)
 }

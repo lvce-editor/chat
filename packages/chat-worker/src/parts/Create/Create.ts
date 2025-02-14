@@ -2,6 +2,7 @@ import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import type { WebView } from '../WebView/WebView.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')
@@ -26,8 +27,13 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   }
   WebViewStates.set(id, webView)
 
-  // Create message VDOMs from saved messages
-  const savedMessageVDoms = webView.messages.map((message) => RenderMessage.renderMessage(message.content, message.role))
+  // Format and create message VDOMs from saved messages
+  const savedMessageVDoms = webView.messages.map((message) => {
+    const formattedContent = Array.isArray(message.content)
+      ? FormatMessage.formatMessage(message.content.map((block) => block.content).join('\n'))
+      : message.content
+    return RenderMessage.renderMessage(formattedContent, message.role)
+  })
 
   const initialDom: VirtualElement = {
     type: 'div',

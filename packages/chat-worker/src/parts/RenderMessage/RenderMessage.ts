@@ -32,9 +32,25 @@ export const renderMessage = (message: string | MessageBlock[], role: 'human' | 
         ],
       }
     }
+    // @ts-ignore
+    if (block.type === 'image') {
+      return {
+        type: 'div',
+        className: 'ImageBlock',
+        children: [
+          {
+            type: 'img',
+            className: 'MessageImage',
+            // @ts-ignore
+            src: block.blobUrl,
+          },
+        ],
+      }
+    }
     return {
       type: 'p',
-      textContent: block.content,
+      // @ts-ignore
+      textContent: block.content || block.text,
     }
   })
 

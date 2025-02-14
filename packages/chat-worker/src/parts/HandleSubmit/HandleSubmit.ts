@@ -1,3 +1,4 @@
+import type { BaseMessageContent } from '../MessageContent/MessageContent.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import { formatMessages } from '../FormatMessages/FormatMessages.ts'
@@ -6,17 +7,36 @@ import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponse
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleSubmit = async (id, input) => {
+export const handleSubmit = async (id, input, file) => {
   const webView = WebViewStates.get(id)
+  const content: BaseMessageContent[] = []
 
-  // Add human message to state
+  if (file) {
+    const blob = new Blob([file.data], { type: file.type })
+    const blobUrl = URL.createObjectURL(blob)
+    content.push({
+      type: 'image',
+      content: file.data,
+      // @ts-ignore
+      blobUrl,
+    })
+  }
+
+  if (input) {
+    content.push({
+      type: 'text',
+      content: input,
+    })
+  }
+
   // @ts-ignore
   webView.messages.push({
     role: 'human',
-    content: input,
+    content,
   })
 
-  await AddMessage.addMessage(id, input, 'human')
+  // @ts-ignore
+  await AddMessage.addMessage(id, content, 'human')
 
   let currentMessage = ''
   const acc = new WritableStream({

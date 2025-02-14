@@ -1,6 +1,7 @@
 import type { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
+import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')
@@ -24,6 +25,9 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     scrollOffset: savedState?.scrollOffset || 0,
   }
   WebViewStates.set(id, webView)
+
+  // Create message VDOMs from saved messages
+  const savedMessageVDoms = webView.messages.map((message) => RenderMessage.renderMessage(message.content, message.role))
 
   const initialDom: VirtualElement = {
     type: 'div',
@@ -50,6 +54,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
           {
             type: 'div',
             className: 'Output',
+            children: savedMessageVDoms,
           },
         ],
       },
@@ -87,15 +92,9 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     await port.invoke('setError', 'Missing Api Key')
   }
 
-  // Restore saved messages if they exist
-  if (webView.messages.length > 0) {
-    for (const message of webView.messages) {
-      await port.invoke('appendMessage', message.content, message.role)
-    }
-    // Restore scroll position after messages are added
-    if (webView.scrollOffset) {
-      await port.invoke('setScrollPosition', webView.scrollOffset)
-    }
+  // Only restore scroll position if there were saved messages
+  if (webView.messages.length > 0 && webView.scrollOffset) {
+    await port.invoke('setScrollPosition', webView.scrollOffset)
   }
 
   return {}

@@ -163,8 +163,8 @@ const clear = () => {
 
 const adjustHeight = (event) => {
   const textarea = event.target
-  textarea.style.height = 'auto'
-  textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
+  // textarea.style.height = 'auto'
+  // textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
 }
 
 const clearMessages = () => {

@@ -1,13 +1,19 @@
 // TODO use virtual dom in  worker
 
 let isScrolledToBottom = true
+let currentImage = null
 
 const handlers = {
   handleSubmit: async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     const input = formData.get('Input')
-    await rpc.invoke('handleSubmit', input)
+    await rpc.invoke('handleSubmit', input, currentImage)
+    currentImage = null
+    const previewWrapper = document.querySelector('.ImagePreviewWrapper')
+    if (previewWrapper) {
+      previewWrapper.classList.add('Hidden')
+    }
     event.target.reset()
   },
 
@@ -30,6 +36,35 @@ const handlers = {
     const textarea = event.target
     textarea.style.height = 'auto'
     textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
+  },
+
+  handleImageUpload: async (event) => {
+    const file = event.target.files[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      currentImage = {
+        type: file.type,
+        data: e.target.result.split(',')[1],
+      }
+
+      const previewWrapper = document.querySelector('.ImagePreviewWrapper')
+      const preview = document.querySelector('.ImagePreview')
+      preview.src = e.target.result
+      previewWrapper.classList.remove('Hidden')
+    }
+    reader.readAsDataURL(file)
+  },
+
+  handleRemoveImage: (event) => {
+    event.preventDefault()
+    currentImage = null
+    const previewWrapper = document.querySelector('.ImagePreviewWrapper')
+    const preview = document.querySelector('.ImagePreview')
+    preview.src = ''
+    previewWrapper.classList.add('Hidden')
+    document.querySelector('.ImageInput').value = ''
   },
 }
 
@@ -66,6 +101,10 @@ const createDomElement = (vdom) => {
     for (const child of vdom.children) {
       element.appendChild(createDomElement(child))
     }
+  }
+  if (vdom.inputType === 'file') {
+    element.type = 'file'
+    element.accept = 'image/*'
   }
 
   return element

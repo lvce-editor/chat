@@ -29,6 +29,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   WebViewStates.set(id, webView)
 
   const savedMessageVDoms = webView.messages.map((message) => {
+    // @ts-ignore
     return RenderMessage.renderMessage(message.content, message.role)
   })
 

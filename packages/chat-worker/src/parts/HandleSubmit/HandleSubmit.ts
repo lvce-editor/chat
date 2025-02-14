@@ -16,8 +16,10 @@ export const handleSubmit = async (id, input) => {
   })
 
   // Use new AddMessage module
+  console.log('before')
   await AddMessage.addMessage(id, input, 'human')
-  await webView.port.invoke('clear')
+
+  console.log('after')
 
   let currentMessage = ''
   const acc = new WritableStream({
@@ -54,6 +56,7 @@ export const handleSubmit = async (id, input) => {
     content: Array.isArray(message.content) ? message.content.map((block) => block.content).join('\n') : message.content,
   }))
 
+  console.log('before')
   const body = await GetChatResponse.getChatResponse(
     formattedMessages,
     webView.apiKey,

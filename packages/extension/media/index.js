@@ -92,45 +92,18 @@ const fixScroll = (wrapper) => {
   }
 }
 
-const renderMessage = (message, role) => {
-  const $Message = document.createElement('div')
-  $Message.className = role === 'human' ? 'MessageHuman' : 'MessageAi'
-
-  if (role === 'human') {
-    $Message.textContent = message
-    return $Message
-  }
-
-  for (const block of message) {
-    if (block.type === 'code') {
-      const pre = document.createElement('pre')
-      pre.className = `CodeBlock language-${block.language}`
-      const code = document.createElement('code')
-      code.className = 'CodeText'
-      code.textContent = block.content
-      pre.appendChild(code)
-      $Message.appendChild(pre)
-    } else {
-      const p = document.createElement('p')
-      p.textContent = block.content
-      $Message.appendChild(p)
-    }
-  }
-  return $Message
-}
-
-const addMessage = (message, role = 'ai') => {
+const appendMessage = (vdom) => {
   const output = document.querySelector('.Output')
-  const $Message = renderMessage(message, role)
-  output?.append($Message)
+  const messageElement = createDomElement(vdom)
+  output?.append(messageElement)
 }
 
-const updateMessage = (blocks) => {
+const updateMessage = (vdom) => {
   const output = document.querySelector('.Output')
   const contentWrapper = document.querySelector('.ContentWrapper')
   const last = output?.lastElementChild
   if (last) {
-    const newMessage = renderMessage(blocks, 'ai')
+    const newMessage = createDomElement(vdom)
     last.replaceWith(newMessage)
   }
   fixScroll(contentWrapper)
@@ -197,7 +170,7 @@ const setScrollTop = () => {
 
 const rpc = globalThis.lvceRpc({
   initialize,
-  addMessage,
+  appendMessage,
   updateMessage,
   setError,
   clear,

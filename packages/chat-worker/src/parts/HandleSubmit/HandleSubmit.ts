@@ -3,6 +3,7 @@ import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 
 export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
@@ -25,7 +26,8 @@ export const handleSubmit = async (id, input) => {
     async write(message) {
       currentMessage += message
       const blocks = FormatMessage.formatMessage(currentMessage)
-      await webView.port.invoke('updateMessage', blocks)
+      const messageVDom = RenderMessage.renderMessage(blocks, 'ai')
+      await webView.port.invoke('updateMessage', messageVDom)
     },
 
     async close() {

@@ -90,7 +90,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   // Restore saved messages if they exist
   if (webView.messages.length > 0) {
     for (const message of webView.messages) {
-      await port.invoke('addMessage', message.content, message.role)
+      await port.invoke('appendMessage', message.content, message.role)
     }
     // Restore scroll position after messages are added
     if (webView.scrollOffset) {

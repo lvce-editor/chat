@@ -7,11 +7,15 @@ export const renderMessage = (message: string | MessageBlock[], role: 'human' | 
     className: role === 'human' ? 'MessageHuman' : 'MessageAi',
   }
 
+  const wrappedMessage: VirtualElement = {
+    type: 'div',
+    className: `MessageWrapper MessageWrapper--${role}`,
+    children: [messageElement],
+  }
+
   if (typeof message === 'string') {
-    return {
-      ...messageElement,
-      textContent: message,
-    }
+    messageElement.textContent = message
+    return wrappedMessage
   }
 
   const blocks = message.map((block) => {
@@ -34,8 +38,6 @@ export const renderMessage = (message: string | MessageBlock[], role: 'human' | 
     }
   })
 
-  return {
-    ...messageElement,
-    children: blocks,
-  }
+  messageElement.children = blocks
+  return wrappedMessage
 }

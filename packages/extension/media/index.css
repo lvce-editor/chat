@@ -230,6 +230,7 @@ code {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex: 1;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */

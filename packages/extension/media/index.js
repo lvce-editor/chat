@@ -70,6 +70,9 @@ const createDomElement = (vdom) => {
   if (vdom.name) {
     element.name = vdom.name
   }
+  if (vdom.src) {
+    element.src = vdom.src
+  }
 
   if (vdom.placeholder) {
     element.placeholder = vdom.placeholder
@@ -211,4 +214,7 @@ const rpc = globalThis.lvceRpc({
   setScrollTop,
   updateNewChatButtonState,
   updateForm,
+  createObjectUrl: (blob) => {
+    return URL.createObjectURL(blob)
+  },
 })

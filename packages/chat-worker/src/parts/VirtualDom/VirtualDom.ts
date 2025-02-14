@@ -5,6 +5,9 @@ export interface VirtualElement {
   textContent?: string
   name?: string
   placeholder?: string
+  inputType?: string
+  accept?: string
+  src?: string
   events?: {
     [key: string]: string
   }

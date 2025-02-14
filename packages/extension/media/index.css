@@ -46,19 +46,21 @@ body {
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
 }
 
-.Message {
+.MessageHuman {
   padding: var(--MessagePadding);
   max-width: var(--MaxWidth);
   line-height: 1.6;
   white-space: pre-wrap;
   border-bottom: 1px solid var(--MessageBorder);
-}
-
-.Message.human {
   background: var(--MessageHumanBackground);
 }
 
-.Message.ai {
+.MessageAi {
+  padding: var(--MessagePadding);
+  max-width: var(--MaxWidth);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  border-bottom: 1px solid var(--MessageBorder);
   background: var(--MessageAiBackground);
 }
 

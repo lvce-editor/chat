@@ -43,28 +43,19 @@ const handlers = {
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = (e) => {
-      currentImage = {
+    reader.onload = async (e) => {
+      const imageData = {
         type: file.type,
         data: e.target.result.split(',')[1],
       }
-
-      const previewWrapper = document.querySelector('.ImagePreviewWrapper')
-      const preview = document.querySelector('.ImagePreview')
-      preview.src = e.target.result
-      previewWrapper.classList.remove('Hidden')
+      await rpc.invoke('handleImageUpload', imageData)
     }
     reader.readAsDataURL(file)
   },
 
-  handleRemoveImage: (event) => {
+  handleRemoveImage: async (event) => {
     event.preventDefault()
-    currentImage = null
-    const previewWrapper = document.querySelector('.ImagePreviewWrapper')
-    const preview = document.querySelector('.ImagePreview')
-    preview.src = ''
-    previewWrapper.classList.add('Hidden')
-    document.querySelector('.ImageInput').value = ''
+    await rpc.invoke('handleRemoveImage')
   },
 }
 

@@ -38,7 +38,7 @@ body {
 }
 
 .Output {
-  width: 100%;
+  /* width: 100%; */
   max-width: var(--MaxWidth);
   flex: 1;
   padding: 0;
@@ -133,7 +133,7 @@ body {
 }
 
 .Header {
-  width: 100%;
+  /* width: 100%; */
   max-width: var(--MaxWidth);
   padding: 8px 16px;
   border-bottom: 1px solid var(--MessageBorder);

@@ -1,11 +1,10 @@
+import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-import * as AddMessage from '../AddMessage/AddMessage.ts'
 
 export const handleSubmit = async (id, input) => {
-  console.log({ input })
   const webView = WebViewStates.get(id)
 
   // Add human message to state
@@ -15,9 +14,7 @@ export const handleSubmit = async (id, input) => {
     content: input,
   })
 
-  // Use new AddMessage module
   await AddMessage.addMessage(id, input, 'human')
-  await webView.port.invoke('clear')
 
   let currentMessage = ''
   const acc = new WritableStream({
@@ -63,7 +60,6 @@ export const handleSubmit = async (id, input) => {
     webView.stream,
     webView.maxTokens,
   )
-  console.log({ body })
   const stream = GetChatResponseStream.getChatResponseStream(body)
   await stream.pipeThrough(messageStream).pipeTo(acc)
 }

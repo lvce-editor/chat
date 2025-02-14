@@ -10,7 +10,6 @@ const submitForm = async (target) => {
 }
 
 const handleSubmit = async (event) => {
-  console.log('HANDLE SUBMIT')
   event.preventDefault()
   await submitForm(event.target)
 }
@@ -194,6 +193,21 @@ const setScrollPosition = (scrollOffset) => {
   output.scrollTop = scrollOffset
 }
 
+const checkIsBottom = () => {
+  const contentWrapper = document.querySelector('.ContentWrapper')
+  if (!contentWrapper) {
+    return false
+  }
+  return isAtBottom(contentWrapper)
+}
+
+const setScrollTop = () => {
+  const contentWrapper = document.querySelector('.ContentWrapper')
+  if (contentWrapper) {
+    contentWrapper.scrollTop = contentWrapper.scrollHeight
+  }
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   addMessage,
@@ -202,4 +216,7 @@ const rpc = globalThis.lvceRpc({
   clear,
   clearMessages,
   setScrollPosition,
+  checkIsBottom,
+  setScrollTop,
+  updateNewChatButtonState,
 })

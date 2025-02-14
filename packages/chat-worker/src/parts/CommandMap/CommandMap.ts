@@ -1,7 +1,7 @@
 import * as Create from '../Create/Create.ts'
-import * as HandleSubmit from '../HandleSubmit/HandleSubmit.ts'
 import * as HandleNewChat from '../HandleNewChat/HandleNewChat.ts'
 import * as HandleScroll from '../HandleScroll/HandleScroll.ts'
+import * as HandleSubmit from '../HandleSubmit/HandleSubmit.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as WrapCommand from '../WrapCommand/WrapCommand.ts'
 

@@ -1,4 +1,5 @@
 import * as Create from '../Create/Create.ts'
+import * as HandleImageUpload from '../HandleImageUpload/HandleImageUpload.ts'
 import * as HandleNewChat from '../HandleNewChat/HandleNewChat.ts'
 import * as HandleScroll from '../HandleScroll/HandleScroll.ts'
 import * as HandleSubmit from '../HandleSubmit/HandleSubmit.ts'
@@ -11,4 +12,5 @@ export const commandMap = {
   handleSubmit: WrapCommand.wrapCommand(HandleSubmit.handleSubmit),
   handleNewChat: WrapCommand.wrapCommand(HandleNewChat.handleNewChat),
   handleScroll: WrapCommand.wrapCommand(HandleScroll.handleScroll),
+  handleImageUpload: WrapCommand.wrapCommand(HandleImageUpload.handleImageUpload),
 }

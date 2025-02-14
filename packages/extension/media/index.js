@@ -103,7 +103,7 @@ const fixScroll = (wrapper) => {
 
 const renderMessage = (message, role) => {
   const $Message = document.createElement('div')
-  $Message.className = `Message ${role}`
+  $Message.className = role === 'human' ? 'MessageHuman' : 'MessageAi'
 
   if (role === 'human') {
     $Message.textContent = message

@@ -2,85 +2,77 @@
 
 let isScrolledToBottom = true
 
-const submitForm = async (target) => {
-  const formData = new FormData(target)
-  const input = formData.get('Input')
-  // @ts-ignore
-  await rpc.invoke('handleSubmit', input)
-}
-
-const handleSubmit = async (event) => {
-  event.preventDefault()
-  await submitForm(event.target)
-}
-
-const shouldSubmit = (event) => {
-  return (event.ctrlKey && event.key === 'Enter') || (event.key === 'Enter' && !event.shiftKey)
-}
-
-const handleKeyDown = (event) => {
-  if (shouldSubmit(event)) {
+const handlers = {
+  handleSubmit: async (event) => {
     event.preventDefault()
-    const form = event.target.closest('.Form')
-    if (form) {
-      const submitEvent = new Event('submit', { cancelable: true })
-      form.dispatchEvent(submitEvent)
+    const formData = new FormData(event.target)
+    const input = formData.get('Input')
+    await rpc.invoke('handleSubmit', input)
+    event.target.reset()
+  },
+
+  handleKeyDown: (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      const form = event.target.closest('.Form')
+      if (form) {
+        const submitEvent = new Event('submit', { cancelable: true })
+        form.dispatchEvent(submitEvent)
+      }
+    }
+  },
+
+  handleNewChat: async () => {
+    await rpc.invoke('handleNewChat')
+  },
+
+  adjustHeight: (event) => {
+    const textarea = event.target
+    textarea.style.height = 'auto'
+    textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
+  },
+}
+
+const createDomElement = (vdom) => {
+  if (typeof vdom === 'string') {
+    return document.createTextNode(vdom)
+  }
+
+  const element = document.createElement(vdom.type)
+
+  if (vdom.className) {
+    element.className = vdom.className
+  }
+
+  if (vdom.textContent) {
+    element.textContent = vdom.textContent
+  }
+
+  if (vdom.name) {
+    element.name = vdom.name
+  }
+
+  if (vdom.placeholder) {
+    element.placeholder = vdom.placeholder
+  }
+
+  if (vdom.events) {
+    for (const [event, handlerName] of Object.entries(vdom.events)) {
+      element.addEventListener(event, handlers[handlerName])
     }
   }
-}
 
-const handleScroll = () => {
-  const wrapper = document.querySelector('.ContentWrapper')
-  if (!wrapper) {
-    return
+  if (vdom.children) {
+    for (const child of vdom.children) {
+      element.appendChild(createDomElement(child))
+    }
   }
-  isScrolledToBottom = isAtBottom(wrapper)
-  // @ts-ignore
-  rpc.invoke('handleScroll', wrapper.scrollTop)
+
+  return element
 }
 
-const initialize = async () => {
-  const app = document.createElement('div')
-  app.className = 'App'
-
-  const header = document.createElement('div')
-  header.className = 'Header'
-
-  const newChatButton = document.createElement('button')
-  newChatButton.className = 'NewChatButton'
-  newChatButton.textContent = 'New Chat'
-  newChatButton.addEventListener('click', async () => {
-    await rpc.invoke('handleNewChat')
-  })
-
-  header.append(newChatButton)
-
-  const contentWrapper = document.createElement('div')
-  contentWrapper.className = 'ContentWrapper'
-
-  const output = document.createElement('div')
-  output.className = 'Output'
-
-  contentWrapper.append(output)
-  contentWrapper.addEventListener('scroll', handleScroll, { passive: true })
-
-  const form = document.createElement('form')
-  form.className = 'Form'
-  form.addEventListener('submit', handleSubmit)
-
-  const formContent = document.createElement('div')
-  formContent.className = 'FormContent'
-
-  const input = document.createElement('textarea')
-  input.className = 'Input'
-  input.name = 'Input'
-  input.placeholder = 'Message...'
-  input.addEventListener('keydown', handleKeyDown)
-  input.addEventListener('input', adjustHeight)
-
-  formContent.append(input)
-  form.append(formContent)
-  app.append(header, contentWrapper, form)
+const initialize = async (vdom) => {
+  const app = createDomElement(vdom)
   document.body.append(app)
   updateNewChatButtonState()
   return {}
@@ -159,12 +151,6 @@ const clear = () => {
   }
   // @ts-ignore
   input.value = ''
-}
-
-const adjustHeight = (event) => {
-  const textarea = event.target
-  // textarea.style.height = 'auto'
-  // textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
 }
 
 const clearMessages = () => {

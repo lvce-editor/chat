@@ -45,30 +45,37 @@ body {
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
 }
 
-.MessageHuman {
-  padding: var(--MessagePadding);
-  max-width: var(--MaxWidth);
-  line-height: 1.6;
-  white-space: pre-wrap;
-  border-bottom: 1px solid var(--MessageBorder);
-  background: var(--MessageHumanBackground);
-}
-
+.MessageHuman,
 .MessageAi {
   padding: var(--MessagePadding);
   max-width: var(--MaxWidth);
   line-height: 1.6;
   white-space: pre-wrap;
-  border-bottom: 1px solid var(--MessageBorder);
+  margin: 8px 16px;
+  border-radius: 12px;
+}
+
+.MessageHuman {
+  background: var(--MessageHumanBackground);
+  margin-left: auto;
+  margin-right: 16px;
+  border: 1px solid var(--MessageBorder);
+}
+
+.MessageAi {
   background: var(--MessageAiBackground);
+  margin-right: auto;
+  margin-left: 16px;
+  border: 1px solid var(--MessageBorder);
 }
 
 .Form {
   width: 100%;
   max-width: var(--MaxWidth);
-  border-top: 1px solid var(--MessageBorder);
-  padding: 16px 0;
+  padding: 16px;
   background: var(--AppBackground);
+  position: fixed;
+  bottom: 0;
 }
 
 .FormContent {
@@ -76,18 +83,20 @@ body {
   margin: 0 auto;
   display: flex;
   gap: 12px;
-  align-items: flex-start;
-  padding: 0 16px;
+  align-items: flex-end;
+  background: var(--MessageHumanBackground);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--MessageBorder);
 }
 
 .Input {
   flex: 1;
   min-height: 24px;
   max-height: 200px;
-  padding: 12px 16px;
-  border: 1px solid var(--InputBorder);
-  border-radius: 6px;
-  background: var(--InputBackground);
+  padding: 12px 0;
+  border: none;
+  background: transparent;
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5;
@@ -96,15 +105,10 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
 }
 
 .Input:focus {
   outline: none;
-  border-color: var(--InputFocusBorder);
-  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
 }
 
 .Input::placeholder {
@@ -112,13 +116,16 @@ body {
 }
 
 .Button {
-  padding: 8px 12px;
+  padding: 8px;
   background: var(--ButtonBackground);
   color: var(--ButtonText);
   border: none;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 500;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -231,6 +238,7 @@ body {
   display: flex;
   justify-content: center;
   flex: 1;
+  padding-bottom: 80px;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */

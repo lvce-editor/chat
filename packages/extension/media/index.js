@@ -40,17 +40,10 @@ const handlers = {
 
   handleImageUpload: async (event) => {
     const file = event.target.files[0]
-    if (!file) return
-
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      const imageData = {
-        type: file.type,
-        data: e.target.result.split(',')[1],
-      }
-      await rpc.invoke('handleImageUpload', imageData)
+    if (!file) {
+      return
     }
-    reader.readAsDataURL(file)
+    await rpc.invoke('handleImageUpload', file)
   },
 
   handleRemoveImage: async (event) => {
@@ -206,10 +199,6 @@ const updateForm = (vdom) => {
   }
 }
 
-const commandHandlers = {
-  updateForm,
-}
-
 const rpc = globalThis.lvceRpc({
   initialize,
   appendMessage,
@@ -221,4 +210,5 @@ const rpc = globalThis.lvceRpc({
   checkIsBottom,
   setScrollTop,
   updateNewChatButtonState,
+  updateForm,
 })

@@ -2,8 +2,8 @@ import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
+import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)

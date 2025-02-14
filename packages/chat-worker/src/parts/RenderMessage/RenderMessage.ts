@@ -1,5 +1,5 @@
-import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import type { MessageBlock } from '../FormatMessage/FormatMessage.ts'
+import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 
 export const renderMessage = (message: string | MessageBlock[], role: 'human' | 'ai'): VirtualElement => {
   const messageElement: VirtualElement = {

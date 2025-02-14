@@ -5,7 +5,6 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 
 export const handleSubmit = async (id, input) => {
-  console.log({ input })
   const webView = WebViewStates.get(id)
 
   // Add human message to state
@@ -15,11 +14,7 @@ export const handleSubmit = async (id, input) => {
     content: input,
   })
 
-  // Use new AddMessage module
-  console.log('before')
   await AddMessage.addMessage(id, input, 'human')
-
-  console.log('after')
 
   let currentMessage = ''
   const acc = new WritableStream({

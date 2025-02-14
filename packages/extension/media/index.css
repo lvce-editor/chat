@@ -83,7 +83,6 @@ body {
 }
 
 .Form {
-  max-width: var(--MaxWidth);
   padding: 16px;
   background: var(--AppBackground);
   bottom: 0;
@@ -92,15 +91,14 @@ body {
 }
 
 .FormContent {
-  width: 100%;
   max-width: var(--MaxWidth);
   display: flex;
   gap: 12px;
-  align-items: flex-end;
   background: var(--MessageHumanBackground);
   padding: 8px 16px;
   border-radius: 20px;
   border: 1px solid var(--MessageBorder);
+  flex: 1;
 }
 
 .Input {
@@ -154,14 +152,17 @@ body {
 }
 
 .Header {
-  max-width: var(--MaxWidth);
-  padding: 8px 0;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--MessageBorder);
   background: var(--AppBackground);
   height: 30px;
   contain: strict;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+}
+
+.HeaderContent {
+  max-width: var(--MaxWidth);
 }
 
 .NewChatButton {

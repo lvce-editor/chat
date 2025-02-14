@@ -1,5 +1,6 @@
 import type { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')
@@ -23,7 +24,64 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     scrollOffset: savedState?.scrollOffset || 0,
   }
   WebViewStates.set(id, webView)
-  await port.invoke('initialize')
+
+  const initialDom: VirtualElement = {
+    type: 'div',
+    className: 'App',
+    children: [
+      {
+        type: 'div',
+        className: 'Header',
+        children: [
+          {
+            type: 'button',
+            className: 'NewChatButton',
+            textContent: 'New Chat',
+            events: {
+              click: 'handleNewChat',
+            },
+          },
+        ],
+      },
+      {
+        type: 'div',
+        className: 'ContentWrapper',
+        children: [
+          {
+            type: 'div',
+            className: 'Output',
+          },
+        ],
+      },
+      {
+        type: 'form',
+        className: 'Form',
+        events: {
+          submit: 'handleSubmit',
+        },
+        children: [
+          {
+            type: 'div',
+            className: 'FormContent',
+            children: [
+              {
+                type: 'textarea',
+                className: 'Input',
+                name: 'Input',
+                placeholder: 'Message...',
+                events: {
+                  keydown: 'handleKeyDown',
+                  input: 'adjustHeight',
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
+
+  await port.invoke('initialize', initialDom)
 
   if (!apiKey) {
     await port.invoke('setError', 'Missing Api Key')
@@ -32,7 +90,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   // Restore saved messages if they exist
   if (webView.messages.length > 0) {
     for (const message of webView.messages) {
-      await port.invoke('addMessage', message.content, message.role)
+      await port.invoke('appendMessage', message.content, message.role)
     }
     // Restore scroll position after messages are added
     if (webView.scrollOffset) {

@@ -45,28 +45,41 @@ body {
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
 }
 
+.MessagesContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+}
+
+.MessageWrapper {
+  display: flex;
+  padding: 8px 0;
+}
+
+.MessageWrapper--human {
+  justify-content: flex-end;
+}
+
+.MessageWrapper--ai {
+  justify-content: flex-start;
+}
+
 .MessageHuman,
 .MessageAi {
   padding: var(--MessagePadding);
   max-width: var(--MaxWidth);
   line-height: 1.6;
   white-space: pre-wrap;
-  margin: 8px 16px;
   border-radius: 12px;
+  border: 1px solid var(--MessageBorder);
 }
 
 .MessageHuman {
   background: var(--MessageHumanBackground);
-  margin-left: auto;
-  margin-right: 16px;
-  border: 1px solid var(--MessageBorder);
 }
 
 .MessageAi {
   background: var(--MessageAiBackground);
-  margin-right: auto;
-  margin-left: 16px;
-  border: 1px solid var(--MessageBorder);
 }
 
 .Form {
@@ -74,18 +87,18 @@ body {
   padding: 16px;
   background: var(--AppBackground);
   bottom: 0;
-  padding-top: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .FormContent {
+  width: 100%;
   max-width: var(--MaxWidth);
-  margin: 0 auto;
   display: flex;
   gap: 12px;
   align-items: flex-end;
   background: var(--MessageHumanBackground);
   padding: 8px 16px;
-  padding-top: 0;
   border-radius: 20px;
   border: 1px solid var(--MessageBorder);
 }
@@ -178,12 +191,15 @@ body {
 }
 
 /* Code block styling */
+.CodeBlockWrapper {
+  padding: 8px 0;
+}
+
 .CodeBlock {
   background: #1e1e1e;
   border: 1px solid var(--MessageBorder);
   border-radius: 3px;
   padding: 8px 12px;
-  margin: 8px 0;
 }
 
 .CodeText {

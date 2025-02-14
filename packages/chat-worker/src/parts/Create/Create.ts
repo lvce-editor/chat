@@ -28,10 +28,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   }
   WebViewStates.set(id, webView)
 
-  // Format and create message VDOMs from saved messages
-  const messages = formatMessages(webView.messages)
-
-  const savedMessageVDoms = messages.map((message) => {
+  const savedMessageVDoms = webView.messages.map((message) => {
     return RenderMessage.renderMessage(message.content, message.role)
   })
 

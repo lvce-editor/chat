@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--AppBackground);
-  align-items: center;
+  /* align-items: center; */
 }
 
 .Output {
@@ -70,12 +70,11 @@ body {
 }
 
 .Form {
-  width: 100%;
   max-width: var(--MaxWidth);
   padding: 16px;
   background: var(--AppBackground);
-  position: fixed;
   bottom: 0;
+  padding-top: 0;
 }
 
 .FormContent {
@@ -86,6 +85,7 @@ body {
   align-items: flex-end;
   background: var(--MessageHumanBackground);
   padding: 8px 16px;
+  padding-top: 0;
   border-radius: 20px;
   border: 1px solid var(--MessageBorder);
 }
@@ -142,9 +142,13 @@ body {
 
 .Header {
   max-width: var(--MaxWidth);
-  padding: 8px 16px;
+  padding: 8px 0;
   border-bottom: 1px solid var(--MessageBorder);
   background: var(--AppBackground);
+  height: 30px;
+  contain: strict;
+  display: flex;
+  justify-content: center;
 }
 
 .NewChatButton {
@@ -233,12 +237,12 @@ body {
 .ContentWrapper {
   scrollbar-width: thin;
   scrollbar-color: var(--ScrollbarThumb) var(--ScrollbarBackground);
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
   display: flex;
   justify-content: center;
   flex: 1;
-  padding-bottom: 80px;
+  contain: strict;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */

@@ -38,7 +38,6 @@ body {
 }
 
 .Output {
-  /* width: 100%; */
   max-width: var(--MaxWidth);
   flex: 1;
   padding: 0;
@@ -135,7 +134,6 @@ body {
 }
 
 .Header {
-  /* width: 100%; */
   max-width: var(--MaxWidth);
   padding: 8px 16px;
   border-bottom: 1px solid var(--MessageBorder);
@@ -169,7 +167,7 @@ body {
 }
 
 /* Code block styling */
-.code-block {
+.CodeBlock {
   background: #1e1e1e;
   border: 1px solid var(--MessageBorder);
   border-radius: 3px;
@@ -177,7 +175,7 @@ body {
   margin: 8px 0;
 }
 
-code {
+.CodeText {
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 13px;
 }

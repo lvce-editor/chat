@@ -10,6 +10,7 @@ const submitForm = async (target) => {
 }
 
 const handleSubmit = async (event) => {
+  console.log('HANDLE SUBMIT')
   event.preventDefault()
   await submitForm(event.target)
 }
@@ -182,7 +183,7 @@ const updateNewChatButtonState = () => {
     return
   }
   // @ts-ignore
-  newChatButton.disabled = output.children.length === 0
+  // newChatButton.disabled = output.children.length === 0
 }
 
 const setScrollPosition = (scrollOffset) => {

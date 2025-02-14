@@ -3,7 +3,7 @@ import * as GetChatResponse from '../src/parts/GetChatResponse/GetChatResponse.t
 
 const mockFetch = jest.fn()
 // @ts-ignore
-global.fetch = mockFetch
+globalThis.fetch = mockFetch
 
 beforeEach(() => {
   mockFetch.mockReset()

@@ -1,9 +1,10 @@
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
+import { formatMessages } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
+import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
@@ -48,10 +49,7 @@ export const handleSubmit = async (id, input) => {
     },
   })
 
-  const formattedMessages = webView.messages.map((message) => ({
-    role: message.role === 'human' ? 'user' : 'assistant',
-    content: Array.isArray(message.content) ? message.content.map((block) => block.content).join('\n') : message.content,
-  }))
+  const formattedMessages = formatMessages(webView.messages)
 
   const body = await GetChatResponse.getChatResponse(
     formattedMessages,

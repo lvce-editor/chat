@@ -347,3 +347,14 @@ body {
 .RemoveImageButton:hover {
   background: var(--ButtonHoverBackground);
 }
+
+.MessageImage {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.ImageBlock {
+  margin: 8px 0;
+}

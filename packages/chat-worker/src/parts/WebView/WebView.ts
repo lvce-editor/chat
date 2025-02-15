@@ -11,4 +11,5 @@ export interface WebView {
   readonly maxTokens: number
   readonly messages: readonly Message[]
   readonly scrollOffset: number
+  readonly images: readonly File[]
 }

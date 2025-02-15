@@ -1,6 +1,5 @@
-import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import type { WebView } from '../WebView/WebView.ts'
-import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
+import { createInitialDom } from '../CreateInitialDom/CreateInitialDom.ts'
 import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
@@ -38,46 +37,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
 
   const viewModels = await Promise.all(webView.messages.map(createMessageViewModel))
   const savedMessageVDoms = viewModels.map(RenderMessage.renderMessage)
-
-  const initialDom: VirtualElement = {
-    type: 'div',
-    className: 'App',
-    children: [
-      {
-        type: 'div',
-        className: 'Header',
-        children: [
-          {
-            type: 'button',
-            className: 'NewChatButton',
-            textContent: 'New Chat',
-            events: {
-              click: 'handleNewChat',
-            },
-          },
-        ],
-      },
-      {
-        type: 'div',
-        className: 'ContentWrapper',
-        children: [
-          {
-            type: 'div',
-            className: 'Output',
-            children: savedMessageVDoms,
-          },
-        ],
-      },
-      {
-        type: 'form',
-        className: 'Form',
-        events: {
-          submit: 'handleSubmit',
-        },
-        children: [createFormContent()],
-      },
-    ],
-  }
+  const initialDom = createInitialDom(savedMessageVDoms)
 
   await port.invoke('initialize', initialDom)
 

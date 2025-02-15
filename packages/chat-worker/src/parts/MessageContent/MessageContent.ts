@@ -16,6 +16,7 @@ export interface CodeMessageContent extends BaseMessageContent {
 export interface ImageMessageContent extends BaseMessageContent {
   readonly type: 'image'
   readonly file: File
+  readonly fileName: string
   readonly mediaType: string
 }
 

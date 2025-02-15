@@ -1,13 +1,10 @@
-// save image in cache for restoring image on reload
-export const getImageFromCache = async (cacheName: string, cacheBaseUrl: string, file: File) => {
+export const getImageFromCache = async (cacheName: string, cacheBaseUrl: string, fileName: string) => {
   try {
-    const res = new Response(file, {
-      headers: {
-        'content-type': 'image/png',
-      },
-    })
     const cache = await caches.open(cacheName)
-    const url = `${cacheBaseUrl}/${file.name}`
-    await cache.put(url, res)
-  } catch {}
+    const url = `${cacheBaseUrl}/${fileName}`
+    const response = await cache.match(url)
+    return response
+  } catch {
+    return undefined
+  }
 }

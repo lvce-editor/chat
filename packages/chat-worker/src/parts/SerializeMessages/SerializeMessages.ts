@@ -24,6 +24,6 @@ const serializeMessage = (message: Message) => {
   }
 }
 
-export const serializeMessages = (messages: readonly Message[]) => {
+export const serializeMessages = (messages: readonly Message[]): readonly any[] => {
   return messages.map(serializeMessage)
 }

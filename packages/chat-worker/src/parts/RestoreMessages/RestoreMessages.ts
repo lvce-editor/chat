@@ -17,7 +17,7 @@ const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: strin
   return savedContent
 }
 
-const restoreMessage = async (id: number, cacheName: string, cacheBaseUrl: string, savedMessage: any) => {
+const restoreMessage = async (id: number, cacheName: string, cacheBaseUrl: string, savedMessage: any): Promise<Message> => {
   if (!savedMessage) {
     return emptyMessage
   }

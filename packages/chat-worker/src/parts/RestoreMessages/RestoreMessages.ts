@@ -1,18 +1,10 @@
 import type { Message } from '../Message/Message.ts'
 import { emptyMessage } from '../EmptyMessage/EmptyMessage.ts'
-import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
+import * as RestoreImage from '../RestoreImage/RestoreImage.ts'
 
 const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: string, savedContent: any) => {
   if (savedContent.type === 'image') {
-    const image = await GetImageFromCache.getImageFromCache(cacheName, cacheBaseUrl, savedContent.fileName)
-    if (!image) {
-      return savedContent
-    }
-    const blob = await image.blob()
-    return {
-      ...savedContent,
-      file: blob,
-    }
+    return RestoreImage.restoreImage(id, cacheName, cacheBaseUrl, savedContent)
   }
   return savedContent
 }

@@ -1,7 +1,8 @@
-import type { MessageContent } from '../MessageContent/MessageContent.ts'
+import type { MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 
-export const renderMessage = (message: readonly MessageContent[], role: 'human' | 'ai'): VirtualElement => {
+export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
+  const { role, blocks } = viewModel
   const messageElement: VirtualElement = {
     type: 'div',
     className: role === 'human' ? 'MessageHuman' : 'MessageAi',
@@ -13,16 +14,11 @@ export const renderMessage = (message: readonly MessageContent[], role: 'human' 
     children: [messageElement],
   }
 
-  if (typeof message === 'string') {
-    messageElement.textContent = message
-    return wrappedMessage
-  }
-
-  const blocks = message.map((block) => {
+  const blocksHtml = blocks.map((block) => {
     if (block.type === 'code') {
       return {
         type: 'pre',
-        className: `CodeBlock language-${block.language}`,
+        className: `CodeBlock language-${block.display.language}`,
         children: [
           {
             type: 'code',
@@ -53,6 +49,6 @@ export const renderMessage = (message: readonly MessageContent[], role: 'human' 
     }
   })
 
-  messageElement.children = blocks
+  messageElement.children = blocksHtml
   return wrappedMessage
 }

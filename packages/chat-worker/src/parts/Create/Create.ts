@@ -1,6 +1,7 @@
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import type { WebView } from '../WebView/WebView.ts'
 import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
+import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -28,10 +29,8 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   }
   WebViewStates.set(id, webView)
 
-  const savedMessageVDoms = webView.messages.map((message) => {
-    // @ts-ignore
-    return RenderMessage.renderMessage(message.content, message.role)
-  })
+  const viewModels = await Promise.all(webView.messages.map(createMessageViewModel))
+  const savedMessageVDoms = viewModels.map(RenderMessage.renderMessage)
 
   const initialDom: VirtualElement = {
     type: 'div',

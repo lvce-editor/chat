@@ -5,22 +5,26 @@ import { formatMessages } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
+import * as ToBase64 from '../ToBase64/ToBase64.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleSubmit = async (id, input, file) => {
+export const handleSubmit = async (id, input) => {
   const webView = WebViewStates.get(id)
   const content: BaseMessageContent[] = []
 
-  if (file) {
-    const blob = new Blob([file.data], { type: file.type })
-    const blobUrl = URL.createObjectURL(blob)
+  console.log({ images: webView.images })
+  for (const file of webView.images) {
+    const base64 = await ToBase64.toBase64(file)
     content.push({
       type: 'image',
-      content: file.data,
       // @ts-ignore
-      blobUrl,
+      content: base64,
+      // @ts-ignore
+      mediaType: 'image/png',
     })
   }
+
+  console.log({ content })
 
   if (input) {
     content.push({

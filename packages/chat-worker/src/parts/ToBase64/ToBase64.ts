@@ -1,11 +1,11 @@
+import * as WaitForFileReaderToLoad from '../WaitForFileReaderLoad/WaitForFileReaderLoad.ts'
+
 export const toBase64 = async (file: File): Promise<string> => {
   const reader = new FileReader()
-  const { resolve, promise } = Promise.withResolvers<string>()
-  reader.onloadend = function () {
-    resolve(reader.result as string)
-  }
+  const promise = WaitForFileReaderToLoad.waitForFileReaderLoder(reader)
   reader.readAsDataURL(file)
-  const base64Raw = await promise
+  await promise
+  const base64Raw = reader.result as string
   const needle = 'base64,'
   const index = base64Raw.indexOf(needle)
   const base64 = base64Raw.slice(index + needle.length)

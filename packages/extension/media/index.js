@@ -50,6 +50,11 @@ const handlers = {
     event.preventDefault()
     await rpc.invoke('handleRemoveImage')
   },
+
+  handleInput: async (event) => {
+    const input = event.target.value
+    await rpc.invoke('handleInput', input)
+  },
 }
 
 const createDomElement = (vdom) => {

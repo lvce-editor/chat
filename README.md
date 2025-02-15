@@ -1,5 +1,7 @@
 # Chat
 
+![Demo](./demo.png)
+
 ## Contributing
 
 ```sh

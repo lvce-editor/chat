@@ -7,6 +7,7 @@ export const getNewContent = (input: string, images: readonly File[]): readonly 
       type: 'image',
       file,
       mediaType: 'image/png',
+      fileName: file.name,
     })
   }
 

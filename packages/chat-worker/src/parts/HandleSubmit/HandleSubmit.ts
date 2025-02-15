@@ -1,9 +1,9 @@
+import type { Message } from '../Message/Message.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
-import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
+import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
-import type { Message } from '../Message/Message.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id: number, input: string) => {

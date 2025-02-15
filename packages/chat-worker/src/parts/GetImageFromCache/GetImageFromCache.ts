@@ -9,6 +9,7 @@ export const getImageFromCache = async (
     const cache = await caches.open(cacheName)
     const url = GetCachePath.getCachePath(cacheBaseUrl, fileName)
     const response = await cache.match(url)
+    console.log({ url, response })
     return response
   } catch (error) {
     console.error(`Error getting image from cache: ${error}`)

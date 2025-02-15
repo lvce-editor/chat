@@ -126,7 +126,7 @@ test('creates view model for image without File', async () => {
     content: [
       {
         type: 'image',
-        file: new Blob(['test']),
+        file: new File(['test'], 'test.png', { type: 'image/png' }),
         fileName: 'test.png',
         mediaType: 'image/png',
       },

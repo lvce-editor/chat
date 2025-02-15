@@ -16,9 +16,7 @@ const mockWebViewStates = {
   },
 }
 
-jest.unstable_mockModule('../src/parts/WebViewStates/WebViewStates.ts', () => ({
-  get: mockWebViewStates.get,
-}))
+jest.unstable_mockModule('../src/parts/WebViewStates/WebViewStates.ts', () => mockWebViewStates)
 
 beforeEach(() => {
   jest.resetAllMocks()

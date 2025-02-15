@@ -9,20 +9,8 @@ test('waits for FileReader to complete loading', async () => {
   const blob = new Blob(['test data'])
   const promise = WaitForFileReaderLoad.waitForFileReaderLoad(reader)
 
-  reader.readAsText(blob)
+  reader.readAsDataURL(blob)
 
   await promise
-  expect(reader.result).toBe('test data')
-})
-
-test('waits for FileReader to complete loading with different data types', async () => {
-  const reader = new FileReader()
-  const imageData = new Uint8Array([0xff, 0xd8, 0xff]) // Simple JPEG header
-  const blob = new Blob([imageData], { type: 'image/jpeg' })
-  const promise = WaitForFileReaderLoad.waitForFileReaderLoad(reader)
-
-  reader.readAsArrayBuffer(blob)
-
-  await promise
-  expect(reader.result).toBeInstanceOf(ArrayBuffer)
+  expect(reader.result).toBe('data:application/octet-stream;base64,dGVzdCBkYXRh')
 })

@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-import * as ToBase64 from '../ToBase64/ToBase64.ts'
 import type {
   StoredMessage,
   ApiMessage,
@@ -8,6 +7,7 @@ import type {
   ApiContent,
   DisplayBlock,
 } from '../MessageTypes/MessageTypes.ts'
+import * as ToBase64 from '../ToBase64/ToBase64.ts'
 
 // Convert UI input to stored message
 export const createStoredMessage = async (input: string, images: File[]): Promise<StoredMessage> => {

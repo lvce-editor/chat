@@ -1,19 +1,8 @@
-export interface CodeBlock {
-  type: 'code'
-  language: string
-  content: string
-}
+import type { MessageContent } from '../MessageContent/MessageContent.ts'
 
-export interface TextBlock {
-  type: 'text'
-  content: string
-}
-
-export type MessageBlock = CodeBlock | TextBlock
-
-export const formatMessage = (text: string): MessageBlock[] => {
+export const formatMessage = (text: string): readonly MessageContent[] => {
   const parts = text.split(/(```\w*\n[\s\S]*?\n```)/g)
-  const blocks: MessageBlock[] = []
+  const blocks: MessageContent[] = []
 
   for (const part of parts) {
     if (part.startsWith('```')) {

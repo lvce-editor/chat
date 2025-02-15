@@ -1,7 +1,7 @@
-import type { MessageBlock } from '../FormatMessage/FormatMessage.ts'
+import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 
-export const renderMessage = (message: string | MessageBlock[], role: 'human' | 'ai'): VirtualElement => {
+export const renderMessage = (message: readonly MessageContent[], role: 'human' | 'ai'): VirtualElement => {
   const messageElement: VirtualElement = {
     type: 'div',
     className: role === 'human' ? 'MessageHuman' : 'MessageAi',
@@ -32,8 +32,9 @@ export const renderMessage = (message: string | MessageBlock[], role: 'human' | 
         ],
       }
     }
-    // @ts-ignore
     if (block.type === 'image') {
+      // TODO create view model that creates object urls for images
+      const src = 'todo' // TODO
       return {
         type: 'div',
         className: 'ImageBlock',
@@ -41,16 +42,14 @@ export const renderMessage = (message: string | MessageBlock[], role: 'human' | 
           {
             type: 'img',
             className: 'MessageImage',
-            // @ts-ignore
-            src: block.blobUrl,
+            src,
           },
         ],
       }
     }
     return {
       type: 'p',
-      // @ts-ignore
-      textContent: block.content || block.text,
+      textContent: block.content,
     }
   })
 

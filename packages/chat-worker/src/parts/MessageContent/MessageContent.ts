@@ -1,7 +1,5 @@
-// TODO always use object for messages
 export interface BaseMessageContent {
   readonly type: string
-  readonly content: string
 }
 
 export interface TextMessageContent extends BaseMessageContent {
@@ -17,5 +15,8 @@ export interface CodeMessageContent extends BaseMessageContent {
 
 export interface ImageMessageContent extends BaseMessageContent {
   readonly type: 'image'
-  readonly content: string // TODO maybe store the image as blob instead
+  readonly file: File
+  readonly mediaType: string
 }
+
+export type MessageContent = ImageMessageContent | CodeMessageContent | TextMessageContent

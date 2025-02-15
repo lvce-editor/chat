@@ -1,5 +1,5 @@
-import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
 import type { Message } from '../Message/Message.ts'
+import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
 
 const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: string, savedContent: any) => {
   if (savedContent.type === 'image') {

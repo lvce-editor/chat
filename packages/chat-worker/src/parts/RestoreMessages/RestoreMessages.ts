@@ -1,4 +1,5 @@
 import type { Message } from '../Message/Message.ts'
+import { emptyMessage } from '../EmptyMessage/EmptyMessage.ts'
 import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
 
 const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: string, savedContent: any) => {
@@ -14,12 +15,6 @@ const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: strin
     }
   }
   return savedContent
-}
-
-const emptyMessage: Message = {
-  role: 'human',
-  webViewId: 0,
-  content: [],
 }
 
 const restoreMessage = async (id: number, cacheName: string, cacheBaseUrl: string, savedMessage: any) => {

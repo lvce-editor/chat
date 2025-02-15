@@ -1,12 +1,12 @@
 import * as Create from '../Create/Create.ts'
 import * as HandleImageUpload from '../HandleImageUpload/HandleImageUpload.ts'
+import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as HandleNewChat from '../HandleNewChat/HandleNewChat.ts'
 import * as HandleRemoveImage from '../HandleRemoveImage/HandleRemoveImage.ts'
 import * as HandleScroll from '../HandleScroll/HandleScroll.ts'
 import * as HandleSubmit from '../HandleSubmit/HandleSubmit.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as WrapCommand from '../WrapCommand/WrapCommand.ts'
-import * as HandleInput from '../HandleInput/HandleInput.ts'
 
 export const commandMap = {
   'WebView.create': Create.create,

@@ -2,7 +2,6 @@
   "name": "builtin.chat-view",
   "version": "0.0.0-dev",
   "description": "",
-  "keywords": [],
   "author": "",
   "type": "module",
   "main": "src/chatMain.ts",
@@ -26,6 +25,5 @@
         }
       ]
     }
-  },
-  "devDependencies": {}
+  }
 }

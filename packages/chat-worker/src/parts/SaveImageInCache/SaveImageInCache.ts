@@ -9,5 +9,7 @@ export const saveImageInCache = async (cacheName: string, cacheBaseUrl: string, 
     const cache = await caches.open(cacheName)
     const url = `${cacheBaseUrl}/${file.name}`
     await cache.put(url, res)
-  } catch {}
+  } catch (error) {
+    console.error(`Failed to save image in cache: ${error}`)
+  }
 }

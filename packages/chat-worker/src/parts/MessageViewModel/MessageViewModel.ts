@@ -8,7 +8,7 @@ export interface MessageViewModel {
   readonly webViewId: number
 }
 
-export interface MessageBlockViewModel {
+interface MessageBlockViewModel {
   readonly type: 'text' | 'code' | 'image'
   readonly content: string
   readonly display: {

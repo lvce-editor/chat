@@ -1,4 +1,4 @@
-export interface BaseMessageContent {
+interface BaseMessageContent {
   readonly type: string
 }
 

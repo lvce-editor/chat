@@ -1,19 +1,19 @@
-export interface SavedMessageContent {
+interface SavedMessageContent {
   readonly type: string
 }
 
-export interface SavedTextContent extends SavedMessageContent {
+interface SavedTextContent extends SavedMessageContent {
   readonly type: 'text'
   readonly content: string
 }
 
-export interface SavedCodeContent extends SavedMessageContent {
+interface SavedCodeContent extends SavedMessageContent {
   readonly type: 'code'
   readonly content: string
   readonly language: string
 }
 
-export interface SavedImageContent extends SavedMessageContent {
+interface SavedImageContent extends SavedMessageContent {
   readonly type: 'image'
   readonly fileName: string
   readonly mediaType: string

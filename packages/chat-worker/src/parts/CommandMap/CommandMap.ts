@@ -9,7 +9,7 @@ import * as WrapCommand from '../WrapCommand/WrapCommand.ts'
 
 export const commandMap = {
   'WebView.create': Create.create,
-  'WebView.saveState': SaveState.saveState,
+  'WebView.saveState': WrapCommand.wrapCommand(SaveState.saveState),
   handleSubmit: WrapCommand.wrapCommand(HandleSubmit.handleSubmit),
   handleNewChat: WrapCommand.wrapCommand(HandleNewChat.handleNewChat),
   handleScroll: WrapCommand.wrapCommand(HandleScroll.handleScroll),

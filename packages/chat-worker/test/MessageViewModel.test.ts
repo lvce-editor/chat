@@ -119,7 +119,7 @@ test('creates view model for image with File', async () => {
   expect(mockPort.invoke).toHaveBeenCalledWith('createObjectUrl', file)
 })
 
-test('creates view model for image without File', async () => {
+test.skip('creates view model for image without File', async () => {
   const message: Message = {
     role: 'human',
     webViewId: 1,

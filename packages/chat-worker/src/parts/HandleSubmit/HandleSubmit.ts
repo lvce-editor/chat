@@ -10,6 +10,9 @@ export const handleSubmit = async (id: number, input: string) => {
   const webView = WebViewStates.get(id)
   const newContent = getNewContent(input, webView.images)
 
+  // @ts-ignore
+  webView.images = []
+
   const message: Message = {
     role: 'human',
     content: newContent,

@@ -1,6 +1,6 @@
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
-import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
+import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'

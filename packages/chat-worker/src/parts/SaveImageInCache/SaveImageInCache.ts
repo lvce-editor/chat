@@ -1,3 +1,5 @@
+import * as GetCachePath from '../GetCachePath/GetCachePath.ts'
+
 // save image in cache for restoring image on reload
 export const saveImageInCache = async (cacheName: string, cacheBaseUrl: string, file: File) => {
   try {
@@ -7,7 +9,7 @@ export const saveImageInCache = async (cacheName: string, cacheBaseUrl: string, 
       },
     })
     const cache = await caches.open(cacheName)
-    const url = `${cacheBaseUrl}/${file.name}`
+    const url = GetCachePath.getCachePath(cacheBaseUrl, file.name)
     await cache.put(url, res)
   } catch {}
 }

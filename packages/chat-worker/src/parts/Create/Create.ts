@@ -18,8 +18,6 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
 
   const restoredMessages = await RestoreMessages.restoreMessages(id, cacheName, cacheBaseUrl, savedState)
 
-  console.log({ restoredMessages })
-
   const webView: WebView = {
     time: 0,
     port,

@@ -1,25 +1,6 @@
-export const eventStream = (stream: ReadableStream): ReadableStream<any> => {
-  const splitLines = new TransformStream({
-    transform(chunk, controller) {
-      const lines = chunk.split('\n')
-      for (const line of lines) {
-        if (!line) {
-          continue
-        }
-        controller.enqueue(line)
-      }
-    },
-  })
+import { ParseLinesStream } from '../ParseLinesStream/ParseLinesStream.ts'
+import { SplitLinesStream } from '../SplitLinesStream/SplitLinesStream.ts'
 
-  const parseLines = new TransformStream({
-    transform(chunk, controller) {
-      if (!chunk.startsWith('data: ')) {
-        return
-      }
-      const dataString = chunk.slice('data: '.length)
-      const parsed = JSON.parse(dataString)
-      controller.enqueue(parsed)
-    },
-  })
-  return stream.pipeThrough(new TextDecoderStream()).pipeThrough(splitLines).pipeThrough(parseLines)
+export const eventStream = (stream: ReadableStream): ReadableStream<any> => {
+  return stream.pipeThrough(new TextDecoderStream()).pipeThrough(new SplitLinesStream()).pipeThrough(new ParseLinesStream())
 }

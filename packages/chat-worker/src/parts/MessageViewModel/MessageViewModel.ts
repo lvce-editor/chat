@@ -1,5 +1,5 @@
-import * as IsFile from '../IsFile/IsFile.ts'
 import type { Message } from '../Message/Message.ts'
+import * as IsFile from '../IsFile/IsFile.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 // View-specific model with display-ready data

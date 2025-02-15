@@ -1,6 +1,6 @@
 import * as WaitForFileReaderToLoad from '../WaitForFileReaderLoad/WaitForFileReaderLoad.ts'
 
-export const toBase64 = async (file: File): Promise<string> => {
+export const toBase64 = async (file: Blob): Promise<string> => {
   const reader = new FileReader()
   const promise = WaitForFileReaderToLoad.waitForFileReaderLoder(reader)
   reader.readAsDataURL(file)

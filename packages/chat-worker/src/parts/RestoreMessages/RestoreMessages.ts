@@ -1,11 +1,9 @@
-import type { Message } from '../Message/Message.ts'
 import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import type { Message } from '../Message/Message.ts'
 
-const restoreContent = async (id: number, savedContent: any) => {
+const restoreContent = async (id: number, cacheName: string, cacheBaseUrl: string, savedContent: any) => {
   if (savedContent.type === 'image') {
-    const webView = WebViewStates.get(id)
-    const image = await GetImageFromCache.getImageFromCache(webView.cacheName, webView.cacheBaseUrl, savedContent.fileName)
+    const image = await GetImageFromCache.getImageFromCache(cacheName, cacheBaseUrl, savedContent.fileName)
     if (!image) {
       return savedContent
     }
@@ -24,7 +22,7 @@ const emptyMessage: Message = {
   content: [],
 }
 
-const restoreMessage = async (id: number, savedMessage: any) => {
+const restoreMessage = async (id: number, cacheName: string, cacheBaseUrl: string, savedMessage: any) => {
   if (!savedMessage) {
     return emptyMessage
   }
@@ -39,17 +37,22 @@ const restoreMessage = async (id: number, savedMessage: any) => {
     webViewId: id,
     content: await Promise.all(
       savedMessage.content.map((content) => {
-        return restoreContent(id, content)
+        return restoreContent(id, cacheName, cacheBaseUrl, content)
       }),
     ),
   }
 }
 
-export const restoreMessages = async (id: number, savedState: any): Promise<readonly Message[]> => {
+export const restoreMessages = async (
+  id: number,
+  cacheName: string,
+  cacheBaseUrl: string,
+  savedState: any,
+): Promise<readonly Message[]> => {
   const baseMessages = savedState?.messages || []
   const restored1 = await Promise.all(
     baseMessages.map((baseMessage) => {
-      return restoreMessage(id, baseMessage)
+      return restoreMessage(id, cacheName, cacheBaseUrl, baseMessage)
     }),
   )
   return restored1

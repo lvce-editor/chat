@@ -17,7 +17,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const cacheName = 'chat-image-cache'
   const cacheBaseUrl = 'https://example.com'
 
-  const restoredMessages = await RestoreMessages.restoreMessages(id, savedState)
+  const restoredMessages = await RestoreMessages.restoreMessages(id, cacheName, cacheBaseUrl, savedState)
 
   const webView: WebView = {
     time: 0,

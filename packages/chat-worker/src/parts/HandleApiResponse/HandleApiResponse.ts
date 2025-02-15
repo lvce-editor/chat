@@ -1,6 +1,7 @@
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -10,31 +11,35 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
   let currentMessage = ''
   const acc = new WritableStream({
     async start() {
-      await AddMessage.addMessage(
-        id,
-        [
+      await AddMessage.addMessage(id, {
+        role: 'ai',
+        content: [
           {
             type: 'text',
             content: '',
           },
         ],
-        'ai',
-      )
+      })
     },
 
     async write(message) {
       currentMessage += message
-      const blocks = FormatMessage.formatMessage(currentMessage)
-      const messageVDom = RenderMessage.renderMessage(blocks, 'ai')
+      const content = FormatMessage.formatMessage(currentMessage)
+      const model = await createMessageViewModel({
+        role: 'ai',
+        content,
+      })
+      const messageVDom = RenderMessage.renderMessage(model)
       await webView.port.invoke('updateMessage', messageVDom)
     },
 
     async close() {
       // Add AI message to state once complete
+      const content = FormatMessage.formatMessage(currentMessage)
       // @ts-ignore
       webView.messages.push({
         role: 'ai',
-        content: FormatMessage.formatMessage(currentMessage),
+        content,
       })
     },
   })

@@ -1,7 +1,8 @@
+import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const addMessage = async (id: number, message: string, role: 'human' | 'ai') => {
+export const addMessage = async (id: number, message: readonly MessageContent[], role: 'human' | 'ai') => {
   const webView = WebViewStates.get(id)
   const wasAtBottom = await webView.port.invoke('checkIsBottom')
 

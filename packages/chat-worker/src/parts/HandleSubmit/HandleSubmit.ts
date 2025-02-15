@@ -1,53 +1,56 @@
-import type { BaseMessageContent } from '../MessageContent/MessageContent.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
-import * as ToBase64 from '../ToBase64/ToBase64.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleSubmit = async (id, input) => {
-  const webView = WebViewStates.get(id)
-  const content: BaseMessageContent[] = []
-
-  console.log({ images: webView.images })
-  for (const file of webView.images) {
-    const base64 = await ToBase64.toBase64(file)
-    content.push({
+const getNewContent = (input: string, images: readonly File[]): readonly MessageContent[] => {
+  const newContent: MessageContent[] = []
+  for (const file of images) {
+    newContent.push({
       type: 'image',
-      // @ts-ignore
-      content: base64,
-      // @ts-ignore
+      file,
       mediaType: 'image/png',
     })
   }
 
-  console.log({ content })
-
   if (input) {
-    content.push({
+    newContent.push({
       type: 'text',
       content: input,
     })
   }
+  return newContent
+}
+
+export const handleSubmit = async (id: number, input: string) => {
+  const webView = WebViewStates.get(id)
+  const newContent = getNewContent(input, webView.images)
 
   // @ts-ignore
   webView.messages.push({
     role: 'human',
-    content,
+    content: newContent,
   })
 
-  console.log({ content })
-
-  // @ts-ignore
-  await AddMessage.addMessage(id, content, 'human')
+  await AddMessage.addMessage(id, newContent, 'human')
 
   let currentMessage = ''
   const acc = new WritableStream({
     async start() {
-      await AddMessage.addMessage(id, '', 'ai')
+      await AddMessage.addMessage(
+        id,
+        [
+          {
+            type: 'text',
+            content: '',
+          },
+        ],
+        'ai',
+      )
     },
 
     async write(message) {
@@ -75,7 +78,7 @@ export const handleSubmit = async (id, input) => {
     },
   })
 
-  const formattedMessages = formatMessagesForApi(webView.messages)
+  const formattedMessages = await formatMessagesForApi(webView.messages)
 
   const body = await GetChatResponse.getChatResponse(
     formattedMessages,

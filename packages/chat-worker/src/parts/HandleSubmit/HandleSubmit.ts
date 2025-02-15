@@ -1,7 +1,7 @@
 import type { BaseMessageContent } from '../MessageContent/MessageContent.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
-import { formatMessages } from '../FormatMessages/FormatMessages.ts'
+import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
@@ -39,6 +39,8 @@ export const handleSubmit = async (id, input) => {
     content,
   })
 
+  console.log({ content })
+
   // @ts-ignore
   await AddMessage.addMessage(id, content, 'human')
 
@@ -73,7 +75,7 @@ export const handleSubmit = async (id, input) => {
     },
   })
 
-  const formattedMessages = formatMessages(webView.messages)
+  const formattedMessages = formatMessagesForApi(webView.messages)
 
   const body = await GetChatResponse.getChatResponse(
     formattedMessages,

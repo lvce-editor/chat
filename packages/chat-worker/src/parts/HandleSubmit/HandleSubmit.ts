@@ -1,22 +1,23 @@
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
-import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
+import type { Message } from '../Message/Message.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id: number, input: string) => {
   const webView = WebViewStates.get(id)
   const newContent = getNewContent(input, webView.images)
 
-  // @ts-ignore
-  webView.messages.push({
+  const message: Message = {
     role: 'human',
     content: newContent,
-  })
+  }
+  // @ts-ignore
+  webView.messages.push(message)
 
-  await AddMessage.addMessage(id, newContent, 'human')
+  await AddMessage.addMessage(id, message)
 
   const formattedMessages = await formatMessagesForApi(webView.messages)
 
@@ -29,6 +30,5 @@ export const handleSubmit = async (id: number, input: string) => {
     webView.stream,
     webView.maxTokens,
   )
-  const stream = GetChatResponseStream.getChatResponseStream(body)
-  await HandleApiResponse.handleApiResponse(id, stream)
+  await HandleApiResponse.handleApiResponse(id, body)
 }

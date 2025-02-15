@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
+import type { MessageContent } from '../src/parts/MessageContent/MessageContent.ts'
 import * as SerializeContent from '../src/parts/SerializeContent/SerializeContent.ts'
-import { MessageContent } from '../src/parts/MessageContent/MessageContent.ts'
 
 test('serializes text content', () => {
   const content: MessageContent = {

@@ -1,5 +1,5 @@
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
+import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleRemoveImage = async (id: number) => {
   const webView = WebViewStates.get(id)

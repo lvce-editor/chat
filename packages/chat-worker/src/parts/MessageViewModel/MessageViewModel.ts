@@ -1,9 +1,11 @@
 import type { Message } from '../Message/Message.ts'
+import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 // View-specific model with display-ready data
 export interface MessageViewModel {
   readonly role: 'human' | 'ai'
   readonly blocks: readonly MessageBlockViewModel[]
+  readonly webViewId: number
 }
 
 export interface MessageBlockViewModel {
@@ -17,10 +19,21 @@ export interface MessageBlockViewModel {
 }
 
 export const createMessageViewModel = async (message: Message): Promise<MessageViewModel> => {
+  const webView = WebViewStates.get(message.webViewId)
   const blocks: readonly MessageBlockViewModel[] = await Promise.all(
     message.content.map(async (part) => {
       if (part.type === 'image') {
-        const blobUrl = 'todo'
+        console.log({ part })
+        if (!(part.file instanceof File)) {
+          return {
+            type: 'image',
+            content: '',
+            display: {
+              blobUrl: '#',
+            },
+          }
+        }
+        const blobUrl = await webView.port.invoke('createObjectUrl', part.file)
         return {
           type: 'image',
           content: '',
@@ -48,7 +61,7 @@ export const createMessageViewModel = async (message: Message): Promise<MessageV
 
   return {
     role: message.role,
-
+    webViewId: message.webViewId,
     blocks,
   }
 }

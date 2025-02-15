@@ -30,7 +30,6 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
     }
     if (block.type === 'image') {
       // TODO create view model that creates object urls for images
-      const src = 'todo' // TODO
       return {
         type: 'div',
         className: 'ImageBlock',
@@ -38,7 +37,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
           {
             type: 'img',
             className: 'MessageImage',
-            src,
+            src: block.display.blobUrl,
           },
         ],
       }

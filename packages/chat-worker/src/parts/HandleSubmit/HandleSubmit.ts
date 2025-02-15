@@ -1,10 +1,5 @@
 import * as AddMessage from '../AddMessage/AddMessage.ts'
-<<<<<<< HEAD
-import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
-=======
-import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
->>>>>>> e698c1c30910 (feature: move api response into separate file (#124))
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'

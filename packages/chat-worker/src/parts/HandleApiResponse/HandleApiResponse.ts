@@ -12,6 +12,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
   const acc = new WritableStream({
     async start() {
       await AddMessage.addMessage(id, {
+        webViewId: id,
         role: 'ai',
         content: [
           {
@@ -28,6 +29,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       const model = await createMessageViewModel({
         role: 'ai',
         content,
+        webViewId: id,
       })
       const messageVDom = RenderMessage.renderMessage(model)
       await webView.port.invoke('updateMessage', messageVDom)
@@ -40,6 +42,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       webView.messages.push({
         role: 'ai',
         content,
+        webViewId: id,
       })
     },
   })

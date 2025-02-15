@@ -14,6 +14,13 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const anthropicVersion = '2023-06-01'
   const maxTokens = 1024
 
+  const restoredMessages = (savedState.messages || []).map((message) => {
+    return {
+      ...message,
+      webViewId: id,
+    }
+  })
+
   const webView: WebView = {
     time: 0,
     port,
@@ -23,7 +30,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     anthropicVersion,
     stream: true,
     maxTokens,
-    messages: savedState?.messages || [],
+    messages: restoredMessages,
     scrollOffset: savedState?.scrollOffset || 0,
     images: [],
   }

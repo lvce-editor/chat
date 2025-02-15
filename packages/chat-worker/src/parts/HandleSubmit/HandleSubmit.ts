@@ -13,6 +13,7 @@ export const handleSubmit = async (id: number, input: string) => {
   const message: Message = {
     role: 'human',
     content: newContent,
+    webViewId: id,
   }
   // @ts-ignore
   webView.messages.push(message)

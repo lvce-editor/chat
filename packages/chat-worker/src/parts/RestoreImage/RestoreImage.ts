@@ -1,5 +1,5 @@
-import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
 import type { ImageMessageContent } from '../MessageContent/MessageContent.ts'
+import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
 import * as ResponseToFile from '../ResponseToFile/ResponseToFile.ts'
 
 export const restoreImage = async (

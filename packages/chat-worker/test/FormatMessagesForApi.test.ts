@@ -85,7 +85,7 @@ test('formats image content for api', async () => {
       content: [
         {
           type: 'image',
-          file: new Blob(['test']),
+          file: new File(['test'], 'test.png', { type: 'image/png' }),
           mediaType: 'image/png',
           fileName: 'test.png',
         },
@@ -129,7 +129,7 @@ test('formats mixed content for api', async () => {
         },
         {
           type: 'image',
-          file: new Blob(['test']),
+          file: new File(['test'], 'test.png', { type: 'image/png' }),
           mediaType: 'image/png',
           fileName: 'test.png',
         },

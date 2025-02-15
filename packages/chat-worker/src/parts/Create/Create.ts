@@ -3,6 +3,7 @@ import type { WebView } from '../WebView/WebView.ts'
 import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
 import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
+import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
@@ -16,12 +17,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const cacheName = 'chat-image-cache'
   const cacheBaseUrl = 'https://example.com'
 
-  const restoredMessages = (savedState.messages || []).map((message) => {
-    return {
-      ...message,
-      webViewId: id,
-    }
-  })
+  const restoredMessages = await RestoreMessages.restoreMessages(id, savedState)
 
   const webView: WebView = {
     time: 0,

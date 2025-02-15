@@ -28,10 +28,10 @@ const restoreMessage = async (id: number, savedMessage: any) => {
   if (!savedMessage) {
     return emptyMessage
   }
-  if (!savedMessage.type) {
+  if (!savedMessage.content) {
     return emptyMessage
   }
-  if (savedMessage.content) {
+  if (!Array.isArray(savedMessage.content)) {
     return emptyMessage
   }
   return {
@@ -46,7 +46,7 @@ const restoreMessage = async (id: number, savedMessage: any) => {
 }
 
 export const restoreMessages = async (id: number, savedState: any): Promise<readonly Message[]> => {
-  const baseMessages = savedState.messages || []
+  const baseMessages = savedState?.messages || []
   const restored1 = await Promise.all(
     baseMessages.map((baseMessage) => {
       return restoreMessage(id, baseMessage)

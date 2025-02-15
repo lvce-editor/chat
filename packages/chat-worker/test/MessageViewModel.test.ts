@@ -143,7 +143,7 @@ test('creates view model for image without File', async () => {
         type: 'image',
         content: '',
         display: {
-          blobUrl: '#',
+          blobUrl: undefined,
         },
       },
     ],

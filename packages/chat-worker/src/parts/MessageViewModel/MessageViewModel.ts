@@ -1,3 +1,4 @@
+import * as IsFile from '../IsFile/IsFile.ts'
 import type { Message } from '../Message/Message.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -23,7 +24,7 @@ export const createMessageViewModel = async (message: Message): Promise<MessageV
   const blocks: readonly MessageBlockViewModel[] = await Promise.all(
     message.content.map(async (part) => {
       if (part.type === 'image') {
-        if (!(part.file instanceof File)) {
+        if (!IsFile.isFile(part.file)) {
           return {
             type: 'image',
             content: '',

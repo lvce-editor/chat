@@ -31,7 +31,7 @@ test('serializes code content', () => {
 test('serializes image content', () => {
   const content: MessageContent = {
     type: 'image',
-    file: new Blob(['test'], { type: 'image/png' }),
+    file: new File(['test'], 'test.png', { type: 'image/png' }),
     fileName: 'test.png',
     mediaType: 'image/png',
   }

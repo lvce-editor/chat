@@ -1,30 +1,11 @@
-import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-
-const getNewContent = (input: string, images: readonly File[]): readonly MessageContent[] => {
-  const newContent: MessageContent[] = []
-  for (const file of images) {
-    newContent.push({
-      type: 'image',
-      file,
-      mediaType: 'image/png',
-    })
-  }
-
-  if (input) {
-    newContent.push({
-      type: 'text',
-      content: input,
-    })
-  }
-  return newContent
-}
 
 export const handleSubmit = async (id: number, input: string) => {
   const webView = WebViewStates.get(id)

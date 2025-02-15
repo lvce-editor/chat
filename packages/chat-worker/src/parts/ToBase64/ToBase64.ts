@@ -2,7 +2,7 @@ import * as WaitForFileReaderToLoad from '../WaitForFileReaderLoad/WaitForFileRe
 
 export const toBase64 = async (file: Blob): Promise<string> => {
   const reader = new FileReader()
-  const promise = WaitForFileReaderToLoad.waitForFileReaderLoder(reader)
+  const promise = WaitForFileReaderToLoad.waitForFileReaderLoad(reader)
   reader.readAsDataURL(file)
   await promise
   const base64Raw = reader.result as string

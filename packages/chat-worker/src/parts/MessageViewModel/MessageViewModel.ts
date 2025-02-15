@@ -23,7 +23,6 @@ export const createMessageViewModel = async (message: Message): Promise<MessageV
   const blocks: readonly MessageBlockViewModel[] = await Promise.all(
     message.content.map(async (part) => {
       if (part.type === 'image') {
-        console.log({ part })
         if (!(part.file instanceof File)) {
           return {
             type: 'image',

@@ -24,6 +24,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     maxTokens,
     messages: savedState?.messages || [],
     scrollOffset: savedState?.scrollOffset || 0,
+    images: [],
   }
   WebViewStates.set(id, webView)
 

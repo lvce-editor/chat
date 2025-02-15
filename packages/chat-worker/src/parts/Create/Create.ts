@@ -13,6 +13,8 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const url = 'https://api.anthropic.com/v1/messages'
   const anthropicVersion = '2023-06-01'
   const maxTokens = 1024
+  const cacheName = 'chat-image-cache'
+  const cacheBaseUrl = 'https://example.com'
 
   const restoredMessages = (savedState.messages || []).map((message) => {
     return {
@@ -33,6 +35,8 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     messages: restoredMessages,
     scrollOffset: savedState?.scrollOffset || 0,
     images: [],
+    cacheName,
+    cacheBaseUrl,
   }
   WebViewStates.set(id, webView)
 

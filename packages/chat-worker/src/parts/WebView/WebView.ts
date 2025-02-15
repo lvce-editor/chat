@@ -12,4 +12,6 @@ export interface WebView {
   readonly messages: readonly Message[]
   readonly scrollOffset: number
   readonly images: readonly File[]
+  readonly cacheName: string
+  readonly cacheBaseUrl: string
 }

@@ -1,11 +1,10 @@
-import type { BaseMessageContent, ImageMessageContent, MessageContent } from '../MessageContent/MessageContent.ts'
 import * as AddMessage from '../AddMessage/AddMessage.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import { formatMessagesForApi } from '../FormatMessages/FormatMessages.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
-import * as ToBase64 from '../ToBase64/ToBase64.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 const getNewContent = (input: string, images: readonly File[]): readonly MessageContent[] => {

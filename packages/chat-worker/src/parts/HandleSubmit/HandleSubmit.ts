@@ -20,7 +20,7 @@ export const handleSubmit = async (id: number) => {
   const newMessages = [...webView.messages, message]
 
   await WebViewStates.update(id, {
-    messages: [...webView.messages, message],
+    messages: newMessages,
     images: [],
     currentInput: '',
     previewImageUrl: '',

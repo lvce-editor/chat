@@ -23,6 +23,7 @@ beforeEach(() => {
 })
 
 const MessageViewModel = await import('../src/parts/MessageViewModel/MessageViewModel.ts')
+const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel/CreateMessageViewModel.ts')
 
 test('creates view model for text message', async () => {
   const message: Message = {
@@ -36,7 +37,7 @@ test('creates view model for text message', async () => {
     ],
   }
 
-  const result = await MessageViewModel.createMessageViewModel(message)
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
     role: 'human',
@@ -64,7 +65,7 @@ test('creates view model for code block', async () => {
     ],
   }
 
-  const result = await MessageViewModel.createMessageViewModel(message)
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
     role: 'ai',
@@ -99,7 +100,7 @@ test('creates view model for image with File', async () => {
     ],
   }
 
-  const result = await MessageViewModel.createMessageViewModel(message)
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
     role: 'human',
@@ -131,7 +132,7 @@ test.skip('creates view model for image without File', async () => {
     ],
   }
 
-  const result = await MessageViewModel.createMessageViewModel(message)
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
     role: 'human',
@@ -176,7 +177,7 @@ test('creates view model for mixed content', async () => {
     ],
   }
 
-  const result = await MessageViewModel.createMessageViewModel(message)
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
     role: 'ai',

@@ -11,6 +11,10 @@ export const set = (id: number, webView: WebView) => {
   webViews[id] = webView
 }
 
+const deepEqual = (a: unknown, b: unknown): boolean => {
+  return JSON.stringify(a) === JSON.stringify(b)
+}
+
 export const update = async (id: number, newWebView: Partial<WebView>) => {
   const oldWebView = get(id)
   const updatedWebView = {
@@ -19,7 +23,14 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
   }
   set(id, updatedWebView)
 
-  // Re-render entire UI
-  const vdom = await render(updatedWebView)
-  await updatedWebView.port.invoke('render', vdom)
+  // Render new VDOM
+  const newVdom = await render(updatedWebView)
+  const oldVdom = await render(oldWebView)
+
+  // Skip render if vdom hasn't changed
+  if (deepEqual(oldVdom, newVdom)) {
+    return
+  }
+
+  await updatedWebView.port.invoke('render', newVdom)
 }

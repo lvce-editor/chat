@@ -35,5 +35,7 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
     return
   }
 
+  console.log({ oldVdom, newVdom })
+
   await updatedWebView.port.invoke('render', newVdom)
 }

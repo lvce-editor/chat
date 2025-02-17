@@ -81,6 +81,7 @@ const handlers = {
 }
 
 const render = (vdom) => {
+  console.log('render')
   const newApp = createDomElement(vdom)
   const oldApp = document.querySelector('.App')
 

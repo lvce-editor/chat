@@ -1,6 +1,6 @@
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 
-export const createFormContent = (blobUrl?: string): VirtualElement => {
+export const createFormContent = (blobUrl: string): VirtualElement => {
   return {
     type: 'div',
     className: 'FormContent',

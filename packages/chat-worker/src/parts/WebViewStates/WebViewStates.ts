@@ -1,6 +1,6 @@
+import type { WebView } from '../WebView/WebView.ts'
 import * as Diff from '../Diff/Diff.ts'
 import * as GetRenderCommands from '../GetRenderCommands/GetRenderCommands.ts'
-import type { WebView } from '../WebView/WebView.ts'
 
 const webViews = Object.create(null)
 

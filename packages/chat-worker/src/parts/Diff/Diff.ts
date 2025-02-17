@@ -1,6 +1,6 @@
+import type { WebView } from '../WebView/WebView.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
-import type { WebView } from '../WebView/WebView.ts'
 
 export const diff = (a: WebView, b: WebView): readonly number[] => {
   const diffs: number[] = []

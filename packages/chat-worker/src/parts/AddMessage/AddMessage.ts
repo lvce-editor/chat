@@ -1,5 +1,5 @@
-import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import type { Message } from '../Message/Message.ts'
+import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 

@@ -82,20 +82,20 @@ const handlers = {
 
     await rpc.invoke('handleImageUpload', file)
   },
+}
 
-  render: (vdom) => {
-    const newApp = createDomElement(vdom)
-    const oldApp = document.querySelector('.App')
-    if (oldApp) {
-      const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
-      oldApp.replaceWith(newApp)
-      if (wasAtBottom) {
-        setScrollTop()
-      }
-    } else {
-      document.body.append(newApp)
+const render = (vdom) => {
+  const newApp = createDomElement(vdom)
+  const oldApp = document.querySelector('.App')
+  if (oldApp) {
+    const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
+    oldApp.replaceWith(newApp)
+    if (wasAtBottom) {
+      setScrollTop()
     }
-  },
+  } else {
+    document.body.append(newApp)
+  }
 }
 
 const createDomElement = (vdom) => {

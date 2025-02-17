@@ -47,9 +47,6 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
 
   await WebViewStates.update(id, newWebView)
 
-  const initialDom = await Render.render(webView)
-  await port.invoke('initialize', initialDom)
-
   if (!apiKey) {
     await port.invoke('setError', 'Missing Api Key')
   }

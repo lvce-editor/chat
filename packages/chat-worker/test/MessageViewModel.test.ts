@@ -22,7 +22,6 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-const MessageViewModel = await import('../src/parts/MessageViewModel/MessageViewModel.ts')
 const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel/CreateMessageViewModel.ts')
 
 test('creates view model for text message', async () => {

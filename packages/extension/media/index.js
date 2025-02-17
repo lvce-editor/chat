@@ -1,15 +1,13 @@
 // TODO use virtual dom in  worker
 
 let isScrolledToBottom = true
-let currentImage = null
 
 const handlers = {
   handleSubmit: async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     const input = formData.get('Input')
-    await rpc.invoke('handleSubmit', input, currentImage)
-    currentImage = null
+    await rpc.invoke('handleSubmit', input)
     const previewWrapper = document.querySelector('.ImagePreviewWrapper')
     if (previewWrapper) {
       previewWrapper.classList.add('Hidden')

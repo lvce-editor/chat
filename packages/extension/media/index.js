@@ -226,5 +226,3 @@ const rpc = globalThis.lvceRpc({
   },
   render,
 })
-
-export {}

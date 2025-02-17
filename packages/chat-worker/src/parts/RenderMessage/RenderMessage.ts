@@ -6,7 +6,11 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
     type: 'div',
+<<<<<<< HEAD
     className: isError ? 'MessageError' : (role === 'human' ? 'MessageHuman' : 'MessageAi'),
+=======
+    className: isError ? 'MessageError' : role === 'human' ? 'MessageHuman' : 'MessageAi',
+>>>>>>> 24d5103dfb0e (feature: display error message if chat message error occurs)
   }
 
   const wrappedMessage: VirtualElement = {

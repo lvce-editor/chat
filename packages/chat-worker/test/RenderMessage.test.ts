@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals'
 import type { MessageViewModel } from '../src/parts/MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../src/parts/RenderMessage/RenderMessage.ts'
+
 test('renders human message with text content', () => {
   const viewModel: MessageViewModel = {
     role: 'human',
@@ -18,7 +19,7 @@ test('renders human message with text content', () => {
 
   expect(result).toEqual({
     type: 'div',
-    className: 'MessageWrapper MessageWrapper--human',
+    className: 'MessageWrapper MessageWrapperHuman',
     children: [
       {
         type: 'div',
@@ -53,7 +54,7 @@ test('renders AI message with code block', () => {
 
   expect(result).toEqual({
     type: 'div',
-    className: 'MessageWrapper MessageWrapper--ai',
+    className: 'MessageWrapper MessageWrapperAi',
     children: [
       {
         type: 'div',
@@ -95,7 +96,7 @@ test('renders message with image block', () => {
 
   expect(result).toEqual({
     type: 'div',
-    className: 'MessageWrapper MessageWrapper--human',
+    className: 'MessageWrapper MessageWrapperHuman',
     children: [
       {
         type: 'div',
@@ -154,7 +155,7 @@ test('renders message with mixed content types', () => {
 
   expect(result).toEqual({
     type: 'div',
-    className: 'MessageWrapper MessageWrapper--ai',
+    className: 'MessageWrapper MessageWrapperAi',
     children: [
       {
         type: 'div',

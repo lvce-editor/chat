@@ -18,6 +18,8 @@ export const handleSubmit = async (id: number) => {
     webViewId: id,
   }
 
+  const newMessages = [...webView.messages, message]
+
   await WebViewStates.update(id, {
     messages: [...webView.messages, message],
     images: [],
@@ -26,7 +28,7 @@ export const handleSubmit = async (id: number) => {
   })
 
   try {
-    const formattedMessages = await formatMessagesForApi(webView.messages)
+    const formattedMessages = await formatMessagesForApi(newMessages)
     const response = await GetChatResponse.getChatResponse(
       formattedMessages,
       webView.apiKey,

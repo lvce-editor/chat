@@ -11,7 +11,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
 
       await WebViewStates.update(id, {
         messages: [
-          ...currentWebView.messages.slice(0, -1),
+          ...currentWebView.messages,
           {
             role: 'ai',
             content: [],

@@ -16,7 +16,6 @@ const deepEqual = (a: unknown, b: unknown): boolean => {
 }
 
 export const update = async (id: number, newWebView: Partial<WebView>) => {
-  console.log({ newWebView })
   const oldWebView = get(id)
   const updatedWebView = {
     ...oldWebView,

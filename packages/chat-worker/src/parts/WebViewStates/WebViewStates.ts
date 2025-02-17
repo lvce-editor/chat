@@ -1,6 +1,7 @@
 import type { WebView } from '../WebView/WebView.ts'
 import { render } from '../Render/Render.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+
 const webViews = Object.create(null)
 
 export const get = (id: number): WebView => {

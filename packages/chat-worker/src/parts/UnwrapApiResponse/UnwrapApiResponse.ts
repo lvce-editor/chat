@@ -9,7 +9,7 @@ export const unwrapApiResponse = async (response: Response): Promise<ReadableStr
     }
     const errorMessage = await parseErrorMessage(response)
     if (errorMessage.includes('does not support image input')) {
-      throw new ApiError(errorMessage, ErrorCodes.E_SONNET_DOES_NOT_SUPPORT_IMAGE_UPLOAD)
+      throw new ApiError(errorMessage, ErrorCodes.E_SONNET_HAIKU_MODEL_DOES_NOT_SUPPORT_IMAGE_UPLOAD)
     }
     throw new Error(errorMessage)
   }

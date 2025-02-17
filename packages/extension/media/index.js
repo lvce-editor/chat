@@ -163,26 +163,9 @@ const createDomElement = (vdom) => {
   return element
 }
 
-const initialize = async (vdom) => {
-  const app = createDomElement(vdom)
-  document.body.append(app)
-  updateNewChatButtonState()
-  return {}
-}
-
 const isAtBottom = (element) => {
   const { scrollTop, scrollHeight, clientHeight } = element
   return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
-}
-
-const updateNewChatButtonState = () => {
-  const output = document.querySelector('.Output')
-  const newChatButton = document.querySelector('.NewChatButton')
-  if (!output || !newChatButton) {
-    return
-  }
-  // @ts-ignore
-  // newChatButton.disabled = output.children.length === 0
 }
 
 const setScrollPosition = (scrollOffset) => {
@@ -216,7 +199,6 @@ const setValue = (name, value) => {
 }
 
 const rpc = globalThis.lvceRpc({
-  initialize,
   setScrollPosition,
   checkIsBottom,
   setScrollTop,

@@ -22,7 +22,6 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
 
   const diffs = Diff.diff(oldWebView, updatedWebView)
 
-  console.log({ diffs })
   if (diffs.length === 0) {
     return
   }

@@ -109,3 +109,58 @@ test('getChatResponse - no response body', async () => {
     ),
   ).rejects.toThrow('no response body')
 })
+
+test('getChatResponse - handles API error response', async () => {
+  const errorResponse = {
+    type: 'error',
+    error: {
+      type: 'invalid_request_error',
+      message: "'claude-3-5-haiku-20241022' does not support image input.",
+    },
+  }
+
+  // @ts-ignore
+  mockFetch.mockResolvedValue({
+    ok: false,
+    status: 400,
+    json: () => Promise.resolve(errorResponse),
+  })
+
+  const formattedMessages = [{ role: 'user', content: 'test message' }]
+
+  await expect(
+    GetChatResponse.getChatResponse(
+      formattedMessages,
+      'test-api-key',
+      'test-model',
+      'https://test.url',
+      '2023-06-01',
+      true,
+      2048,
+    ),
+  ).rejects.toThrow("'claude-3-5-haiku-20241022' does not support image input.")
+})
+
+test('getChatResponse - handles unparseable error response', async () => {
+  // @ts-ignore
+  mockFetch.mockResolvedValue({
+    ok: false,
+    status: 400,
+    statusText: 'Bad Request',
+    json: () => Promise.reject(new Error('Invalid JSON')),
+  })
+
+  const formattedMessages = [{ role: 'user', content: 'test message' }]
+
+  await expect(
+    GetChatResponse.getChatResponse(
+      formattedMessages,
+      'test-api-key',
+      'test-model',
+      'https://test.url',
+      '2023-06-01',
+      true,
+      2048,
+    ),
+  ).rejects.toThrow('Bad Request')
+})

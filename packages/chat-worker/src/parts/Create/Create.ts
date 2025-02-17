@@ -1,6 +1,6 @@
 import type { WebView } from '../WebView/WebView.ts'
 import { createInitialDom } from '../CreateInitialDom/CreateInitialDom.ts'
-import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
+import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'

@@ -1,8 +1,8 @@
-import type { WebView } from '../WebView/WebView.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
+import type { WebView } from '../WebView/WebView.ts'
+import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
 import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import { renderMessage } from '../RenderMessage/RenderMessage.ts'
-import { createFormContent } from '../CreateFormContent/CreateFormContent.ts'
 
 export const render = async (webView: WebView): Promise<VirtualElement> => {
   const viewModels = await Promise.all(webView.messages.map(createMessageViewModel))

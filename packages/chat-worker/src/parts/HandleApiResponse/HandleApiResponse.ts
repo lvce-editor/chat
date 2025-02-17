@@ -11,8 +11,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       currentMessage += message
       const content = FormatMessage.formatMessage(currentMessage)
 
-      await WebViewStates.update(id, (webView) => ({
-        ...webView,
+      await WebViewStates.update(id, {
         messages: [
           ...webView.messages.slice(0, -1),
           {
@@ -21,13 +20,12 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
             webViewId: id,
           },
         ],
-      }))
+      })
     },
 
     async close() {
       const content = FormatMessage.formatMessage(currentMessage)
-      await WebViewStates.update(id, (webView) => ({
-        ...webView,
+      await WebViewStates.update(id, {
         messages: [
           ...webView.messages.slice(0, -1),
           {
@@ -36,7 +34,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
             webViewId: id,
           },
         ],
-      }))
+      })
     },
   })
 

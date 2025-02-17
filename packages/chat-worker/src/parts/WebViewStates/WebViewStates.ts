@@ -11,12 +11,15 @@ export const set = (id: number, webView: WebView) => {
   webViews[id] = webView
 }
 
-export const update = async (id: number, updater: (webView: WebView) => WebView) => {
+export const update = async (id: number, newWebView: Partial<WebView>) => {
   const oldWebView = get(id)
-  const newWebView = updater(oldWebView)
-  set(id, newWebView)
+  const updatedWebView = {
+    ...oldWebView,
+    ...newWebView,
+  }
+  set(id, updatedWebView)
 
   // Re-render entire UI
-  const vdom = await render(newWebView)
-  await newWebView.port.invoke('render', vdom)
+  const vdom = await render(updatedWebView)
+  await updatedWebView.port.invoke('render', vdom)
 }

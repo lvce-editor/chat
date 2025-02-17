@@ -9,6 +9,7 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
 
+  console.log({ webView })
   const newContent = getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
@@ -17,13 +18,12 @@ export const handleSubmit = async (id: number) => {
     webViewId: id,
   }
 
-  await WebViewStates.update(id, (webView) => ({
-    ...webView,
+  await WebViewStates.update(id, {
     messages: [...webView.messages, message],
     images: [],
     currentInput: '',
     previewImageUrl: '',
-  }))
+  })
 
   try {
     const formattedMessages = await formatMessagesForApi(webView.messages)

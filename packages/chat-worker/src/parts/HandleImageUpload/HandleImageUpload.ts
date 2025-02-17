@@ -10,9 +10,8 @@ export const handleImageUpload = async (id: number, file: File | undefined) => {
   await SaveImageInCache.saveImageInCache(webView.cacheName, webView.cacheBaseUrl, file)
   const blobUrl = await webView.port.invoke('createObjectUrl', file)
 
-  await WebViewStates.update(id, (webView) => ({
-    ...webView,
+  await WebViewStates.update(id, {
     images: [...webView.images, file],
     previewImageUrl: blobUrl,
-  }))
+  })
 }

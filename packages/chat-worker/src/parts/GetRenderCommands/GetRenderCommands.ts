@@ -1,18 +1,10 @@
-import type { WebView } from '../WebView/WebView.ts'
-import * as DeepEqual from '../DeepEqual/DeepEqual.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Render from '../Render/Render.ts'
+import type { WebView } from '../WebView/WebView.ts'
 
 const getRenderCommandsDom = async (oldWebView: WebView, newWebView: WebView): Promise<readonly any[]> => {
-  // Render new VDOM
   const newVdom = await Render.render(newWebView)
-  const oldVdom = await Render.render(oldWebView)
-
-  // Skip render if vdom hasn't changed
-  if (DeepEqual.deepEqual(oldVdom, newVdom)) {
-    return []
-  }
   return ['render', newVdom]
 }
 

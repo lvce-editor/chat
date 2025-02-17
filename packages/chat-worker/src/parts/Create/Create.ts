@@ -41,7 +41,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     messages: restoredMessages,
     scrollOffset: savedState?.scrollOffset || 0,
     inputSource: InputSource.Script,
-    currentInput: savedState.currentInput || '',
+    currentInput: savedState?.currentInput || '',
   }
 
   await WebViewStates.update(id, newWebView)

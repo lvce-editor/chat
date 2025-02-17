@@ -82,6 +82,20 @@ const handlers = {
 
     await rpc.invoke('handleImageUpload', file)
   },
+
+  render: (vdom) => {
+    const newApp = createDomElement(vdom)
+    const oldApp = document.querySelector('.App')
+    if (oldApp) {
+      const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
+      oldApp.replaceWith(newApp)
+      if (wasAtBottom) {
+        setScrollTop()
+      }
+    } else {
+      document.body.append(newApp)
+    }
+  },
 }
 
 const createDomElement = (vdom) => {
@@ -137,8 +151,9 @@ const initialize = async (vdom) => {
 }
 
 const isAtBottom = (element) => {
-  const { scrollTop, scrollHeight, clientHeight } = element
-  return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
+  if (!element) return false
+  const threshold = 10 // pixels from bottom to consider "at bottom"
+  return element.scrollHeight - element.scrollTop - element.clientHeight < threshold
 }
 
 const fixScroll = (wrapper) => {
@@ -249,4 +264,5 @@ const rpc = globalThis.lvceRpc({
   createObjectUrl: (blob) => {
     return URL.createObjectURL(blob)
   },
+  render,
 })

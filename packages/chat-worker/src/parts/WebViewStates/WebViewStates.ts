@@ -1,7 +1,7 @@
 import type { WebView } from '../WebView/WebView.ts'
+import * as DeepEqual from '../DeepEqual/DeepEqual.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Render from '../Render/Render.ts'
-import * as DeepEqual from '../DeepEqual/DeepEqual.ts'
 
 const webViews = Object.create(null)
 

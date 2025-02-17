@@ -32,6 +32,9 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     images: [],
     cacheName,
     cacheBaseUrl,
+    currentInput: '',
+    isScrolledToBottom: false,
+    previewImageUrl: '',
   }
   WebViewStates.set(id, webView)
 

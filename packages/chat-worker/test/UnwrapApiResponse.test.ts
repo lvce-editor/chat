@@ -59,3 +59,24 @@ test.skip('returns response body for successful response', async () => {
   const result = await UnwrapApiResponse.unwrapApiResponse(response)
   expect(result).toBe(mockBody)
 })
+
+test('handles empty message content error', async () => {
+  const errorResponse = {
+    type: 'error',
+    error: {
+      type: 'invalid_request_error',
+      message: 'messages.2: all messages must have non-empty content except for the optional final assistant message',
+    },
+  }
+
+  const response = new Response(JSON.stringify(errorResponse), {
+    status: 400,
+    statusText: 'Bad Request',
+  })
+
+  await expect(UnwrapApiResponse.unwrapApiResponse(response)).rejects.toThrow(
+    new Error(
+      `E_EMPTY_MESSAGE_NOT_ALLOWED: messages.2: all messages must have non-empty content except for the optional final assistant message`,
+    ),
+  )
+})

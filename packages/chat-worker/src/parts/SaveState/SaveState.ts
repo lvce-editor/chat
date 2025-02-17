@@ -5,8 +5,10 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const saveState = (): SavedState => {
   const webView = WebViewStates.get(id)
+  const { messages, scrollOffset, currentInput } = webView
   return {
-    messages: serializeMessages(webView.messages),
-    scrollOffset: webView.scrollOffset,
+    messages: serializeMessages(messages),
+    scrollOffset,
+    currentInput,
   }
 }

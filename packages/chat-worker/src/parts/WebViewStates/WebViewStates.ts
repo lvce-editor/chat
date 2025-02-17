@@ -28,7 +28,6 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
 
   const commands = await GetRenderCommands.getRenderCommands(oldWebView, updatedWebView, diffs)
 
-  console.log({ commands })
   for (const item of commands) {
     if (item.length === 0) {
       continue

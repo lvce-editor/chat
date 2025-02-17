@@ -1,5 +1,4 @@
 import type { Message } from '../Message/Message.ts'
-import * as AddMessage from '../AddMessage/AddMessage.ts'
 import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
@@ -11,22 +10,22 @@ export const handleSubmit = async (id: number, input: string) => {
   const webView = WebViewStates.get(id)
   const newContent = getNewContent(input, webView.images)
 
-  // @ts-ignore
-  webView.images = []
-
   const message: Message = {
     role: 'human',
     content: newContent,
     webViewId: id,
   }
-  // @ts-ignore
-  webView.messages.push(message)
 
-  await AddMessage.addMessage(id, message)
+  await WebViewStates.update(id, (webView) => ({
+    ...webView,
+    messages: [...webView.messages, message],
+    images: [],
+    currentInput: '',
+    previewImageUrl: undefined,
+  }))
 
   try {
     const formattedMessages = await formatMessagesForApi(webView.messages)
-
     const response = await GetChatResponse.getChatResponse(
       formattedMessages,
       webView.apiKey,
@@ -49,8 +48,10 @@ export const handleSubmit = async (id: number, input: string) => {
       ],
       webViewId: id,
     }
-    // @ts-ignore
-    webView.messages.push(errorMessage)
-    await AddMessage.addMessage(id, errorMessage)
+
+    await WebViewStates.update(id, (webView) => ({
+      ...webView,
+      messages: [...webView.messages, errorMessage],
+    }))
   }
 }

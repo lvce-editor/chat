@@ -3,6 +3,7 @@ import { createInitialDom } from '../CreateInitialDom/CreateInitialDom.ts'
 import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
@@ -35,6 +36,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     currentInput: '',
     isScrolledToBottom: false,
     previewImageUrl: '',
+    inputSource: InputSource.Script,
   }
   WebViewStates.set(id, webView)
 

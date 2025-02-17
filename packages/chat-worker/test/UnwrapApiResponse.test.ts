@@ -26,7 +26,7 @@ test('handles invalid api key', async () => {
     statusText: 'Unauthorized',
   })
 
-  await expect(UnwrapApiResponse.unwrapApiResponse(response)).rejects.toThrow('invalid api key')
+  await expect(UnwrapApiResponse.unwrapApiResponse(response)).rejects.toThrow('E_INVALID_API_KEY: Invalid API key')
 })
 
 test('handles unparseable error response', async () => {

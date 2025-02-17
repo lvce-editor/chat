@@ -60,7 +60,7 @@ test.skip('returns response body for successful response', async () => {
   expect(result).toBe(mockBody)
 })
 
-test.only('handles empty message content error', async () => {
+test('handles empty message content error', async () => {
   const errorResponse = {
     type: 'error',
     error: {

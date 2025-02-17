@@ -9,7 +9,6 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
 
-  console.log({ webView })
   const newContent = getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {

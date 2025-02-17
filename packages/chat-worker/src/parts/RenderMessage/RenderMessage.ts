@@ -11,7 +11,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
 
   const wrappedMessage: VirtualElement = {
     type: 'div',
-    className: `MessageWrapper MessageWrapper--${role}${isError ? ' MessageWrapper--error' : ''}`,
+    className: isError ? 'MessageWrapperError' : `MessageWrapper MessageWrapper${role === 'human' ? 'Human' : 'Ai'}`,
     children: [messageElement],
   }
 
@@ -23,7 +23,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
         children: [
           {
             type: 'code',
-            className: 'CodeText',
+            className: isError ? 'MessageCodeTextError' : 'CodeText',
             textContent: block.content,
           },
         ],

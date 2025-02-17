@@ -1,5 +1,3 @@
-import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
-
 export const getChatResponse = async (
   formattedMessages: any[],
   apiKey: string,
@@ -8,8 +6,8 @@ export const getChatResponse = async (
   anthropicVersion: string,
   stream: boolean,
   maxTokens: number,
-): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> => {
-  const response = await fetch(url, {
+): Promise<Response> => {
+  return fetch(url, {
     method: 'POST',
     headers: {
       'x-api-key': apiKey,
@@ -24,5 +22,4 @@ export const getChatResponse = async (
       stream,
     }),
   })
-  return UnwrapApiResponse.unwrapApiResponse(response)
 }

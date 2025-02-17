@@ -10,12 +10,13 @@ beforeEach(() => {
 })
 
 test('getChatResponse - successful response', async () => {
-  const mockResponse = new ReadableStream()
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockStream = new ReadableStream()
+  const mockResponse = {
     ok: true,
-    body: mockResponse,
-  })
+    body: mockStream,
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [
     { role: 'user', content: 'Hello' },
@@ -52,31 +53,41 @@ test('getChatResponse - successful response', async () => {
 })
 
 test('getChatResponse - invalid api key', async () => {
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockResponse = {
     ok: false,
     status: 401,
-  })
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [{ role: 'user', content: 'test message' }]
 
-  await expect(
-    GetChatResponse.getChatResponse(formattedMessages, 'invalid-key', 'test-model', 'https://test.url', '2023-06-01', true, 2048),
-  ).rejects.toThrow('invalid api key')
+  expect(
+    await GetChatResponse.getChatResponse(
+      formattedMessages,
+      'invalid-key',
+      'test-model',
+      'https://test.url',
+      '2023-06-01',
+      true,
+      2048,
+    ),
+  ).toBe(mockResponse)
 })
 
 test('getChatResponse - other error', async () => {
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockResponse = {
     ok: false,
     status: 500,
     statusText: 'Internal Server Error',
-  })
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [{ role: 'user', content: 'test message' }]
 
-  await expect(
-    GetChatResponse.getChatResponse(
+  expect(
+    await GetChatResponse.getChatResponse(
       formattedMessages,
       'test-api-key',
       'test-model',
@@ -85,20 +96,21 @@ test('getChatResponse - other error', async () => {
       true,
       2048,
     ),
-  ).rejects.toThrow('Internal Server Error')
+  ).toBe(mockResponse)
 })
 
 test('getChatResponse - no response body', async () => {
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockResponse = {
     ok: true,
     body: null,
-  })
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [{ role: 'user', content: 'test message' }]
 
-  await expect(
-    GetChatResponse.getChatResponse(
+  expect(
+    await GetChatResponse.getChatResponse(
       formattedMessages,
       'test-api-key',
       'test-model',
@@ -107,7 +119,7 @@ test('getChatResponse - no response body', async () => {
       true,
       2048,
     ),
-  ).rejects.toThrow('no response body')
+  ).toBe(mockResponse)
 })
 
 test('getChatResponse - handles API error response', async () => {
@@ -119,17 +131,18 @@ test('getChatResponse - handles API error response', async () => {
     },
   }
 
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockResponse = {
     ok: false,
     status: 400,
     json: () => Promise.resolve(errorResponse),
-  })
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [{ role: 'user', content: 'test message' }]
 
-  await expect(
-    GetChatResponse.getChatResponse(
+  expect(
+    await GetChatResponse.getChatResponse(
       formattedMessages,
       'test-api-key',
       'test-model',
@@ -138,22 +151,23 @@ test('getChatResponse - handles API error response', async () => {
       true,
       2048,
     ),
-  ).rejects.toThrow("'claude-3-5-haiku-20241022' does not support image input.")
+  ).toBe(mockResponse)
 })
 
 test('getChatResponse - handles unparseable error response', async () => {
-  // @ts-ignore
-  mockFetch.mockResolvedValue({
+  const mockResponse = {
     ok: false,
     status: 400,
     statusText: 'Bad Request',
     json: () => Promise.reject(new Error('Invalid JSON')),
-  })
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [{ role: 'user', content: 'test message' }]
 
-  await expect(
-    GetChatResponse.getChatResponse(
+  expect(
+    await GetChatResponse.getChatResponse(
       formattedMessages,
       'test-api-key',
       'test-model',
@@ -162,5 +176,5 @@ test('getChatResponse - handles unparseable error response', async () => {
       true,
       2048,
     ),
-  ).rejects.toThrow('Bad Request')
+  ).toBe(mockResponse)
 })

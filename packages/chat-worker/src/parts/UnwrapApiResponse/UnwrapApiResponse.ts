@@ -11,6 +11,9 @@ export const unwrapApiResponse = async (response: Response): Promise<ReadableStr
     if (errorMessage.includes('does not support image input')) {
       throw new ApiError(errorMessage, ErrorCodes.E_SONNET_HAIKU_MODEL_DOES_NOT_SUPPORT_IMAGE_UPLOAD)
     }
+    if (errorMessage.includes('all messages must have non-empty content')) {
+      throw new ApiError(errorMessage, ErrorCodes.E_EMPTY_MESSAGE_NOT_ALLOWED)
+    }
     throw new Error(errorMessage)
   }
 

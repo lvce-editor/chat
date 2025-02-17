@@ -358,3 +358,18 @@ body {
 .ImageBlock {
   margin: 8px 0;
 }
+
+.MessageError {
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.MessageWrapperError {
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+}
+
+.MessageCodeTextError {
+  color: #dc2626;
+}

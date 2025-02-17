@@ -38,6 +38,15 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   }
   WebViewStates.set(id, webView)
 
+  const newWebView: Partial<WebView> = {
+    messages: restoredMessages,
+    scrollOffset: savedState?.scrollOffset || 0,
+    inputSource: InputSource.Script,
+    currentInput: savedState.currentInput || '',
+  }
+
+  await WebViewStates.update(id, newWebView)
+
   const initialDom = await Render.render(webView)
   await port.invoke('initialize', initialDom)
 

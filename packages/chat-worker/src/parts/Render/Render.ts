@@ -43,6 +43,7 @@ export const render = async (webView: WebView): Promise<VirtualElement> => {
         events: {
           submit: 'handleSubmit',
         },
+        // @ts-ignore
         children: [createFormContent(webView.previewImageUrl)],
       },
     ],

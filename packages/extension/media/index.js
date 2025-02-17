@@ -87,9 +87,33 @@ const handlers = {
 const render = (vdom) => {
   const newApp = createDomElement(vdom)
   const oldApp = document.querySelector('.App')
+
   if (oldApp) {
+    const activeElement = document.activeElement
     const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
+
+    // Store selection/cursor position if it's a text input with a name
+    const name = activeElement instanceof HTMLElement ? activeElement.getAttribute('name') : null
+    const selectionStart = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionStart : null
+    const selectionEnd = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionEnd : null
+
     oldApp.replaceWith(newApp)
+
+    // Restore focus and selection if we had a named active element
+    if (name) {
+      const newActiveElement = newApp.querySelector(`[name="${name}"]`)
+      if (newActiveElement) {
+        newActiveElement.focus()
+
+        // Restore cursor position for textareas
+        if (selectionStart !== null && newActiveElement instanceof HTMLTextAreaElement) {
+          newActiveElement.selectionStart = selectionStart
+          // @ts-ignore
+          newActiveElement.selectionEnd = selectionEnd
+        }
+      }
+    }
+
     if (wasAtBottom) {
       setScrollTop()
     }

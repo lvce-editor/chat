@@ -289,3 +289,10 @@ const rpc = globalThis.lvceRpc({
   },
   render,
 })
+
+export const setValue = (element, name, value) => {
+  const input = element.querySelector(`[name="${name}"]`)
+  if (input) {
+    input.value = value
+  }
+}

@@ -24,17 +24,33 @@ export const handleSubmit = async (id: number, input: string) => {
 
   await AddMessage.addMessage(id, message)
 
-  const formattedMessages = await formatMessagesForApi(webView.messages)
+  try {
+    const formattedMessages = await formatMessagesForApi(webView.messages)
 
-  const response = await GetChatResponse.getChatResponse(
-    formattedMessages,
-    webView.apiKey,
-    webView.modelId,
-    webView.url,
-    webView.anthropicVersion,
-    webView.stream,
-    webView.maxTokens,
-  )
-  const body = await UnwrapApiResponse.unwrapApiResponse(response)
-  await HandleApiResponse.handleApiResponse(id, body)
+    const response = await GetChatResponse.getChatResponse(
+      formattedMessages,
+      webView.apiKey,
+      webView.modelId,
+      webView.url,
+      webView.anthropicVersion,
+      webView.stream,
+      webView.maxTokens,
+    )
+    const body = await UnwrapApiResponse.unwrapApiResponse(response)
+    await HandleApiResponse.handleApiResponse(id, body)
+  } catch (error) {
+    const errorMessage: Message = {
+      role: 'ai',
+      content: [
+        {
+          type: 'text',
+          content: `Error: ${error}`,
+        },
+      ],
+      webViewId: id,
+    }
+    // @ts-ignore
+    webView.messages.push(errorMessage)
+    await AddMessage.addMessage(id, errorMessage)
+  }
 }

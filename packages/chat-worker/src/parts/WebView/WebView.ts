@@ -17,4 +17,5 @@ export interface WebView {
   readonly stream: boolean
   readonly time: number
   readonly url: string
+  readonly inputSource: number
 }

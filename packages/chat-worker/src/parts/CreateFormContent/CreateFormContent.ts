@@ -68,8 +68,10 @@ export const createFormContent = (blobUrl?: string): VirtualElement => {
         placeholder: 'Message...',
         events: {
           keydown: 'handleKeyDown',
-          input: 'adjustHeight',
+          input: 'handleInput',
+          adjustHeight: 'adjustHeight',
         },
+        textContent: '',
       },
     ],
   }

@@ -1,6 +1,7 @@
 import type { WebView } from '../WebView/WebView.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Render from '../Render/Render.ts'
+import * as DeepEqual from '../DeepEqual/DeepEqual.ts'
 
 const webViews = Object.create(null)
 
@@ -10,10 +11,6 @@ export const get = (id: number): WebView => {
 
 export const set = (id: number, webView: WebView) => {
   webViews[id] = webView
-}
-
-const deepEqual = (a: unknown, b: unknown): boolean => {
-  return JSON.stringify(a) === JSON.stringify(b)
 }
 
 export const update = async (id: number, newWebView: Partial<WebView>) => {
@@ -34,7 +31,7 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
   const oldVdom = await Render.render(oldWebView)
 
   // Skip render if vdom hasn't changed
-  if (deepEqual(oldVdom, newVdom)) {
+  if (DeepEqual.deepEqual(oldVdom, newVdom)) {
     return
   }
 

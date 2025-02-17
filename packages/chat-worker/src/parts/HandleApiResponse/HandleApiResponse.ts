@@ -3,17 +3,17 @@ import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponse
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleApiResponse = async (id: number, body: ReadableStream) => {
-  const webView = WebViewStates.get(id)
   let currentMessage = ''
 
   const acc = new WritableStream({
     async write(message) {
       currentMessage += message
       const content = FormatMessage.formatMessage(currentMessage)
+      const currentWebView = WebViewStates.get(id)
 
       await WebViewStates.update(id, {
         messages: [
-          ...webView.messages.slice(0, -1),
+          ...currentWebView.messages.slice(0, -1),
           {
             role: 'ai',
             content,
@@ -25,9 +25,11 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
 
     async close() {
       const content = FormatMessage.formatMessage(currentMessage)
+      const currentWebView = WebViewStates.get(id)
+
       await WebViewStates.update(id, {
         messages: [
-          ...webView.messages.slice(0, -1),
+          ...currentWebView.messages.slice(0, -1),
           {
             role: 'ai',
             content,

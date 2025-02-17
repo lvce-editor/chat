@@ -4,8 +4,8 @@ import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForA
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
+import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id: number, input: string) => {
   const webView = WebViewStates.get(id)

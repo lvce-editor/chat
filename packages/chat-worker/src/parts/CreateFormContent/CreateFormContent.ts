@@ -4,7 +4,23 @@ export const createFormContent = (blobUrl?: string): VirtualElement => {
   return {
     type: 'div',
     className: 'FormContent',
+    events: {
+      dragover: 'handleDragOver',
+      dragleave: 'handleDragLeave',
+      drop: 'handleDrop',
+    },
     children: [
+      {
+        type: 'div',
+        className: 'DropZone Hidden',
+        children: [
+          {
+            type: 'div',
+            className: 'DropZoneText',
+            textContent: 'Drop image here',
+          },
+        ],
+      },
       {
         type: 'label',
         className: 'ImageUploadButton',

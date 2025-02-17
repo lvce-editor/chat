@@ -53,6 +53,35 @@ const handlers = {
     const input = event.target.value
     await rpc.invoke('handleInput', input)
   },
+
+  handleDragOver: (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const dropZone = event.currentTarget.querySelector('.DropZone')
+    dropZone?.classList.remove('Hidden')
+  },
+
+  handleDragLeave: (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const dropZone = event.currentTarget.querySelector('.DropZone')
+    dropZone?.classList.add('Hidden')
+  },
+
+  handleDrop: async (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    const dropZone = event.currentTarget.querySelector('.DropZone')
+    dropZone?.classList.add('Hidden')
+
+    const file = event.dataTransfer?.files[0]
+    if (!file || !file.type.startsWith('image/')) {
+      return
+    }
+
+    await rpc.invoke('handleImageUpload', file)
+  },
 }
 
 const createDomElement = (vdom) => {

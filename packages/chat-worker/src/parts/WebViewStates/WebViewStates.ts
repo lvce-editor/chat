@@ -1,6 +1,6 @@
 import type { WebView } from '../WebView/WebView.ts'
 import { render } from '../Render/Render.ts'
-
+import * as InputSource from '../InputSource/InputSource.ts'
 const webViews = Object.create(null)
 
 export const get = (id: number): WebView => {
@@ -23,6 +23,11 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
     ...newWebView,
   }
   set(id, updatedWebView)
+
+  // Update input value if source is script
+  if (updatedWebView.inputSource === InputSource.Script && oldWebView.currentInput !== newWebView.currentInput) {
+    await updatedWebView.port.invoke('setValue', 'Input', updatedWebView.currentInput)
+  }
 
   // Render new VDOM
   const newVdom = await render(updatedWebView)

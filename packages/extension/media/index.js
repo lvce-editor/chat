@@ -84,44 +84,6 @@ const handlers = {
   },
 }
 
-const render = (vdom) => {
-  const newApp = createDomElement(vdom)
-  const oldApp = document.querySelector('.App')
-
-  if (oldApp) {
-    const activeElement = document.activeElement
-    const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
-
-    // Store input value and cursor position
-    const oldInput = oldApp.querySelector('[name="Input"]')
-    // @ts-ignore
-    const inputValue = oldInput?.value || ''
-    const selectionStart = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionStart : null
-    const selectionEnd = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionEnd : null
-
-    oldApp.replaceWith(newApp)
-
-    // Restore input value and focus
-    const newInput = newApp.querySelector('[name="Input"]')
-    if (newInput) {
-      newInput.value = inputValue
-      if (activeElement === oldInput) {
-        newInput.focus()
-        if (selectionStart !== null) {
-          newInput.selectionStart = selectionStart
-          newInput.selectionEnd = selectionEnd
-        }
-      }
-    }
-
-    if (wasAtBottom) {
-      setScrollTop()
-    }
-  } else {
-    document.body.append(newApp)
-  }
-}
-
 const createDomElement = (vdom) => {
   if (typeof vdom === 'string') {
     return document.createTextNode(vdom)
@@ -287,12 +249,4 @@ const rpc = globalThis.lvceRpc({
   createObjectUrl: (blob) => {
     return URL.createObjectURL(blob)
   },
-  render,
 })
-
-export const setValue = (element, name, value) => {
-  const input = element.querySelector(`[name="${name}"]`)
-  if (input) {
-    input.value = value
-  }
-}

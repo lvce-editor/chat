@@ -1,7 +1,7 @@
+import type { WebView } from '../WebView/WebView.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Render from '../Render/Render.ts'
-import type { WebView } from '../WebView/WebView.ts'
 
 const getRenderCommandsDom = async (oldWebView: WebView, newWebView: WebView): Promise<readonly any[]> => {
   const newVdom = await Render.render(newWebView)

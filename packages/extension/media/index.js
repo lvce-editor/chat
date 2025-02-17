@@ -92,24 +92,24 @@ const render = (vdom) => {
     const activeElement = document.activeElement
     const wasAtBottom = isAtBottom(document.querySelector('.ContentWrapper'))
 
-    // Store selection/cursor position if it's a text input with a name
-    const name = activeElement instanceof HTMLElement ? activeElement.getAttribute('name') : null
+    // Store input value and cursor position
+    const oldInput = oldApp.querySelector('[name="Input"]')
+    // @ts-ignore
+    const inputValue = oldInput?.value || ''
     const selectionStart = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionStart : null
     const selectionEnd = activeElement instanceof HTMLTextAreaElement ? activeElement.selectionEnd : null
 
     oldApp.replaceWith(newApp)
 
-    // Restore focus and selection if we had a named active element
-    if (name) {
-      const newActiveElement = newApp.querySelector(`[name="${name}"]`)
-      if (newActiveElement) {
-        newActiveElement.focus()
-
-        // Restore cursor position for textareas
-        if (selectionStart !== null && newActiveElement instanceof HTMLTextAreaElement) {
-          newActiveElement.selectionStart = selectionStart
-          // @ts-ignore
-          newActiveElement.selectionEnd = selectionEnd
+    // Restore input value and focus
+    const newInput = newApp.querySelector('[name="Input"]')
+    if (newInput) {
+      newInput.value = inputValue
+      if (activeElement === oldInput) {
+        newInput.focus()
+        if (selectionStart !== null) {
+          newInput.selectionStart = selectionStart
+          newInput.selectionEnd = selectionEnd
         }
       }
     }

@@ -6,9 +6,10 @@ import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleSubmit = async (id: number, input: string) => {
+export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
-  const newContent = getNewContent(input, webView.images)
+
+  const newContent = getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
     role: 'human',
@@ -21,7 +22,7 @@ export const handleSubmit = async (id: number, input: string) => {
     messages: [...webView.messages, message],
     images: [],
     currentInput: '',
-    previewImageUrl: undefined,
+    previewImageUrl: '',
   }))
 
   try {

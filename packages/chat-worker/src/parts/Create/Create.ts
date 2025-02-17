@@ -1,9 +1,9 @@
 import type { WebView } from '../WebView/WebView.ts'
 import { createInitialDom } from '../CreateInitialDom/CreateInitialDom.ts'
-import { createMessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')

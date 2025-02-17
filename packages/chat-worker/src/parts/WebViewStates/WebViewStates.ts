@@ -1,5 +1,5 @@
 import type { WebView } from '../WebView/WebView.ts'
-import { render } from '../Render/Render.ts'
+import * as Render from '../Render/Render.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 const webViews = Object.create(null)
@@ -30,8 +30,8 @@ export const update = async (id: number, newWebView: Partial<WebView>) => {
   }
 
   // Render new VDOM
-  const newVdom = await render(updatedWebView)
-  const oldVdom = await render(oldWebView)
+  const newVdom = await Render.render(updatedWebView)
+  const oldVdom = await Render.render(oldWebView)
 
   // Skip render if vdom hasn't changed
   if (deepEqual(oldVdom, newVdom)) {

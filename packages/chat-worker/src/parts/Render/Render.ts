@@ -5,7 +5,8 @@ import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageV
 import { renderMessage } from '../RenderMessage/RenderMessage.ts'
 
 export const render = async (webView: WebView): Promise<VirtualElement> => {
-  const viewModels = await Promise.all(webView.messages.map(createMessageViewModel))
+  const { messages } = webView
+  const viewModels = await Promise.all(messages.map(createMessageViewModel))
   const messageVDoms = viewModels.map(renderMessage)
 
   return {
@@ -43,7 +44,6 @@ export const render = async (webView: WebView): Promise<VirtualElement> => {
         events: {
           submit: 'handleSubmit',
         },
-        // @ts-ignore
         children: [createFormContent(webView.previewImageUrl)],
       },
     ],

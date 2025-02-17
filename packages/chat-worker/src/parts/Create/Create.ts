@@ -1,8 +1,5 @@
 import type { WebView } from '../WebView/WebView.ts'
-import { createInitialDom } from '../CreateInitialDom/CreateInitialDom.ts'
-import { createMessageViewModel } from '../CreateMessageViewModel/CreateMessageViewModel.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
-import * as RenderMessage from '../RenderMessage/RenderMessage.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -17,8 +14,6 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const cacheName = 'chat-image-cache'
   const cacheBaseUrl = 'https://example.com'
 
-  const restoredMessages = await RestoreMessages.restoreMessages(id, cacheName, cacheBaseUrl, savedState)
-
   const webView: WebView = {
     time: 0,
     port,
@@ -28,8 +23,8 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     anthropicVersion,
     stream: true,
     maxTokens,
-    messages: restoredMessages,
-    scrollOffset: savedState?.scrollOffset || 0,
+    messages: [],
+    scrollOffset: 0,
     images: [],
     cacheName,
     cacheBaseUrl,
@@ -40,11 +35,16 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   }
   WebViewStates.set(id, webView)
 
-  const viewModels = await Promise.all(webView.messages.map(createMessageViewModel))
-  const savedMessageVDoms = viewModels.map(RenderMessage.renderMessage)
-  const initialDom = createInitialDom(savedMessageVDoms)
+  const restoredMessages = await RestoreMessages.restoreMessages(id, cacheName, cacheBaseUrl, savedState)
 
-  await port.invoke('initialize', initialDom)
+  const newWebView: Partial<WebView> = {
+    messages: restoredMessages,
+    scrollOffset: savedState?.scrollOffset || 0,
+    inputSource: InputSource.Script,
+    currentInput: savedState.currentInput || '',
+  }
+
+  await WebViewStates.update(id, newWebView)
 
   if (!apiKey) {
     await port.invoke('setError', 'Missing Api Key')

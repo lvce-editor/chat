@@ -1,32 +1,35 @@
 import type { Message } from '../Message/Message.ts'
-import * as AddMessage from '../AddMessage/AddMessage.ts'
 import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleSubmit = async (id: number, input: string) => {
+export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
-  const newContent = getNewContent(input, webView.images)
 
-  // @ts-ignore
-  webView.images = []
+  const newContent = getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
     role: 'human',
     content: newContent,
     webViewId: id,
   }
-  // @ts-ignore
-  webView.messages.push(message)
 
-  await AddMessage.addMessage(id, message)
+  const newMessages = [...webView.messages, message]
+
+  await WebViewStates.update(id, {
+    messages: newMessages,
+    images: [],
+    currentInput: '',
+    inputSource: InputSource.Script,
+    previewImageUrl: '',
+  })
 
   try {
-    const formattedMessages = await formatMessagesForApi(webView.messages)
-
+    const formattedMessages = await formatMessagesForApi(newMessages)
     const response = await GetChatResponse.getChatResponse(
       formattedMessages,
       webView.apiKey,
@@ -49,8 +52,10 @@ export const handleSubmit = async (id: number, input: string) => {
       ],
       webViewId: id,
     }
-    // @ts-ignore
-    webView.messages.push(errorMessage)
-    await AddMessage.addMessage(id, errorMessage)
+
+    await WebViewStates.update(id, {
+      ...webView,
+      messages: [...newMessages, errorMessage],
+    })
   }
 }

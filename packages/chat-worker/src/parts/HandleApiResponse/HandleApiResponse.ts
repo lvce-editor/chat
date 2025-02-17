@@ -6,6 +6,21 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
   let currentMessage = ''
 
   const acc = new WritableStream({
+    async start() {
+      const currentWebView = WebViewStates.get(id)
+
+      await WebViewStates.update(id, {
+        messages: [
+          ...currentWebView.messages.slice(0, -1),
+          {
+            role: 'ai',
+            content: [],
+            webViewId: id,
+          },
+        ],
+      })
+    },
+
     async write(message) {
       currentMessage += message
       const content = FormatMessage.formatMessage(currentMessage)

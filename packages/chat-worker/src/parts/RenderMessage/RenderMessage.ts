@@ -6,7 +6,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
     type: 'div',
-    className: isError ? 'MessageError' : role === 'human' ? 'MessageHuman' : 'MessageAi',
+    className: isError ? 'MessageError' : (role === 'human' ? 'MessageHuman' : 'MessageAi'),
   }
 
   const wrappedMessage: VirtualElement = {

@@ -1,7 +1,3 @@
-// TODO use virtual dom in  worker
-
-let isScrolledToBottom = true
-
 const handlers = {
   handleSubmit: async (event) => {
     event.preventDefault()
@@ -179,58 +175,6 @@ const isAtBottom = (element) => {
   return Math.abs(scrollHeight - clientHeight - scrollTop) < 10
 }
 
-const fixScroll = (wrapper) => {
-  if (isScrolledToBottom) {
-    const contentWrapper = document.querySelector('.ContentWrapper')
-    if (contentWrapper) {
-      contentWrapper.scrollTop = contentWrapper.scrollHeight
-    }
-  }
-}
-
-const appendMessage = (vdom) => {
-  const output = document.querySelector('.Output')
-  const messageElement = createDomElement(vdom)
-  output?.append(messageElement)
-}
-
-const updateMessage = (vdom) => {
-  const output = document.querySelector('.Output')
-  const contentWrapper = document.querySelector('.ContentWrapper')
-  const last = output?.lastElementChild
-  if (last) {
-    const newMessage = createDomElement(vdom)
-    last.replaceWith(newMessage)
-  }
-  fixScroll(contentWrapper)
-}
-
-const setError = (message) => {
-  const output = document.querySelector('.Output')
-  const $Message = document.createElement('div')
-  $Message.className = 'Message Error'
-  $Message.textContent = message
-  output?.append($Message)
-}
-
-const clear = () => {
-  const input = document.querySelector('.Input')
-  if (!input) {
-    return
-  }
-  // @ts-ignore
-  input.value = ''
-}
-
-const clearMessages = () => {
-  const output = document.querySelector('.Output')
-  if (!output) {
-    return
-  }
-  output.innerHTML = ''
-  updateNewChatButtonState()
-}
-
 const updateNewChatButtonState = () => {
   const output = document.querySelector('.Output')
   const newChatButton = document.querySelector('.NewChatButton')
@@ -264,14 +208,6 @@ const setScrollTop = () => {
   }
 }
 
-const updateForm = (vdom) => {
-  const oldForm = document.querySelector('.FormContent')
-  const newForm = createDomElement(vdom)
-  if (oldForm) {
-    oldForm.replaceWith(newForm)
-  }
-}
-
 const setValue = (name, value) => {
   const input = document.querySelector(`[name="${name}"]`)
   if (input && input instanceof HTMLTextAreaElement) {
@@ -281,19 +217,14 @@ const setValue = (name, value) => {
 
 const rpc = globalThis.lvceRpc({
   initialize,
-  appendMessage,
-  updateMessage,
-  setError,
-  clear,
-  clearMessages,
   setScrollPosition,
   checkIsBottom,
   setScrollTop,
-  updateNewChatButtonState,
-  updateForm,
   setValue,
   createObjectUrl: (blob) => {
     return URL.createObjectURL(blob)
   },
   render,
 })
+
+export {}

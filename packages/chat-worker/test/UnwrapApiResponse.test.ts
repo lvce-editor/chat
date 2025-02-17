@@ -60,7 +60,7 @@ test.skip('returns response body for successful response', async () => {
   expect(result).toBe(mockBody)
 })
 
-test('handles empty message content error', async () => {
+test.only('handles empty message content error', async () => {
   const errorResponse = {
     type: 'error',
     error: {
@@ -75,6 +75,8 @@ test('handles empty message content error', async () => {
   })
 
   await expect(UnwrapApiResponse.unwrapApiResponse(response)).rejects.toThrow(
-    'messages.2: all messages must have non-empty content except for the optional final assistant message',
+    new Error(
+      `E_EMPTY_MESSAGE_NOT_ALLOWED: messages.2: all messages must have non-empty content except for the optional final assistant message`,
+    ),
   )
 })

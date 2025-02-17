@@ -272,6 +272,13 @@ const updateForm = (vdom) => {
   }
 }
 
+const setValue = (element, name, value) => {
+  const input = element.querySelector(`[name="${name}"]`)
+  if (input) {
+    input.value = value
+  }
+}
+
 const rpc = globalThis.lvceRpc({
   initialize,
   appendMessage,
@@ -284,6 +291,7 @@ const rpc = globalThis.lvceRpc({
   setScrollTop,
   updateNewChatButtonState,
   updateForm,
+  setValue,
   createObjectUrl: (blob) => {
     return URL.createObjectURL(blob)
   },

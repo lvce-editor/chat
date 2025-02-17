@@ -272,9 +272,9 @@ const updateForm = (vdom) => {
   }
 }
 
-const setValue = (element, name, value) => {
-  const input = element.querySelector(`[name="${name}"]`)
-  if (input) {
+const setValue = (name, value) => {
+  const input = document.querySelector(`[name="${name}"]`)
+  if (input && input instanceof HTMLTextAreaElement) {
     input.value = value
   }
 }

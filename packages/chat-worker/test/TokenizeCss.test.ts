@@ -39,6 +39,10 @@ test('tokenizes CSS comments', () => {
     { type: TokenType.Whitespace, text: ' ' },
     { type: TokenType.Property, text: 'color' },
     { type: TokenType.Delimiter, text: ':' },
+    {
+      text: ' ',
+      type: 'Whitespace',
+    },
     { type: TokenType.Value, text: 'blue' },
     { type: TokenType.Delimiter, text: ';' },
     { type: TokenType.Whitespace, text: ' ' },

@@ -1,12 +1,13 @@
 import { test, expect } from '@jest/globals'
 import * as FormatMessage from '../src/parts/FormatMessage/FormatMessage.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 
 test('formats plain text', () => {
   const text = 'Hello, world!'
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Hello, world!',
     },
   ])
@@ -17,7 +18,7 @@ test('formats single code block', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'javascript',
       content: 'const x = 1;',
     },
@@ -29,16 +30,16 @@ test('formats mixed content', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Here is some code:',
     },
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'javascript',
       content: 'const x = 1;',
     },
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'And here is more text.',
     },
   ])
@@ -49,7 +50,7 @@ test('handles code block without language', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'text',
       content: 'plain text',
     },
@@ -61,16 +62,16 @@ test('handles multiple code blocks', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'javascript',
       content: 'const x = 1;',
     },
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Some text',
     },
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'python',
       content: 'print("hello")',
     },
@@ -82,11 +83,11 @@ test('handles partial code block at end', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Here is some code:',
     },
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'javascript',
       content: 'const x = 1;',
     },
@@ -98,7 +99,7 @@ test.skip('handles code block without newline', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: 'code',
+      type: MessageContentType.Code,
       language: 'javascript',
       content: 'const x = 1;',
     },

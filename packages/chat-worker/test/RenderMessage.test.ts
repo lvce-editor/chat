@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import type { MessageViewModel } from '../src/parts/MessageViewModel/MessageViewModel.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 import * as RenderMessage from '../src/parts/RenderMessage/RenderMessage.ts'
 
@@ -9,7 +10,7 @@ test('renders human message with text content', () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'text',
+        type: MessageContentType.Text,
         content: 'Hello world',
         display: {},
       },
@@ -42,7 +43,7 @@ test('renders AI message with code block', () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
@@ -89,7 +90,7 @@ test('renders message with image block', () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'image',
+        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:123',
@@ -131,24 +132,24 @@ test('renders message with mixed content types', () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'text',
+        type: MessageContentType.Text,
         content: 'Here is some code:',
         display: {},
       },
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'console.log("hello");',
         display: {
           language: 'javascript',
         },
       },
       {
-        type: 'text',
+        type: MessageContentType.Text,
         content: 'And here is an image:',
         display: {},
       },
       {
-        type: 'image',
+        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:123',

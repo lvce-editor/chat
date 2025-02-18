@@ -6,7 +6,7 @@ export interface MessageViewModel {
 }
 
 export interface MessageBlockViewModel {
-  readonly type: 'text' | 'code' | 'image'
+  readonly type: number
   readonly content: string
   readonly display: {
     readonly blobUrl?: string

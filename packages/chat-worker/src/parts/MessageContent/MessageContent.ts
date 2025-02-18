@@ -1,20 +1,20 @@
 interface BaseMessageContent {
-  readonly type: string
+  readonly type: number
 }
 
 export interface TextMessageContent extends BaseMessageContent {
-  readonly type: 'text'
+  readonly type: 1 // Text
   readonly content: string
 }
 
 export interface CodeMessageContent extends BaseMessageContent {
-  readonly type: 'code'
+  readonly type: 2 // Code
   readonly content: string
   readonly language?: string
 }
 
 export interface ImageMessageContent extends BaseMessageContent {
-  readonly type: 'image'
+  readonly type: 3 // Image
   readonly file: File
   readonly fileName: string
   readonly mediaType: string

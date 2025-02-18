@@ -1,10 +1,11 @@
 import type { MessageContent } from '../MessageContent/MessageContent.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const getNewContent = (input: string, images: readonly File[]): readonly MessageContent[] => {
   const newContent: MessageContent[] = []
   for (const file of images) {
     newContent.push({
-      type: 'image',
+      type: MessageContentType.Image,
       file,
       mediaType: 'image/png',
       fileName: file.name,
@@ -13,7 +14,7 @@ export const getNewContent = (input: string, images: readonly File[]): readonly 
 
   if (input) {
     newContent.push({
-      type: 'text',
+      type: MessageContentType.Text,
       content: input,
     })
   }

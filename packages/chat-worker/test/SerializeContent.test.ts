@@ -1,28 +1,29 @@
 import { test, expect } from '@jest/globals'
 import type { MessageContent } from '../src/parts/MessageContent/MessageContent.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 import * as SerializeContent from '../src/parts/SerializeContent/SerializeContent.ts'
 
 test('serializes text content', () => {
   const content: MessageContent = {
-    type: 'text',
+    type: MessageContentType.Text,
     content: 'Hello world',
   }
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: 'text',
+    type: MessageContentType.Text,
     content: 'Hello world',
   })
 })
 
 test('serializes code content', () => {
   const content: MessageContent = {
-    type: 'code',
+    type: MessageContentType.Code,
     content: 'const x = 1',
     language: 'javascript',
   }
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: 'code',
+    type: MessageContentType.Code,
     content: 'const x = 1',
     language: 'javascript',
   })
@@ -30,14 +31,14 @@ test('serializes code content', () => {
 
 test('serializes image content', () => {
   const content: MessageContent = {
-    type: 'image',
+    type: MessageContentType.Image,
     file: new File(['test'], 'test.png', { type: 'image/png' }),
     fileName: 'test.png',
     mediaType: 'image/png',
   }
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: 'image',
+    type: MessageContentType.Image,
     fileName: 'test.png',
     mediaType: 'image/png',
   })

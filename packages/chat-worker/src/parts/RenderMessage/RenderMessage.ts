@@ -1,6 +1,7 @@
 import type { MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import * as GetCodeBlockVirtualDom from '../GetCodeBlockVirtualDom/GetCodeBlockVirtualDom.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 
 export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
@@ -18,10 +19,10 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   }
 
   const blocksHtml = blocks.map((block) => {
-    if (block.type === 'code') {
+    if (block.type === MessageContentType.Code) {
       return GetCodeBlockVirtualDom.getCodeBlockVirtualDom(block, isError)
     }
-    if (block.type === 'image') {
+    if (block.type === MessageContentType.Image) {
       // TODO create view model that creates object urls for images
       return {
         type: 'div',

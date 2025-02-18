@@ -5,6 +5,7 @@ import type {
   MessageContent,
   TextMessageContent,
 } from '../MessageContent/MessageContent.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as ToBase64 from '../ToBase64/ToBase64.ts'
 
@@ -35,17 +36,29 @@ const formatCodePartForApi = (block: CodeMessageContent) => {
 }
 
 const formatContentPartForApi = (block: MessageContent) => {
-  if (block.type === 'image') {
+  if (block.type === MessageContentType.Image) {
     return formatContentPartImageForApi(block)
   }
-  if (block.type === 'text') {
+  if (block.type === MessageContentType.Text) {
     return formatContentPartTextForApi(block)
   }
   return formatCodePartForApi(block)
 }
 
-const formatContentsForApi = async (content: readonly MessageContent[]) => {
-  return Array.isArray(content) ? await Promise.all(content.map(formatContentPartForApi)) : content
+const formatContentsForApi = async (contents: readonly MessageContent[]) => {
+  const formattedContents: any[] = []
+  for (const content of contents) {
+    formattedContents.push(await formatContentPartForApi(content))
+  }
+  return formattedContents
+}
+
+export const formatMessagesForApi = async (messages: readonly Message[]) => {
+  const formattedMessages: any[] = []
+  for (const message of messages) {
+    formattedMessages.push(await formatMessageForApi(message))
+  }
+  return formattedMessages
 }
 
 const formatMessageForApi = async (message: Message) => {
@@ -53,8 +66,4 @@ const formatMessageForApi = async (message: Message) => {
     role: message.role === MessageRole.Human ? 'user' : 'assistant',
     content: await formatContentsForApi(message.content),
   }
-}
-
-export const formatMessagesForApi = async (messages: readonly Message[]) => {
-  return await Promise.all(messages.map(formatMessageForApi))
 }

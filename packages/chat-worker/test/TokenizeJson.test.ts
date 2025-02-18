@@ -88,7 +88,7 @@ test('tokenizes JSON with null and escaped strings', () => {
     { type: TokenType.String, text: '"message"' },
     { type: TokenType.Delimiter, text: ':' },
     { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.String, text: '"Hello \\"World\\""' },
+    { type: TokenType.String, text: String.raw`"Hello \"World\""` },
     { type: TokenType.Whitespace, text: '\n' },
     { type: TokenType.Delimiter, text: '}' },
   ])

@@ -30,7 +30,7 @@ test('formats mixed content', () => {
   expect(blocks).toEqual([
     {
       type: 'text',
-      content: 'Here is some code:\n',
+      content: 'Here is some code:',
     },
     {
       type: 'code',
@@ -39,7 +39,7 @@ test('formats mixed content', () => {
     },
     {
       type: 'text',
-      content: '\nAnd here is more text.',
+      content: 'And here is more text.',
     },
   ])
 })
@@ -67,7 +67,7 @@ test('handles multiple code blocks', () => {
     },
     {
       type: 'text',
-      content: '\nSome text\n',
+      content: 'Some text',
     },
     {
       type: 'code',
@@ -77,13 +77,30 @@ test('handles multiple code blocks', () => {
   ])
 })
 
-test.skip('ignores malformed code blocks', () => {
-  const text = '```javascript\nconst x = 1;\n Some text'
+test('handles partial code block at end', () => {
+  const text = 'Here is some code:\n```javascript\nconst x = 1;'
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
       type: 'text',
-      content: '```javascript\nconst x = 1;\n Some text',
+      content: 'Here is some code:',
+    },
+    {
+      type: 'code',
+      language: 'javascript',
+      content: 'const x = 1;',
+    },
+  ])
+})
+
+test.skip('handles code block without newline', () => {
+  const text = '```javascript const x = 1;'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: 'code',
+      language: 'javascript',
+      content: 'const x = 1;',
     },
   ])
 })

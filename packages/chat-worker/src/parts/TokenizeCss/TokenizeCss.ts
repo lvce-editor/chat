@@ -47,17 +47,14 @@ export const tokenizeCss = (code: string): readonly Token[] => {
       continue
     }
 
-    // Handle selectors (only at the start or after a closing brace)
+    // Handle selectors
     if (
       (tokens.length === 0 ||
         (tokens[tokens.length - 1].type === TokenType.Delimiter && tokens[tokens.length - 1].text === '}') ||
-        (tokens[tokens.length - 1].type === TokenType.Whitespace &&
-          tokens[tokens.length - 2]?.type === TokenType.Delimiter &&
-          tokens[tokens.length - 2].text === '}')) &&
+        tokens[tokens.length - 1].type === TokenType.Whitespace) &&
       (char === '.' || char === '#' || isAlpha(char))
     ) {
-      let text = char
-      current++
+      let text = ''
       while (current < code.length && !isDelimiter(code[current]) && !isWhitespace(code[current])) {
         text += code[current]
         current++

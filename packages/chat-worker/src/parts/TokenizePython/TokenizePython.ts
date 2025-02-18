@@ -1,4 +1,5 @@
 import type { Token } from '../Token/Token.ts'
+import * as TokenType from '../TokenType/TokenType.ts'
 
 export const tokenizePython = (code: string): readonly Token[] => {
   const tokens: Token[] = []
@@ -45,7 +46,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: 'comment', text })
+      tokens.push({ type: TokenType.Comment, text })
       continue
     }
 
@@ -65,7 +66,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: 'string', text })
+      tokens.push({ type: TokenType.String, text })
       continue
     }
 
@@ -76,7 +77,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: 'number', text })
+      tokens.push({ type: TokenType.Number, text })
       continue
     }
 
@@ -88,7 +89,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         current++
       }
 
-      const type = keywords.has(text) ? 'keyword' : 'identifier'
+      const type = keywords.has(text) ? TokenType.Keyword : TokenType.Identifier
       tokens.push({ type, text })
       continue
     }
@@ -104,13 +105,13 @@ export const tokenizePython = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: 'operator', text })
+      tokens.push({ type: TokenType.Operator, text })
       continue
     }
 
-    // Handle parentheses, brackets, and other delimiters
+    // Handle delimiters
     if (isDelimiter(char)) {
-      tokens.push({ type: 'delimiter', text: char })
+      tokens.push({ type: TokenType.Delimiter, text: char })
       current++
       continue
     }
@@ -122,12 +123,12 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: 'whitespace', text })
+      tokens.push({ type: TokenType.Whitespace, text })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: 'text', text: char })
+    tokens.push({ type: TokenType.Text, text: char })
     current++
   }
 

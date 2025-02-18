@@ -156,5 +156,5 @@ function isOperator(char: string): boolean {
 }
 
 function isDelimiter(char: string): boolean {
-  return /\[()[\]{}:;,.]/.test(char)
+  return /\[\(\)\[\]{}:;,.]/.test(char)
 }

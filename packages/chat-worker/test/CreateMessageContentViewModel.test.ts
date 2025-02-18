@@ -19,13 +19,13 @@ test('creates view model for code block with tokens', async () => {
     { type: TokenType.Keyword, text: 'def' },
     { type: TokenType.Whitespace, text: ' ' },
     { type: TokenType.Identifier, text: 'hello' },
-    { type: TokenType.Delimiter, text: '(' },
-    { type: TokenType.Delimiter, text: ')' },
-    { type: TokenType.Delimiter, text: ':' },
+    { type: TokenType.Text, text: '(' },
+    { type: TokenType.Text, text: ')' },
+    { type: TokenType.Text, text: ':' },
     { type: TokenType.Whitespace, text: '\n    ' },
     { type: TokenType.Identifier, text: 'print' },
-    { type: TokenType.Delimiter, text: '(' },
+    { type: TokenType.Text, text: '(' },
     { type: TokenType.String, text: '"Hello"' },
-    { type: TokenType.Delimiter, text: ')' },
+    { type: TokenType.Text, text: ')' },
   ])
 })

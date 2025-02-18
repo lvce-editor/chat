@@ -49,8 +49,9 @@ export const tokenizeCss = (code: string): readonly Token[] => {
 
     // Handle selectors
     if (char === '.' || char === '#' || isAlpha(char)) {
-      let text = ''
-      while (current < code.length && !isDelimiter(code[current])) {
+      let text = char
+      current++
+      while (current < code.length && !isDelimiter(code[current]) && !isWhitespace(code[current])) {
         text += code[current]
         current++
       }
@@ -59,7 +60,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
     }
 
     // Handle properties
-    if ((isAlpha(char) && code[current - 1] === '\n') || code[current - 1] === ' ' || code[current - 1] === '{') {
+    if (isAlpha(char) && (current === 0 || isWhitespace(code[current - 1]) || code[current - 1] === '{')) {
       let text = ''
       while (current < code.length && (isAlphaNumeric(code[current]) || code[current] === '-')) {
         text += code[current]

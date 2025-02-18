@@ -61,7 +61,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
       ],
       webViewId: id,
     }
-    await WebViewStates.update(id, {
+    await Update.update(id, {
       messages: [...restoredMessages, errorMessage],
     })
   }

@@ -47,9 +47,17 @@ export const tokenizeCss = (code: string): readonly Token[] => {
       continue
     }
 
-    // Handle selectors
-    if (char === '.' || char === '#' || isAlpha(char)) {
-      let text = ''
+    // Handle selectors (only at the start or after a closing brace)
+    if (
+      (tokens.length === 0 ||
+        (tokens[tokens.length - 1].type === TokenType.Delimiter && tokens[tokens.length - 1].text === '}') ||
+        (tokens[tokens.length - 1].type === TokenType.Whitespace &&
+          tokens[tokens.length - 2]?.type === TokenType.Delimiter &&
+          tokens[tokens.length - 2].text === '}')) &&
+      (char === '.' || char === '#' || isAlpha(char))
+    ) {
+      let text = char
+      current++
       while (current < code.length && !isDelimiter(code[current]) && !isWhitespace(code[current])) {
         text += code[current]
         current++
@@ -65,8 +73,11 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      const type = properties.has(text) ? TokenType.Property : TokenType.Identifier
-      tokens.push({ type, text })
+      if (properties.has(text)) {
+        tokens.push({ type: TokenType.Property, text })
+      } else {
+        tokens.push({ type: TokenType.Identifier, text })
+      }
       continue
     }
 

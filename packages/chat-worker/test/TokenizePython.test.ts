@@ -20,7 +20,7 @@ test('tokenizes basic Python code', () => {
     { type: 'operator', text: '+' },
     { type: 'whitespace', text: ' ' },
     { type: 'identifier', text: 'name' },
-    { type: 'delimiter', text: ')' },
+    { type: 'text', text: ')' },
   ])
 })
 

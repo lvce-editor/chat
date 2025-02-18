@@ -6,6 +6,7 @@ import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')
@@ -55,7 +56,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
       role: MessageRole.Ai,
       content: [
         {
-          type: 'text',
+          type: MessageContentType.Text,
           content: `Error: ${ErrorCodes.E_MISSING_API_KEY}: Missing API Key`,
         },
       ],

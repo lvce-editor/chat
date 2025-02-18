@@ -22,7 +22,7 @@ test('returns image content when only images provided', () => {
   const result = GetNewContent.getNewContent('', [mockFile])
   expect(result).toEqual([
     {
-      type: 'image',
+      type: MessageContentType.Image,
       file: mockFile,
       mediaType: 'image/png',
       fileName: 'test.png',
@@ -35,7 +35,7 @@ test('returns both image and text content when both provided', () => {
   const result = GetNewContent.getNewContent('Hello world', [mockFile])
   expect(result).toEqual([
     {
-      type: 'image',
+      type: MessageContentType.Image,
       file: mockFile,
       mediaType: 'image/png',
       fileName: 'test.png',

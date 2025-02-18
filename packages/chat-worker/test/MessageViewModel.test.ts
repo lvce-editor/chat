@@ -75,6 +75,7 @@ test('creates view model for code block', async () => {
         content: 'const x = 1;',
         display: {
           language: 'javascript',
+          tokens: expect.anything(),
         },
       },
     ],
@@ -192,6 +193,7 @@ test('creates view model for mixed content', async () => {
         content: 'const x = 1;',
         display: {
           language: 'javascript',
+          tokens: expect.anything(),
         },
       },
       {

@@ -6,6 +6,7 @@ import type {
 } from '../MessageContent/MessageContent.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as IsFile from '../IsFile/IsFile.ts'
+import * as Tokenize from '../Tokenize/Tokenize.ts'
 
 const createMessageContentImageViewModel = async (part: ImageMessageContent, webView: any): Promise<MessageBlockViewModel> => {
   if (!IsFile.isFile(part.file)) {
@@ -28,11 +29,13 @@ const createMessageContentImageViewModel = async (part: ImageMessageContent, web
 }
 
 const createMessageContentCodeViewModel = (part: CodeMessageContent): MessageBlockViewModel => {
+  const tokens = Tokenize.tokenize(part.content, part.language || 'text')
   return {
     type: 'code',
     content: part.content,
     display: {
       language: part.language,
+      tokens,
     },
   }
 }

@@ -12,5 +12,6 @@ export interface MessageBlockViewModel {
     readonly blobUrl?: string
     readonly language?: string
     readonly className?: string
+    readonly tokens?: readonly any[]
   }
 }

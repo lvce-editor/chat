@@ -6,6 +6,7 @@ import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
+import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleSubmit = async (id: number) => {
@@ -21,7 +22,7 @@ export const handleSubmit = async (id: number) => {
 
   const newMessages = [...webView.messages, message]
 
-  await WebViewStates.update(id, {
+  await Update.update(id, {
     messages: newMessages,
     images: [],
     currentInput: '',
@@ -54,7 +55,7 @@ export const handleSubmit = async (id: number) => {
       webViewId: id,
     }
 
-    await WebViewStates.update(id, {
+    await Update.update(id, {
       ...webView,
       messages: [...newMessages, errorMessage],
     })

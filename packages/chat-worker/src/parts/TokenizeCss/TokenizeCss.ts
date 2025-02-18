@@ -49,8 +49,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
 
     // Handle selectors
     if (char === '.' || char === '#' || isAlpha(char)) {
-      let text = char
-      current++
+      let text = ''
       while (current < code.length && !isDelimiter(code[current]) && !isWhitespace(code[current])) {
         text += code[current]
         current++
@@ -76,11 +75,17 @@ export const tokenizeCss = (code: string): readonly Token[] => {
       tokens.push({ type: TokenType.Delimiter, text: char })
       current++
 
-      // Skip whitespace
+      // Skip whitespace after colon
+      let whitespace = ''
       while (current < code.length && isWhitespace(code[current])) {
+        whitespace += code[current]
         current++
       }
+      if (whitespace) {
+        tokens.push({ type: TokenType.Whitespace, text: whitespace })
+      }
 
+      // Capture value
       let text = ''
       while (current < code.length && code[current] !== ';' && code[current] !== '}') {
         text += code[current]

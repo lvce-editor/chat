@@ -11,14 +11,10 @@ const handlers = {
     event.target.reset()
   },
 
-  handleKeyDown: (event) => {
+  handleKeyDown: async (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
-      const form = event.target.closest('.Form')
-      if (form) {
-        const submitEvent = new Event('submit', { cancelable: true })
-        form.dispatchEvent(submitEvent)
-      }
+      await rpc.invoke('handleEnter')
     }
   },
 

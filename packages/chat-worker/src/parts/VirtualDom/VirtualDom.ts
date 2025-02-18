@@ -1,7 +1,7 @@
 export interface VirtualElement {
   type: string
   className?: string
-  children?: (VirtualElement | string)[]
+  children?: readonly (VirtualElement | string)[]
   textContent?: string
   name?: string
   placeholder?: string

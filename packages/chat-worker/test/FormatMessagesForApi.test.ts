@@ -1,6 +1,7 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 import type { Message } from '../src/parts/Message/Message.ts'
 import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 
 const mockToBase64 = jest.fn()
 
@@ -20,7 +21,7 @@ test('formats text content for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: 'text',
+          type: MessageContentType.Text,
           content: 'Hello world',
         },
       ],
@@ -50,7 +51,7 @@ test('formats code content for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: 'code',
+          type: MessageContentType.Code,
           content: 'const x = 1;',
           language: 'javascript',
         },
@@ -85,7 +86,7 @@ test('formats image content for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: 'image',
+          type: MessageContentType.Image,
           file: new File(['test'], 'test.png', { type: 'image/png' }),
           mediaType: 'image/png',
           fileName: 'test.png',
@@ -125,17 +126,17 @@ test('formats mixed content for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: 'text',
+          type: MessageContentType.Text,
           content: 'Here is an image:',
         },
         {
-          type: 'image',
+          type: MessageContentType.Image,
           file: new File(['test'], 'test.png', { type: 'image/png' }),
           mediaType: 'image/png',
           fileName: 'test.png',
         },
         {
-          type: 'code',
+          type: MessageContentType.Code,
           content: 'console.log("hello")',
           language: 'javascript',
         },
@@ -178,7 +179,7 @@ test('formats AI messages for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: 'text',
+          type: MessageContentType.Text,
           content: 'Hello, I am an AI',
         },
       ],

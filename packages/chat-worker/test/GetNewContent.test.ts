@@ -11,7 +11,7 @@ test('returns text content when only text input provided', () => {
   const result = GetNewContent.getNewContent('Hello world', [])
   expect(result).toEqual([
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Hello world',
     },
   ])
@@ -41,7 +41,7 @@ test('returns both image and text content when both provided', () => {
       fileName: 'test.png',
     },
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Hello world',
     },
   ])

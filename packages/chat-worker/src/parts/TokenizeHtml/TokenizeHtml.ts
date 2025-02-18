@@ -1,4 +1,5 @@
 import type { Token } from '../Token/Token.ts'
+import * as TokenType from '../TokenType/TokenType.ts'
 
 export const tokenizeHtml = (code: string): readonly Token[] => {
   const tokens: Token[] = []
@@ -17,13 +18,13 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: 'tag', text })
+      tokens.push({ type: TokenType.Tag, text })
       continue
     }
 
     // Handle tag endings
     if (char === '>') {
-      tokens.push({ type: 'tag', text: char })
+      tokens.push({ type: TokenType.Tag, text: char })
       current++
       continue
     }
@@ -38,11 +39,11 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
       }
 
       if (current < code.length && code[current] === '=') {
-        tokens.push({ type: 'attribute', text })
-        tokens.push({ type: 'operator', text: '=' })
+        tokens.push({ type: TokenType.Attribute, text })
+        tokens.push({ type: TokenType.Operator, text: '=' })
         current++
       } else {
-        tokens.push({ type: 'text', text })
+        tokens.push({ type: TokenType.Text, text })
       }
       continue
     }
@@ -58,7 +59,7 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
       }
 
       text += code[current]
-      tokens.push({ type: 'string', text })
+      tokens.push({ type: TokenType.String, text })
       current++
       continue
     }
@@ -72,12 +73,12 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: 'whitespace', text })
+      tokens.push({ type: TokenType.Whitespace, text })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: 'text', text: char })
+    tokens.push({ type: TokenType.Text, text: char })
     current++
   }
 

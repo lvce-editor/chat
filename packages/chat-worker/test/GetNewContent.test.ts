@@ -53,19 +53,19 @@ test('handles multiple images', () => {
   const result = GetNewContent.getNewContent('Hello world', [mockFile1, mockFile2])
   expect(result).toEqual([
     {
-      type: 'image',
+      type: MessageContentType.Image,
       file: mockFile1,
       mediaType: 'image/png',
       fileName: 'test1.png',
     },
     {
-      type: 'image',
+      type: MessageContentType.Image,
       file: mockFile2,
       mediaType: 'image/png',
       fileName: 'test2.png',
     },
     {
-      type: 'text',
+      type: MessageContentType.Text,
       content: 'Hello world',
     },
   ])

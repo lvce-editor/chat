@@ -1,9 +1,13 @@
 import type { Token } from '../Token/Token.ts'
 import * as TokenType from '../TokenType/TokenType.ts'
 
+type State = 'initial' | 'inSelector' | 'inBlock'
+
 export const tokenizeCss = (code: string): readonly Token[] => {
   const tokens: Token[] = []
   let current = 0
+  let state: State = 'initial'
+  const stateStack: State[] = []
 
   // CSS properties and values
   const properties = new Set([
@@ -47,28 +51,37 @@ export const tokenizeCss = (code: string): readonly Token[] => {
       continue
     }
 
+    // Handle opening block
+    if (char === '{') {
+      tokens.push({ type: TokenType.Delimiter, text: char })
+      stateStack.push(state)
+      state = 'inBlock'
+      current++
+      continue
+    }
+
+    // Handle closing block
+    if (char === '}') {
+      tokens.push({ type: TokenType.Delimiter, text: char })
+      state = stateStack.pop() || 'initial'
+      current++
+      continue
+    }
+
     // Handle selectors
-    if (
-      (tokens.length === 0 ||
-        (tokens[tokens.length - 1].type === TokenType.Delimiter && tokens[tokens.length - 1].text === '}') ||
-        tokens[tokens.length - 1].type === TokenType.Whitespace) &&
-      (char === '.' || char === '#' || isAlpha(char))
-    ) {
+    if ((state === 'initial' || state === 'inSelector') && (char === '.' || char === '#' || isAlpha(char))) {
       let text = ''
       while (current < code.length && !isDelimiter(code[current]) && !isWhitespace(code[current])) {
         text += code[current]
         current++
       }
       tokens.push({ type: TokenType.Selector, text })
+      state = 'inSelector'
       continue
     }
 
     // Handle properties
-    if (
-      isAlpha(char) &&
-      tokens.length > 0 &&
-      (tokens[tokens.length - 1].type === TokenType.Whitespace || tokens[tokens.length - 1].type === TokenType.Delimiter)
-    ) {
+    if (state === 'inBlock' && isAlpha(char)) {
       let text = ''
       while (current < code.length && (isAlphaNumeric(code[current]) || code[current] === '-')) {
         text += code[current]

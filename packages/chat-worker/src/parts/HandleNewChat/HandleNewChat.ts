@@ -1,7 +1,7 @@
-import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import * as Update from '../Update/Update.ts'
 
 export const handleNewChat = async (id: number) => {
-  await WebViewStates.update(id, {
+  await Update.update(id, {
     messages: [],
     currentInput: '',
     images: [],

@@ -1,6 +1,7 @@
 import type { WebView } from '../WebView/WebView.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
+import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
@@ -44,7 +45,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     currentInput: savedState?.currentInput || '',
   }
 
-  await WebViewStates.update(id, newWebView)
+  await Update.update(id, newWebView)
 
   if (!apiKey) {
     await port.invoke('setError', 'Missing Api Key')

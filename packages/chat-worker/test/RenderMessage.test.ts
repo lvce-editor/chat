@@ -172,7 +172,12 @@ test('renders message with mixed content types', () => {
               {
                 type: 'code',
                 className: 'CodeText',
-                textContent: 'console.log("hello");',
+                children: [
+                  {
+                    children: ['console.log("hello");'],
+                    type: 'span',
+                  },
+                ],
               },
             ],
           },

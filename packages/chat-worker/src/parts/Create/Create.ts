@@ -1,5 +1,8 @@
+import type { Message } from '../Message/Message.ts'
 import type { WebView } from '../WebView/WebView.ts'
+import * as ErrorCodes from '../ErrorCodes/ErrorCodes.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
@@ -48,7 +51,19 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   await Update.update(id, newWebView)
 
   if (!apiKey) {
-    await port.invoke('setError', 'Missing Api Key')
+    const errorMessage: Message = {
+      role: MessageRole.Ai,
+      content: [
+        {
+          type: 'text',
+          content: `Error: ${ErrorCodes.E_MISSING_API_KEY}: Missing API Key`,
+        },
+      ],
+      webViewId: id,
+    }
+    await Update.update(id, {
+      messages: [...restoredMessages, errorMessage],
+    })
   }
 
   // Only restore scroll position if there were saved messages

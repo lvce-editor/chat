@@ -398,3 +398,53 @@ body {
   color: var(--ButtonText);
   font-size: 16px;
 }
+
+/* Token colors for syntax highlighting */
+.TokenString {
+  color: #ce9178; /* Soft red for strings */
+}
+
+.TokenNumber {
+  color: #b5cea8; /* Light green for numbers */
+}
+
+.TokenKeyword {
+  color: #569cd6; /* Blue for keywords */
+}
+
+.TokenIdentifier {
+  color: #9cdcfe; /* Light blue for identifiers */
+}
+
+.TokenOperator {
+  color: #d4d4d4; /* Light gray for operators */
+}
+
+.TokenDelimiter {
+  color: #d4d4d4; /* Light gray for delimiters */
+}
+
+.TokenComment {
+  color: #6a9955; /* Green for comments */
+}
+
+.TokenTag {
+  color: #569cd6; /* Blue for HTML tags */
+}
+
+.TokenAttribute {
+  color: #9cdcfe; /* Light blue for HTML attributes */
+}
+
+.TokenWhitespace {
+  /* No specific color needed */
+}
+
+.TokenText {
+  color: #d4d4d4; /* Light gray for plain text */
+}
+
+/* Add some subtle hover effect for better UX */
+.Token:hover {
+  opacity: 0.9;
+}

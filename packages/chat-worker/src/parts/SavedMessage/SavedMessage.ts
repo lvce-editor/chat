@@ -22,6 +22,6 @@ interface SavedImageContent extends SavedMessageContent {
 export type SavedContent = SavedTextContent | SavedCodeContent | SavedImageContent
 
 export interface SavedMessage {
-  readonly role: 'human' | 'ai'
+  readonly role: number
   readonly content: readonly SavedContent[]
 }

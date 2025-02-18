@@ -3,6 +3,7 @@
  */
 import { test, expect, jest, beforeEach } from '@jest/globals'
 import type { Message } from '../src/parts/Message/Message.ts'
+import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 
 const mockPort = {
   invoke: jest.fn(),
@@ -26,7 +27,7 @@ const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel
 
 test('creates view model for text message', async () => {
   const message: Message = {
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     content: [
       {
@@ -39,7 +40,7 @@ test('creates view model for text message', async () => {
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     blocks: [
       {
@@ -53,7 +54,7 @@ test('creates view model for text message', async () => {
 
 test('creates view model for code block', async () => {
   const message: Message = {
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     content: [
       {
@@ -67,7 +68,7 @@ test('creates view model for code block', async () => {
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     blocks: [
       {
@@ -88,7 +89,7 @@ test('creates view model for image with File', async () => {
   mockPort.invoke.mockResolvedValue('blob:test-url')
 
   const message: Message = {
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     content: [
       {
@@ -103,7 +104,7 @@ test('creates view model for image with File', async () => {
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     blocks: [
       {
@@ -120,7 +121,7 @@ test('creates view model for image with File', async () => {
 
 test.skip('creates view model for image without File', async () => {
   const message: Message = {
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     content: [
       {
@@ -135,7 +136,7 @@ test.skip('creates view model for image without File', async () => {
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     blocks: [
       {
@@ -156,7 +157,7 @@ test('creates view model for mixed content', async () => {
   const file = new File(['test'], 'test.png', { type: 'image/png' })
 
   const message: Message = {
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     content: [
       {
@@ -180,7 +181,7 @@ test('creates view model for mixed content', async () => {
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     blocks: [
       {

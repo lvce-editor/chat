@@ -4,6 +4,7 @@ import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -13,7 +14,7 @@ export const handleSubmit = async (id: number) => {
   const newContent = getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
-    role: 'human',
+    role: MessageRole.Human,
     content: newContent,
     webViewId: id,
   }
@@ -43,7 +44,7 @@ export const handleSubmit = async (id: number) => {
     await HandleApiResponse.handleApiResponse(id, body)
   } catch (error) {
     const errorMessage: Message = {
-      role: 'ai',
+      role: MessageRole.Ai,
       content: [
         {
           type: 'text',

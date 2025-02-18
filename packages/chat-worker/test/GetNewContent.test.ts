@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import * as GetNewContent from '../src/parts/GetNewContent/GetNewContent.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 
 test('returns empty array when no input and no images', () => {
   const result = GetNewContent.getNewContent('', [])
@@ -68,4 +69,52 @@ test('handles multiple images', () => {
       content: 'Hello world',
     },
   ])
+})
+
+test('creates text content from input', () => {
+  const result = GetNewContent.getNewContent('Hello', [])
+
+  expect(result).toEqual([
+    {
+      type: MessageContentType.Text,
+      content: 'Hello',
+    },
+  ])
+})
+
+test('creates image content from files', () => {
+  const file = new File(['test'], 'test.png', { type: 'image/png' })
+  const result = GetNewContent.getNewContent('', [file])
+
+  expect(result).toEqual([
+    {
+      type: MessageContentType.Image,
+      file,
+      mediaType: 'image/png',
+      fileName: 'test.png',
+    },
+  ])
+})
+
+test('creates mixed content from input and files', () => {
+  const file = new File(['test'], 'test.png', { type: 'image/png' })
+  const result = GetNewContent.getNewContent('Hello', [file])
+
+  expect(result).toEqual([
+    {
+      type: MessageContentType.Image,
+      file,
+      mediaType: 'image/png',
+      fileName: 'test.png',
+    },
+    {
+      type: MessageContentType.Text,
+      content: 'Hello',
+    },
+  ])
+})
+
+test('returns empty array when no input or files', () => {
+  const result = GetNewContent.getNewContent('', [])
+  expect(result).toEqual([])
 })

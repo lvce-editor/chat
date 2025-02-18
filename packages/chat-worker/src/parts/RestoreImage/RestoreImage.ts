@@ -1,5 +1,6 @@
 import type { ImageMessageContent } from '../MessageContent/MessageContent.ts'
 import * as GetImageFromCache from '../GetImageFromCache/GetImageFromCache.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as ResponseToFile from '../ResponseToFile/ResponseToFile.ts'
 
 export const restoreImage = async (
@@ -8,7 +9,7 @@ export const restoreImage = async (
   cacheBaseUrl: string,
   savedContent: any,
 ): Promise<ImageMessageContent> => {
-  if (savedContent.type === 'image') {
+  if (savedContent.type === MessageContentType.Image) {
     const image = await GetImageFromCache.getImageFromCache(cacheName, cacheBaseUrl, savedContent.fileName)
     if (!image) {
       return savedContent

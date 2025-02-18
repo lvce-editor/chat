@@ -1,20 +1,20 @@
 interface SavedMessageContent {
-  readonly type: string
+  readonly type: number
 }
 
 interface SavedTextContent extends SavedMessageContent {
-  readonly type: 'text'
+  readonly type: 1
   readonly content: string
 }
 
 interface SavedCodeContent extends SavedMessageContent {
-  readonly type: 'code'
+  readonly type: 2
   readonly content: string
   readonly language: string
 }
 
 interface SavedImageContent extends SavedMessageContent {
-  readonly type: 'image'
+  readonly type: 3
   readonly fileName: string
   readonly mediaType: string
 }

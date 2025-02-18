@@ -4,11 +4,11 @@ import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import { getNewContent } from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-
 export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
 
@@ -48,7 +48,7 @@ export const handleSubmit = async (id: number) => {
       role: MessageRole.Ai,
       content: [
         {
-          type: 'text',
+          type: MessageContentType.Text,
           content: `Error: ${error}`,
         },
       ],

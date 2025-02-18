@@ -1,18 +1,19 @@
 import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import type { SavedContent } from '../SavedMessage/SavedMessage.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const serializeContent = (content: MessageContent): SavedContent => {
   switch (content.type) {
-    case 'image': {
+    case MessageContentType.Image: {
       return {
-        type: content.type,
+        type: MessageContentType.Image,
         mediaType: content.mediaType,
         fileName: content.fileName,
       }
     }
-    case 'code':
+    case MessageContentType.Code:
       return {
-        type: content.type,
+        type: MessageContentType.Code,
         content: content.content,
         language: content.language || '',
       }

@@ -2,17 +2,18 @@ import { test, expect } from '@jest/globals'
 import type { CodeMessageContent } from '../src/parts/MessageContent/MessageContent.ts'
 import * as CreateMessageContentViewModel from '../src/parts/CreateMessageContentViewModel/CreateMessageContentViewModel.ts'
 import * as TokenType from '../src/parts/TokenType/TokenType.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 
 test('creates view model for code block with tokens', async () => {
   const part: CodeMessageContent = {
-    type: 'code',
+    type: MessageContentType.Code,
     content: 'def hello():\n    print("Hello")',
     language: 'python',
   }
 
   const result = await CreateMessageContentViewModel.createMessageContentViewModel(part, {})
 
-  expect(result.type).toBe('code')
+  expect(result.type).toBe(MessageContentType.Code)
   expect(result.content).toBe('def hello():\n    print("Hello")')
   expect(result.display.language).toBe('python')
   expect(result.display.tokens).toEqual([

@@ -1,4 +1,5 @@
 import type { MessageContent } from '../MessageContent/MessageContent.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const formatMessage = (text: string): readonly MessageContent[] => {
   const blocks: MessageContent[] = []
@@ -13,7 +14,7 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
       const remainingText = text.slice(current).trim()
       if (remainingText) {
         blocks.push({
-          type: 'text',
+          type: MessageContentType.Text,
           content: remainingText,
         })
       }
@@ -24,7 +25,7 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
     const textBeforeCode = text.slice(current, codeBlockStart).trim()
     if (textBeforeCode) {
       blocks.push({
-        type: 'text',
+        type: MessageContentType.Text,
         content: textBeforeCode,
       })
     }
@@ -44,7 +45,7 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
 
     if (code) {
       blocks.push({
-        type: 'code',
+        type: MessageContentType.Code,
         language: language || 'text',
         content: code,
       })

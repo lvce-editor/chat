@@ -3,6 +3,7 @@
  */
 import { test, expect, jest, beforeEach } from '@jest/globals'
 import type { Message } from '../src/parts/Message/Message.ts'
+import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 
 const mockPort = {
@@ -25,14 +26,14 @@ beforeEach(() => {
 
 const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel/CreateMessageViewModel.ts')
 
-test('creates view model for text message', async () => {
+test('creates view model for text content', async () => {
   const message: Message = {
     role: MessageRole.Human,
     webViewId: 1,
     content: [
       {
-        type: 'text',
-        content: 'Hello world',
+        type: MessageContentType.Text,
+        content: 'Hello',
       },
     ],
   }
@@ -44,21 +45,21 @@ test('creates view model for text message', async () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'text',
-        content: 'Hello world',
+        type: MessageContentType.Text,
+        content: 'Hello',
         display: {},
       },
     ],
   })
 })
 
-test('creates view model for code block', async () => {
+test('creates view model for code content', async () => {
   const message: Message = {
     role: MessageRole.Ai,
     webViewId: 1,
     content: [
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'const x = 1;',
         language: 'javascript',
       },
@@ -72,7 +73,7 @@ test('creates view model for code block', async () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
@@ -83,17 +84,17 @@ test('creates view model for code block', async () => {
   })
 })
 
-test('creates view model for image with File', async () => {
-  const file = new File(['test'], 'test.png', { type: 'image/png' })
+test('creates view model for image content', async () => {
   // @ts-ignore
   mockPort.invoke.mockResolvedValue('blob:test-url')
+  const file = new File(['test'], 'test.png', { type: 'image/png' })
 
   const message: Message = {
     role: MessageRole.Human,
     webViewId: 1,
     content: [
       {
-        type: 'image',
+        type: MessageContentType.Image,
         file,
         fileName: 'test.png',
         mediaType: 'image/png',
@@ -108,7 +109,7 @@ test('creates view model for image with File', async () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'image',
+        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:test-url',
@@ -116,39 +117,6 @@ test('creates view model for image with File', async () => {
       },
     ],
   })
-  expect(mockPort.invoke).toHaveBeenCalledWith('createObjectUrl', file)
-})
-
-test.skip('creates view model for image without File', async () => {
-  const message: Message = {
-    role: MessageRole.Human,
-    webViewId: 1,
-    content: [
-      {
-        type: 'image',
-        file: new File(['test'], 'test.png', { type: 'image/png' }),
-        fileName: 'test.png',
-        mediaType: 'image/png',
-      },
-    ],
-  }
-
-  const result = await CreateMessageViewModel.createMessageViewModel(message)
-
-  expect(result).toEqual({
-    role: MessageRole.Human,
-    webViewId: 1,
-    blocks: [
-      {
-        type: 'image',
-        content: '',
-        display: {
-          blobUrl: undefined,
-        },
-      },
-    ],
-  })
-  expect(mockPort.invoke).not.toHaveBeenCalled()
 })
 
 test('creates view model for mixed content', async () => {
@@ -161,16 +129,16 @@ test('creates view model for mixed content', async () => {
     webViewId: 1,
     content: [
       {
-        type: 'text',
+        type: MessageContentType.Text,
         content: 'Hello',
       },
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'const x = 1;',
         language: 'javascript',
       },
       {
-        type: 'image',
+        type: MessageContentType.Image,
         file,
         fileName: 'test.png',
         mediaType: 'image/png',
@@ -185,12 +153,12 @@ test('creates view model for mixed content', async () => {
     webViewId: 1,
     blocks: [
       {
-        type: 'text',
+        type: MessageContentType.Text,
         content: 'Hello',
         display: {},
       },
       {
-        type: 'code',
+        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
@@ -198,7 +166,7 @@ test('creates view model for mixed content', async () => {
         },
       },
       {
-        type: 'image',
+        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:test-url',

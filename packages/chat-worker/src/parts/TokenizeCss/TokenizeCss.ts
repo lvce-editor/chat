@@ -66,7 +66,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
     // Handle properties
     if (isAlpha(char) && (current === 0 || isWhitespace(code[current - 1]) || code[current - 1] === '{')) {
       let text = ''
-      while (current < code.length && (isAlphaNumeric(code[current]) || code[current] === '-')) {
+      while (current < code.length && (isAlphaNumeric(code[current]) || code[current] === '-') && code[current] !== ':') {
         text += code[current]
         current++
       }

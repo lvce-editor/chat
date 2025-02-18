@@ -1,7 +1,7 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 import type { Message } from '../src/parts/Message/Message.ts'
-import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
+import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 
 const mockToBase64 = jest.fn()
 

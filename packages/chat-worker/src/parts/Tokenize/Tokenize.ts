@@ -1,7 +1,7 @@
 import type { Token } from '../Token/Token.ts'
+import * as TokenizeCss from '../TokenizeCss/TokenizeCss.ts'
 import * as TokenizeHtml from '../TokenizeHtml/TokenizeHtml.ts'
 import * as TokenizePython from '../TokenizePython/TokenizePython.ts'
-import * as TokenizeCss from '../TokenizeCss/TokenizeCss.ts'
 
 export const tokenize = (code: string, language: string): readonly Token[] => {
   switch (language.toLowerCase()) {

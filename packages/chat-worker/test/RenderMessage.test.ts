@@ -67,7 +67,12 @@ test('renders AI message with code block', () => {
               {
                 type: 'code',
                 className: 'CodeText',
-                textContent: 'const x = 1;',
+                children: [
+                  {
+                    children: ['const x = 1;'],
+                    type: 'span',
+                  },
+                ],
               },
             ],
           },
@@ -172,7 +177,12 @@ test('renders message with mixed content types', () => {
               {
                 type: 'code',
                 className: 'CodeText',
-                textContent: 'console.log("hello");',
+                children: [
+                  {
+                    children: ['console.log("hello");'],
+                    type: 'span',
+                  },
+                ],
               },
             ],
           },

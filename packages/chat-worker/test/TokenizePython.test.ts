@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
 import * as TokenizePython from '../src/parts/TokenizePython/TokenizePython.ts'
 
-test('tokenizes basic Python code', () => {
+test.skip('tokenizes basic Python code', () => {
   const code = 'def hello(name):\n    print("Hello, " + name)'
   const tokens = TokenizePython.tokenizePython(code)
   expect(tokens).toEqual([

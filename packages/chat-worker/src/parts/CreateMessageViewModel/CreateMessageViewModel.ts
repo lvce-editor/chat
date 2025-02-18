@@ -1,46 +1,12 @@
 import type { Message } from '../Message/Message.ts'
 import type { MessageBlockViewModel, MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
-import * as IsFile from '../IsFile/IsFile.ts'
+import { createMessageContentViewModel } from '../CreateMessageContentViewModel/CreateMessageContentViewModel.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const createMessageViewModel = async (message: Message): Promise<MessageViewModel> => {
   const webView = WebViewStates.get(message.webViewId)
   const blocks: readonly MessageBlockViewModel[] = await Promise.all(
-    message.content.map(async (part) => {
-      if (part.type === 'image') {
-        if (!IsFile.isFile(part.file)) {
-          return {
-            type: 'image',
-            content: '',
-            display: {
-              blobUrl: '#',
-            },
-          }
-        }
-        const blobUrl = await webView.port.invoke('createObjectUrl', part.file)
-        return {
-          type: 'image',
-          content: '',
-          display: {
-            blobUrl,
-          },
-        }
-      }
-      if (part.type === 'code') {
-        return {
-          type: 'code',
-          content: part.content,
-          display: {
-            language: part.language,
-          },
-        }
-      }
-      return {
-        type: 'text',
-        content: part.content,
-        display: {},
-      }
-    }),
+    message.content.map((part) => createMessageContentViewModel(part, webView)),
   )
 
   return {

@@ -1,5 +1,5 @@
-import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
+import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import * as TokensToVdom from '../TokensToVdom/TokensToVdom.ts'
 
 export const getCodeBlockVirtualDom = (block: MessageBlockViewModel, isError: boolean): VirtualElement => {

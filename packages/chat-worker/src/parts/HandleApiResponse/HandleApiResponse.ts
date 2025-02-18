@@ -1,5 +1,6 @@
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const handleApiResponse = async (id: number, body: ReadableStream) => {
@@ -13,7 +14,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
         messages: [
           ...currentWebView.messages,
           {
-            role: 'ai',
+            role: MessageRole.Ai,
             content: [],
             webViewId: id,
           },
@@ -30,7 +31,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
         messages: [
           ...currentWebView.messages.slice(0, -1),
           {
-            role: 'ai',
+            role: MessageRole.Ai,
             content,
             webViewId: id,
           },
@@ -46,7 +47,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
         messages: [
           ...currentWebView.messages.slice(0, -1),
           {
-            role: 'ai',
+            role: MessageRole.Ai,
             content,
             webViewId: id,
           },

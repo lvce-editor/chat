@@ -1,6 +1,6 @@
 // View-specific model with display-ready data
 export interface MessageViewModel {
-  readonly role: 'human' | 'ai'
+  readonly role: number
   readonly blocks: readonly MessageBlockViewModel[]
   readonly webViewId: number
 }

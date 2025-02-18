@@ -1,5 +1,6 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 import type { Message } from '../src/parts/Message/Message.ts'
+import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 
 const mockToBase64 = jest.fn()
 
@@ -15,7 +16,7 @@ test('formats text content for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: 'human',
+      role: MessageRole.Human,
       webViewId: 1,
       content: [
         {
@@ -45,7 +46,7 @@ test('formats code content for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: 'human',
+      role: MessageRole.Human,
       webViewId: 1,
       content: [
         {
@@ -80,7 +81,7 @@ test('formats image content for api', async () => {
 
   const messages: readonly Message[] = [
     {
-      role: 'human',
+      role: MessageRole.Human,
       webViewId: 1,
       content: [
         {
@@ -120,7 +121,7 @@ test('formats mixed content for api', async () => {
 
   const messages: readonly Message[] = [
     {
-      role: 'human',
+      role: MessageRole.Human,
       webViewId: 1,
       content: [
         {
@@ -173,7 +174,7 @@ test('formats AI messages for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: 'ai',
+      role: MessageRole.Ai,
       webViewId: 1,
       content: [
         {

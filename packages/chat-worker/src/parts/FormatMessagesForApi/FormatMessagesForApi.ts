@@ -1,5 +1,11 @@
 import type { Message } from '../Message/Message.ts'
-import type { CodeMessageContent, ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
+import type {
+  CodeMessageContent,
+  ImageMessageContent,
+  MessageContent,
+  TextMessageContent,
+} from '../MessageContent/MessageContent.ts'
+import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as ToBase64 from '../ToBase64/ToBase64.ts'
 
 const formatContentPartImageForApi = async (block: ImageMessageContent) => {
@@ -20,6 +26,7 @@ const formatContentPartTextForApi = (block: TextMessageContent) => {
     text: block.content,
   }
 }
+
 const formatCodePartForApi = (block: CodeMessageContent) => {
   return {
     type: 'text',
@@ -43,7 +50,7 @@ const formatContentsForApi = async (content: readonly MessageContent[]) => {
 
 const formatMessageForApi = async (message: Message) => {
   return {
-    role: message.role === 'human' ? 'user' : 'assistant',
+    role: message.role === MessageRole.Human ? 'user' : 'assistant',
     content: await formatContentsForApi(message.content),
   }
 }

@@ -1,10 +1,11 @@
 import { test, expect } from '@jest/globals'
 import type { MessageViewModel } from '../src/parts/MessageViewModel/MessageViewModel.ts'
+import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 import * as RenderMessage from '../src/parts/RenderMessage/RenderMessage.ts'
 
 test('renders human message with text content', () => {
   const viewModel: MessageViewModel = {
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     blocks: [
       {
@@ -37,7 +38,7 @@ test('renders human message with text content', () => {
 
 test('renders AI message with code block', () => {
   const viewModel: MessageViewModel = {
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     blocks: [
       {
@@ -84,7 +85,7 @@ test('renders AI message with code block', () => {
 
 test('renders message with image block', () => {
   const viewModel: MessageViewModel = {
-    role: 'human',
+    role: MessageRole.Human,
     webViewId: 1,
     blocks: [
       {
@@ -126,7 +127,7 @@ test('renders message with image block', () => {
 
 test('renders message with mixed content types', () => {
   const viewModel: MessageViewModel = {
-    role: 'ai',
+    role: MessageRole.Ai,
     webViewId: 1,
     blocks: [
       {

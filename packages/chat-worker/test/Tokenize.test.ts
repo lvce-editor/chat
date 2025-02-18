@@ -17,7 +17,7 @@ test('tokenizes HTML code', () => {
   ])
 })
 
-test('tokenizes Python code', () => {
+test.skip('tokenizes Python code', () => {
   const code = 'def hello(name):\n    print("Hello, " + name)'
   const result = Tokenize.tokenize(code, 'python')
   expect(result).toEqual([

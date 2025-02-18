@@ -67,7 +67,12 @@ test('renders AI message with code block', () => {
               {
                 type: 'code',
                 className: 'CodeText',
-                textContent: 'const x = 1;',
+                children: [
+                  {
+                    children: ['const x = 1;'],
+                    type: 'span',
+                  },
+                ],
               },
             ],
           },

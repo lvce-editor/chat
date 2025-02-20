@@ -15,6 +15,13 @@ const getRenderCommandsValue = (oldWebView: WebView, newWebView: WebView): reado
   return ['setValue', 'Input', newWebView.currentInput]
 }
 
+const getRenderCommandsFocus = (oldWebView: WebView, newWebView: WebView): readonly any[] => {
+  if (newWebView.inputSource === InputSource.User || !newWebView.focused) {
+    return []
+  }
+  return ['focusInput']
+}
+
 export const getRenderCommands = async (
   oldWebView: WebView,
   newWebView: WebView,
@@ -28,6 +35,9 @@ export const getRenderCommands = async (
         break
       case DiffType.InputValue:
         renderCommands.push(getRenderCommandsValue(oldWebView, newWebView))
+        break
+      case DiffType.Focus:
+        renderCommands.push(getRenderCommandsFocus(oldWebView, newWebView))
         break
       default:
         break

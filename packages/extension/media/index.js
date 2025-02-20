@@ -74,14 +74,6 @@ const handlers = {
 
     await rpc.invoke('handleImageUpload', file)
   },
-
-  focusInput: () => {
-    const input = document.querySelector('.Input')
-    if (input) {
-      // @ts-ignore
-      input.focus()
-    }
-  },
 }
 
 const render = (vdom) => {
@@ -202,6 +194,14 @@ const setValue = (name, value) => {
   }
 }
 
+const focusInput = () => {
+  const input = document.querySelector('.Input')
+  if (input) {
+    // @ts-ignore
+    input.focus()
+  }
+}
+
 const rpc = globalThis.lvceRpc({
   setScrollPosition,
   checkIsBottom,
@@ -211,4 +211,5 @@ const rpc = globalThis.lvceRpc({
     return URL.createObjectURL(blob)
   },
   render,
+  focusInput,
 })

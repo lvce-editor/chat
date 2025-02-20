@@ -37,6 +37,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     isScrolledToBottom: false,
     previewImageUrl: '',
     inputSource: InputSource.Script,
+    focused: false,
   }
   WebViewStates.set(id, webView)
 
@@ -45,11 +46,16 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const newWebView: Partial<WebView> = {
     messages: restoredMessages,
     scrollOffset: savedState?.scrollOffset || 0,
-    inputSource: InputSource.Script,
+    inputSource: savedState?.inputSource || InputSource.Script,
     currentInput: savedState?.currentInput || '',
+    focused: savedState?.focused || false,
   }
 
   await Update.update(id, newWebView)
+
+  if (savedState?.focused) {
+    await port.invoke('focusInput')
+  }
 
   if (!apiKey) {
     const errorMessage: Message = {

@@ -1,3 +1,4 @@
+import * as InputSource from '../InputSource/InputSource.ts'
 import * as Update from '../Update/Update.ts'
 
 export const handleNewChat = async (id: number) => {
@@ -6,5 +7,7 @@ export const handleNewChat = async (id: number) => {
     currentInput: '',
     images: [],
     previewImageUrl: '',
+    focused: true,
+    inputSource: InputSource.Script,
   })
 }

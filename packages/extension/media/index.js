@@ -74,6 +74,14 @@ const handlers = {
 
     await rpc.invoke('handleImageUpload', file)
   },
+
+  focusInput: () => {
+    const input = document.querySelector('.Input')
+    if (input) {
+      // @ts-ignore
+      input.focus()
+    }
+  },
 }
 
 const render = (vdom) => {

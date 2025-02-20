@@ -18,4 +18,5 @@ export interface WebView {
   readonly time: number
   readonly url: string
   readonly inputSource: number
+  readonly focused: boolean
 }

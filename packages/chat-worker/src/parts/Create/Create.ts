@@ -46,7 +46,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const newWebView: Partial<WebView> = {
     messages: restoredMessages,
     scrollOffset: savedState?.scrollOffset || 0,
-    inputSource: savedState?.inputSource || InputSource.Script,
+    inputSource: InputSource.Script,
     currentInput: savedState?.currentInput || '',
     focused: savedState?.focused || false,
   }

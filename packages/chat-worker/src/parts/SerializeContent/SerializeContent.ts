@@ -17,6 +17,13 @@ export const serializeContent = (content: MessageContent): SavedContent => {
         content: content.content,
         language: content.language || '',
       }
+    case MessageContentType.List: {
+      return {
+        type: MessageContentType.Code,
+        content: '',
+        language: '',
+      }
+    }
     default:
       return content
   }

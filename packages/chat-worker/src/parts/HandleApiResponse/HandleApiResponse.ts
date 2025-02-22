@@ -1,10 +1,9 @@
-import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import { Message } from '../Message/Message.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const handleApiResponse = async (id: number, body: ReadableStream) => {
   let currentMessage = ''

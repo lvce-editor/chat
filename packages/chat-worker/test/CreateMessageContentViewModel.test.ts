@@ -7,7 +7,7 @@ import * as TokenType from '../src/parts/TokenType/TokenType.ts'
 test('creates view model for code block with tokens', async () => {
   const part: MessageContent = {
     type: MessageContentType.Text,
-    content: '```python\ndef hello():\n    print("Hello")```',
+    content: '```python\ndef hello():\n    print("Hello")\n```',
   }
 
   const [result] = await CreateMessageContentViewModel.createMessageContentViewModel(part, {})

@@ -16,6 +16,7 @@
   --ScrollbarThumb: #424242;
   --ScrollbarThumbHover: #4f4f4f;
   --FontFamily: system-ui, Ubuntu, 'Droid Sans', sans-serif;
+  --CodeFontFamily: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
 }
 
 * {
@@ -214,7 +215,7 @@ body {
 }
 
 .CodeText {
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: var(--CodeFontFamily);
   font-size: 13px;
 }
 

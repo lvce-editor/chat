@@ -9,7 +9,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
     type: 'div',
-    className: isError ? 'MessageError' : (role === MessageRole.Human ? 'MessageHuman' : 'MessageAi'),
+    className: isError ? 'MessageError' : role === MessageRole.Human ? 'MessageHuman' : 'MessageAi',
   }
 
   const wrappedMessage: VirtualElement = {
@@ -20,10 +20,11 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
 
   const blocksHtml = blocks.map((block) => {
     if (block.type === MessageContentType.List) {
+      const items = block.items || []
       return {
         type: 'ul',
         className: 'MessageList',
-        children: block.items.map((item) => ({
+        children: items.map((item) => ({
           type: 'li',
           className: 'MessageListItem',
           textContent: item,

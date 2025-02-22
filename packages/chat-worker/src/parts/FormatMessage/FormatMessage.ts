@@ -26,7 +26,8 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
       case 'Normal':
         if (trimmedLine.startsWith('- ')) {
           state = 'InUnorderedList'
-          listItems = [trimmedLine.slice(2)]
+          const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
+          listItems = [content]
         } else if (/^\d+\.\s/.test(trimmedLine)) {
           state = 'InOrderedList'
           listItems = [trimmedLine.replace(/^\d+\.\s/, '')]
@@ -44,7 +45,8 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
 
       case 'InUnorderedList':
         if (trimmedLine.startsWith('- ')) {
-          listItems.push(trimmedLine.slice(2))
+          const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
+          listItems.push(content)
         } else {
           blocks.push({
             type: MessageContentType.List,

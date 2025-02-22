@@ -82,15 +82,32 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
         }
         break
     }
-  }
 
-  // Handle any remaining list items at the end
-  if (listItems.length > 0) {
-    blocks.push({
-      type: MessageContentType.List,
-      items: listItems,
-      ordered: state === 'InOrderedList',
-    })
+    if (i === lines.length - 1) {
+      switch (state) {
+        case 'InCodeBlock':
+          blocks.push({
+            type: MessageContentType.Code,
+            language: language || 'text',
+            content: codeContent.trim(),
+          })
+          break
+        case 'InUnorderedList':
+          blocks.push({
+            type: MessageContentType.List,
+            items: listItems,
+            ordered: false,
+          })
+          break
+        case 'InOrderedList':
+          blocks.push({
+            type: MessageContentType.List,
+            items: listItems,
+            ordered: true,
+          })
+          break
+      }
+    }
   }
 
   return blocks

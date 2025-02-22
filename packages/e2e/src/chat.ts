@@ -1,9 +1,13 @@
+import type { Test } from '@lvce-editor/test-with-playwright'
+
 export const name = 'chat'
 
-export const skip = true
+export const test: Test = async ({ Main, Locator, expect }) => {
+  // act
+  await Main.openUri('test://example.chat')
 
-export const test = async ({ FileSystem, Main, Editor, Locator, expect }) => {
-  // TODO verify media preview opens
-  // TODO add tests for different files types
-  // TODO add tests for errors
+  // assert
+  const webview = Locator('.WebViewIframe')
+  await expect(webview).toBeVisible()
+  await expect(webview).toHaveAttribute('title', 'Chat')
 }

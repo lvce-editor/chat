@@ -1,11 +1,5 @@
 import type { Message } from '../Message/Message.ts'
-import type {
-  CodeMessageContent,
-  ImageMessageContent,
-  ListMessageContent,
-  MessageContent,
-  TextMessageContent,
-} from '../MessageContent/MessageContent.ts'
+import type { ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as ToBase64 from '../ToBase64/ToBase64.ts'
@@ -29,31 +23,11 @@ const formatContentPartTextForApi = (block: TextMessageContent) => {
   }
 }
 
-const formatCodePartForApi = (block: CodeMessageContent) => {
-  return {
-    type: 'text',
-    text: block.content,
-  }
-}
-
-const formatListPartForApi = (block: ListMessageContent) => {
-  return {
-    type: 'text',
-    text: block.items.map((item) => `- ${item}`).join('\n'),
-  }
-}
-
 const formatContentPartForApi = (block: MessageContent) => {
   if (block.type === MessageContentType.Image) {
     return formatContentPartImageForApi(block)
   }
-  if (block.type === MessageContentType.Text) {
-    return formatContentPartTextForApi(block)
-  }
-  if (block.type === MessageContentType.List) {
-    return formatListPartForApi(block)
-  }
-  return formatCodePartForApi(block)
+  return formatContentPartTextForApi(block)
 }
 
 const formatContentsForApi = async (contents: readonly MessageContent[]) => {

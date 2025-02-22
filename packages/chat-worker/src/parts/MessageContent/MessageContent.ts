@@ -20,4 +20,9 @@ export interface ImageMessageContent extends BaseMessageContent {
   readonly mediaType: string
 }
 
-export type MessageContent = ImageMessageContent | CodeMessageContent | TextMessageContent
+export interface ListMessageContent extends BaseMessageContent {
+  readonly type: 4 // List
+  readonly items: readonly string[]
+}
+
+export type MessageContent = ImageMessageContent | CodeMessageContent | TextMessageContent | ListMessageContent

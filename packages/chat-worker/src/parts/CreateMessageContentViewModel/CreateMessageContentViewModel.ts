@@ -3,6 +3,7 @@ import type {
   ImageMessageContent,
   MessageContent,
   TextMessageContent,
+  ListMessageContent,
 } from '../MessageContent/MessageContent.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as IsFile from '../IsFile/IsFile.ts'
@@ -49,12 +50,24 @@ const createMessageContentTextViewModel = (part: TextMessageContent): MessageBlo
   }
 }
 
+const createMessageContentListViewModel = (part: ListMessageContent): MessageBlockViewModel => {
+  return {
+    type: MessageContentType.List,
+    content: '',
+    items: part.items,
+    display: {},
+  }
+}
+
 export const createMessageContentViewModel = async (part: MessageContent, webView: any): Promise<MessageBlockViewModel> => {
   if (part.type === MessageContentType.Image) {
     return createMessageContentImageViewModel(part, webView)
   }
   if (part.type === MessageContentType.Code) {
     return createMessageContentCodeViewModel(part)
+  }
+  if (part.type === MessageContentType.List) {
+    return createMessageContentListViewModel(part)
   }
   return createMessageContentTextViewModel(part)
 }

@@ -1,7 +1,7 @@
 import type { MessageContent } from '../MessageContent/MessageContent.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
-type State = 'Normal' | 'InUnorderedList' | 'InOrderedList' | 'InCodeBlock'
+type State = 'Normal' | 'InList' | 'InCodeBlock'
 
 export const formatMessage = (text: string): readonly MessageContent[] => {
   const blocks: MessageContent[] = []
@@ -19,11 +19,8 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
     switch (state) {
       case 'Normal':
         if (trimmedLine.startsWith('- ')) {
-          state = 'InUnorderedList'
+          state = 'InList'
           listItems = [trimmedLine.slice(2)]
-        } else if (/^\d+\.\s/.test(trimmedLine)) {
-          state = 'InOrderedList'
-          listItems = [trimmedLine.replace(/^\d+\.\s/, '')]
         } else if (trimmedLine.startsWith('```')) {
           state = 'InCodeBlock'
           language = trimmedLine.slice(3).trim()
@@ -36,29 +33,13 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
         }
         break
 
-      case 'InUnorderedList':
+      case 'InList':
         if (trimmedLine.startsWith('- ')) {
           listItems.push(trimmedLine.slice(2))
         } else {
           blocks.push({
             type: MessageContentType.List,
             items: listItems,
-            ordered: false,
-          })
-          listItems = []
-          state = 'Normal'
-          i-- // Reprocess this line in Normal state
-        }
-        break
-
-      case 'InOrderedList':
-        if (/^\d+\.\s/.test(trimmedLine)) {
-          listItems.push(trimmedLine.replace(/^\d+\.\s/, ''))
-        } else {
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: true,
           })
           listItems = []
           state = 'Normal'
@@ -82,32 +63,20 @@ export const formatMessage = (text: string): readonly MessageContent[] => {
         }
         break
     }
+  }
 
-    if (i === lines.length - 1) {
-      switch (state) {
-        case 'InCodeBlock':
-          blocks.push({
-            type: MessageContentType.Code,
-            language: language || 'text',
-            content: codeContent.trim(),
-          })
-          break
-        case 'InUnorderedList':
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: false,
-          })
-          break
-        case 'InOrderedList':
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: true,
-          })
-          break
-      }
-    }
+  // Handle any remaining content based on final state
+  if (state === 'InList' && listItems.length > 0) {
+    blocks.push({
+      type: MessageContentType.List,
+      items: listItems,
+    })
+  } else if (state === 'InCodeBlock' && codeContent) {
+    blocks.push({
+      type: MessageContentType.Code,
+      language: language || 'text',
+      content: codeContent.trim(),
+    })
   }
 
   return blocks

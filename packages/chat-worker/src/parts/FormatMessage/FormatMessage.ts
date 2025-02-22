@@ -1,10 +1,16 @@
-import type { MessageContent } from '../MessageContent/MessageContent.ts'
+import type {
+  FormattedCodeContent,
+  FormattedListContent,
+  FormattedTextContent,
+} from '../FormattedMessageContent/FormattedMessageContent.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 type State = 'Normal' | 'InUnorderedList' | 'InOrderedList' | 'InCodeBlock'
 
-export const formatMessage = (text: string): readonly MessageContent[] => {
-  const blocks: MessageContent[] = []
+export type FormattedContentInternal = FormattedTextContent | FormattedCodeContent | FormattedListContent
+
+export const formatMessage = (text: string): readonly FormattedContentInternal[] => {
+  const blocks: FormattedContentInternal[] = []
   let state: State = 'Normal'
   let listItems: string[] = []
   let codeContent = ''

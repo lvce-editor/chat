@@ -119,6 +119,7 @@ test('formats list items', () => {
     {
       type: MessageContentType.List,
       items: ['Item 1', 'Item 2', 'Item 3'],
+      ordered: false,
     },
   ])
 })
@@ -134,6 +135,7 @@ test('formats mixed list and text content', () => {
     {
       type: MessageContentType.List,
       items: ['Item 1', 'Item 2'],
+      ordered: false,
     },
     {
       type: MessageContentType.Text,
@@ -149,6 +151,7 @@ test('formats mixed list and code blocks', () => {
     {
       type: MessageContentType.List,
       items: ['Item 1', 'Item 2'],
+      ordered: false,
     },
     {
       type: MessageContentType.Code,

@@ -8,6 +8,7 @@ export interface MessageViewModel {
 export interface MessageBlockViewModel {
   readonly type: number
   readonly content: string
+  readonly items?: readonly string[]
   readonly display: {
     readonly blobUrl?: string
     readonly language?: string

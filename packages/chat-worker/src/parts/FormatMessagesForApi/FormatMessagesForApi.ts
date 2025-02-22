@@ -2,6 +2,7 @@ import type { Message } from '../Message/Message.ts'
 import type {
   CodeMessageContent,
   ImageMessageContent,
+  ListMessageContent,
   MessageContent,
   TextMessageContent,
 } from '../MessageContent/MessageContent.ts'
@@ -35,12 +36,22 @@ const formatCodePartForApi = (block: CodeMessageContent) => {
   }
 }
 
+const formatListPartForApi = (block: ListMessageContent) => {
+  return {
+    type: 'text',
+    text: block.items.map((item) => `- ${item}`).join('\n'),
+  }
+}
+
 const formatContentPartForApi = (block: MessageContent) => {
   if (block.type === MessageContentType.Image) {
     return formatContentPartImageForApi(block)
   }
   if (block.type === MessageContentType.Text) {
     return formatContentPartTextForApi(block)
+  }
+  if (block.type === MessageContentType.List) {
+    return formatListPartForApi(block)
   }
   return formatCodePartForApi(block)
 }

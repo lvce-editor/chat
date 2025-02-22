@@ -449,3 +449,13 @@ body {
 .Token:hover {
   opacity: 0.9;
 }
+
+.MessageList {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+.MessageListItem {
+  margin: 4px 0;
+  line-height: 1.6;
+}

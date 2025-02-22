@@ -19,6 +19,18 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   }
 
   const blocksHtml = blocks.map((block) => {
+    if (block.type === MessageContentType.List) {
+      const items = block.items || []
+      return {
+        type: 'ul',
+        className: 'MessageList',
+        children: items.map((item) => ({
+          type: 'li',
+          className: 'MessageListItem',
+          textContent: item,
+        })),
+      }
+    }
     if (block.type === MessageContentType.Code) {
       return GetCodeBlockVirtualDom.getCodeBlockVirtualDom(block, isError)
     }

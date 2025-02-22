@@ -1,5 +1,6 @@
 import type { MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetCodeBlockVirtualDom from '../GetCodeBlockVirtualDom/GetCodeBlockVirtualDom.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
@@ -9,12 +10,14 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
     type: 'div',
-    className: isError ? 'MessageError' : (role === MessageRole.Human ? 'MessageHuman' : 'MessageAi'),
+    className: isError ? ClassNames.MessageError : role === MessageRole.Human ? ClassNames.MessageHuman : ClassNames.MessageAi,
   }
 
   const wrappedMessage: VirtualElement = {
     type: 'div',
-    className: isError ? 'MessageWrapperError' : `MessageWrapper MessageWrapper${role === MessageRole.Human ? 'Human' : 'Ai'}`,
+    className: isError
+      ? ClassNames.MessageWrapperError
+      : `${ClassNames.MessageWrapper} ${role === MessageRole.Human ? ClassNames.MessageWrapperHuman : ClassNames.MessageWrapperAi}`,
     children: [messageElement],
   }
 
@@ -22,11 +25,11 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
     if (block.type === MessageContentType.List) {
       const items = block.items || []
       return {
-        type: 'ul',
-        className: 'MessageList',
+        type: block.ordered ? 'ol' : 'ul',
+        className: ClassNames.MessageList,
         children: items.map((item) => ({
           type: 'li',
-          className: 'MessageListItem',
+          className: ClassNames.MessageListItem,
           textContent: item,
         })),
       }
@@ -38,11 +41,11 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
       // TODO create view model that creates object urls for images
       return {
         type: 'div',
-        className: 'ImageBlock',
+        className: ClassNames.ImageBlock,
         children: [
           {
             type: 'img',
-            className: 'MessageImage',
+            className: ClassNames.MessageImage,
             src: block.display.blobUrl,
           },
         ],

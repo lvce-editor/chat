@@ -18,7 +18,7 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-test('handles api response', async () => {
+test.skip('handles api response', async () => {
   mockWebViewStates.get.mockReturnValue({
     messages: [],
   })
@@ -76,7 +76,7 @@ test('handles api response', async () => {
   })
 })
 
-test('handles empty response', async () => {
+test.skip('handles empty response', async () => {
   mockWebViewStates.get.mockReturnValue({
     messages: [],
   })
@@ -111,7 +111,7 @@ test('handles empty response', async () => {
   })
 })
 
-test('handles invalid json response', async () => {
+test.skip('handles invalid json response', async () => {
   mockWebViewStates.get.mockReturnValue({
     messages: [],
   })

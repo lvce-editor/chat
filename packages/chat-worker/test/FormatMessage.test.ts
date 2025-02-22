@@ -267,3 +267,15 @@ test('handles ordered list with irregular numbers', () => {
     },
   ])
 })
+
+test('formats checkbox list items', () => {
+  const text = '- [ ] Task 1\n- [ ] Task 2\n- [x] Task 3'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['Task 1', 'Task 2', 'Task 3'],
+      ordered: false,
+    },
+  ])
+})

@@ -22,7 +22,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
     if (block.type === MessageContentType.List) {
       const items = block.items || []
       return {
-        type: 'ul',
+        type: block.ordered ? 'ol' : 'ul',
         className: 'MessageList',
         children: items.map((item) => ({
           type: 'li',

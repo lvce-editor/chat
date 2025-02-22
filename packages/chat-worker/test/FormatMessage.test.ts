@@ -206,3 +206,60 @@ test('formats code block with empty lines', () => {
     },
   ])
 })
+
+test('formats ordered list', () => {
+  const text = '1. First item\n2. Second item\n3. Third item'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['First item', 'Second item', 'Third item'],
+      ordered: true,
+    },
+  ])
+})
+
+test('formats mixed ordered and unordered lists', () => {
+  const text = '1. First ordered\n2. Second ordered\n\nSome text\n\n- First unordered\n- Second unordered'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['First ordered', 'Second ordered'],
+      ordered: true,
+    },
+    {
+      type: MessageContentType.Text,
+      content: 'Some text',
+    },
+    {
+      type: MessageContentType.List,
+      items: ['First unordered', 'Second unordered'],
+      ordered: false,
+    },
+  ])
+})
+
+test('handles single ordered list item', () => {
+  const text = '1. Single item'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['Single item'],
+      ordered: true,
+    },
+  ])
+})
+
+test('handles ordered list with irregular numbers', () => {
+  const text = '1. First\n5. Second\n10. Third'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['First', 'Second', 'Third'],
+      ordered: true,
+    },
+  ])
+})

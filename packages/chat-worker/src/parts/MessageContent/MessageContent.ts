@@ -23,6 +23,7 @@ export interface ImageMessageContent extends BaseMessageContent {
 export interface ListMessageContent extends BaseMessageContent {
   readonly type: 4 // List
   readonly items: readonly string[]
+  readonly ordered: boolean
 }
 
 export type MessageContent = ImageMessageContent | CodeMessageContent | TextMessageContent | ListMessageContent

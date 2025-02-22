@@ -1,8 +1,8 @@
 import { test, expect } from '@jest/globals'
+import type { MessageContent } from '../src/parts/MessageContent/MessageContent.ts'
 import * as CreateMessageContentViewModel from '../src/parts/CreateMessageContentViewModel/CreateMessageContentViewModel.ts'
 import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
 import * as TokenType from '../src/parts/TokenType/TokenType.ts'
-import type { MessageContent } from '../src/parts/MessageContent/MessageContent.ts'
 
 test('creates view model for code block with tokens', async () => {
   const part: MessageContent = {

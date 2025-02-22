@@ -1,6 +1,6 @@
 import type { MessageContent } from '../MessageContent/MessageContent.ts'
-import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import type { SavedContent } from '../SavedMessage/SavedMessage.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as SerializeImageContent from '../SerializeImageContent/SerializeImageContent.ts'
 import * as SerializeTextContent from '../SerializeTextContent/SerializeTextContent.ts'
 

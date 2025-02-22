@@ -1,5 +1,5 @@
+import type { Message } from '../Message/Message.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
-import { Message } from '../Message/Message.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as Update from '../Update/Update.ts'

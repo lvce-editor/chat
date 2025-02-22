@@ -1,7 +1,7 @@
 import { test, expect, jest, beforeEach } from '@jest/globals'
 import * as HandleApiResponse from '../src/parts/HandleApiResponse/HandleApiResponse.ts'
-import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 import * as MessageContentType from '../src/parts/MessageContentType/MessageContentType.ts'
+import * as MessageRole from '../src/parts/MessageRole/MessageRole.ts'
 
 const mockUpdate = {
   update: jest.fn(),

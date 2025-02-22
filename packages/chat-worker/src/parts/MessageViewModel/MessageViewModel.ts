@@ -9,11 +9,11 @@ export interface MessageBlockViewModel {
   readonly type: number
   readonly content: string
   readonly items?: readonly string[]
+  readonly ordered?: boolean
   readonly display: {
     readonly blobUrl?: string
     readonly language?: string
     readonly className?: string
     readonly tokens?: readonly any[]
-    readonly ordered?: boolean
   }
 }

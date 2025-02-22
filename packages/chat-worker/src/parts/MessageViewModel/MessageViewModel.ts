@@ -14,5 +14,6 @@ export interface MessageBlockViewModel {
     readonly language?: string
     readonly className?: string
     readonly tokens?: readonly any[]
+    readonly ordered?: boolean
   }
 }

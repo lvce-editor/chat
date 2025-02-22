@@ -1,8 +1,10 @@
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
+import { Message } from '../Message/Message.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 export const handleApiResponse = async (id: number, body: ReadableStream) => {
   let currentMessage = ''
@@ -25,34 +27,36 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
 
     async write(message) {
       currentMessage += message
-      const content = FormatMessage.formatMessage(currentMessage)
       const currentWebView = WebViewStates.get(id)
-
-      await Update.update(id, {
-        messages: [
-          ...currentWebView.messages.slice(0, -1),
+      const newMessage: Message = {
+        role: MessageRole.Ai,
+        content: [
           {
-            role: MessageRole.Ai,
-            content,
-            webViewId: id,
+            type: MessageContentType.Text,
+            content: currentMessage,
           },
         ],
+        webViewId: id,
+      }
+      await Update.update(id, {
+        messages: [...currentWebView.messages.slice(0, -1), newMessage],
       })
     },
 
     async close() {
-      const content = FormatMessage.formatMessage(currentMessage)
       const currentWebView = WebViewStates.get(id)
-
-      await Update.update(id, {
-        messages: [
-          ...currentWebView.messages.slice(0, -1),
+      const newMessage: Message = {
+        role: MessageRole.Ai,
+        content: [
           {
-            role: MessageRole.Ai,
-            content,
-            webViewId: id,
+            type: MessageContentType.Text,
+            content: currentMessage,
           },
         ],
+        webViewId: id,
+      }
+      await Update.update(id, {
+        messages: [...currentWebView.messages.slice(0, -1), newMessage],
       })
     },
   })

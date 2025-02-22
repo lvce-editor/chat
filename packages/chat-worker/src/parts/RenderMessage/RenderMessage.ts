@@ -26,7 +26,11 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
       const items = block.items || []
       return {
         type: block.ordered ? 'ol' : 'ul',
+<<<<<<< HEAD
         className: ClassNames.MessageList,
+=======
+        className: 'MessageList',
+>>>>>>> origin/main
         children: items.map((item) => ({
           type: 'li',
           className: ClassNames.MessageListItem,

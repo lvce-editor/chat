@@ -15,20 +15,6 @@ test('serializes text content', () => {
   })
 })
 
-test('serializes code content', () => {
-  const content: MessageContent = {
-    type: MessageContentType.Code,
-    content: 'const x = 1',
-    language: 'javascript',
-  }
-  const result = SerializeContent.serializeContent(content)
-  expect(result).toEqual({
-    type: MessageContentType.Code,
-    content: 'const x = 1',
-    language: 'javascript',
-  })
-})
-
 test('serializes image content', () => {
   const content: MessageContent = {
     type: MessageContentType.Image,

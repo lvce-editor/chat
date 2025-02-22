@@ -51,9 +51,8 @@ test('formats code content for api', async () => {
       webViewId: 1,
       content: [
         {
-          type: MessageContentType.Code,
+          type: MessageContentType.Text,
           content: 'const x = 1;',
-          language: 'javascript',
         },
       ],
     },
@@ -136,9 +135,8 @@ test('formats mixed content for api', async () => {
           fileName: 'test.png',
         },
         {
-          type: MessageContentType.Code,
+          type: MessageContentType.Text,
           content: 'console.log("hello")',
-          language: 'javascript',
         },
       ],
     },

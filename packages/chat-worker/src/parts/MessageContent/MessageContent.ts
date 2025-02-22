@@ -7,12 +7,6 @@ export interface TextMessageContent extends BaseMessageContent {
   readonly content: string
 }
 
-export interface CodeMessageContent extends BaseMessageContent {
-  readonly type: 2 // Code
-  readonly content: string
-  readonly language?: string
-}
-
 export interface ImageMessageContent extends BaseMessageContent {
   readonly type: 3 // Image
   readonly file: File
@@ -20,10 +14,4 @@ export interface ImageMessageContent extends BaseMessageContent {
   readonly mediaType: string
 }
 
-export interface ListMessageContent extends BaseMessageContent {
-  readonly type: 4 // List
-  readonly items: readonly string[]
-  readonly ordered: boolean
-}
-
-export type MessageContent = ImageMessageContent | CodeMessageContent | TextMessageContent | ListMessageContent
+export type MessageContent = TextMessageContent | ImageMessageContent

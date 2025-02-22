@@ -59,9 +59,8 @@ test('creates view model for code content', async () => {
     webViewId: 1,
     content: [
       {
-        type: MessageContentType.Code,
-        content: 'const x = 1;',
-        language: 'javascript',
+        type: MessageContentType.Text,
+        content: '```javascript\nconst x = 1;\n```',
       },
     ],
   }
@@ -130,12 +129,7 @@ test('creates view model for mixed content', async () => {
     content: [
       {
         type: MessageContentType.Text,
-        content: 'Hello',
-      },
-      {
-        type: MessageContentType.Code,
-        content: 'const x = 1;',
-        language: 'javascript',
+        content: 'Hello\n```javascript\nconst x = 1;\n```',
       },
       {
         type: MessageContentType.Image,
@@ -171,6 +165,35 @@ test('creates view model for mixed content', async () => {
         display: {
           blobUrl: 'blob:test-url',
         },
+      },
+    ],
+  })
+})
+
+test('creates view model for list content', async () => {
+  const message: Message = {
+    role: MessageRole.Ai,
+    webViewId: 1,
+    content: [
+      {
+        type: MessageContentType.Text,
+        content: '- First item\n- Second item',
+      },
+    ],
+  }
+
+  const result = await CreateMessageViewModel.createMessageViewModel(message)
+
+  expect(result).toEqual({
+    role: MessageRole.Ai,
+    webViewId: 1,
+    blocks: [
+      {
+        type: MessageContentType.List,
+        content: '',
+        items: ['First item', 'Second item'],
+        ordered: false,
+        display: {},
       },
     ],
   })

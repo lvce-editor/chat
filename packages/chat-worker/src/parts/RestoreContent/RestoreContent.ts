@@ -11,5 +11,11 @@ export const restoreContent = async (
   if (savedContent.type === MessageContentType.Image) {
     return RestoreImage.restoreImage(id, cacheName, cacheBaseUrl, savedContent)
   }
-  return savedContent
+  if (savedContent.type === MessageContentType.Text) {
+    return savedContent
+  }
+  return {
+    type: MessageContentType.Text,
+    content: '',
+  }
 }

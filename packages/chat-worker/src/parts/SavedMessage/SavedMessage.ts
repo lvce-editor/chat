@@ -7,19 +7,13 @@ interface SavedTextContent extends SavedMessageContent {
   readonly content: string
 }
 
-interface SavedCodeContent extends SavedMessageContent {
-  readonly type: 2
-  readonly content: string
-  readonly language: string
-}
-
 interface SavedImageContent extends SavedMessageContent {
   readonly type: 3
   readonly fileName: string
   readonly mediaType: string
 }
 
-export type SavedContent = SavedTextContent | SavedCodeContent | SavedImageContent
+export type SavedContent = SavedTextContent | SavedImageContent
 
 export interface SavedMessage {
   readonly role: number

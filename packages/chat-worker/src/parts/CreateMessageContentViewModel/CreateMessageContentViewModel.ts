@@ -1,73 +1,70 @@
-import type {
-  CodeMessageContent,
-  ImageMessageContent,
-  MessageContent,
-  TextMessageContent,
-  ListMessageContent,
-} from '../MessageContent/MessageContent.ts'
+import type { ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
+import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as IsFile from '../IsFile/IsFile.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as Tokenize from '../Tokenize/Tokenize.ts'
 
-const createMessageContentImageViewModel = async (part: ImageMessageContent, webView: any): Promise<MessageBlockViewModel> => {
+const createMessageContentImageViewModel = async (part: ImageMessageContent, webView: any): Promise<MessageBlockViewModel[]> => {
   if (!IsFile.isFile(part.file)) {
-    return {
+    return [
+      {
+        type: MessageContentType.Image,
+        content: '',
+        display: {
+          blobUrl: '#',
+        },
+      },
+    ]
+  }
+  const blobUrl = await webView.port.invoke('createObjectUrl', part.file)
+  return [
+    {
       type: MessageContentType.Image,
       content: '',
       display: {
-        blobUrl: '#',
+        blobUrl,
       },
-    }
-  }
-  const blobUrl = await webView.port.invoke('createObjectUrl', part.file)
-  return {
-    type: MessageContentType.Image,
-    content: '',
-    display: {
-      blobUrl,
     },
+  ]
+}
+
+const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBlockViewModel => {
+  switch (block.type) {
+    case MessageContentType.Code:
+      return {
+        type: MessageContentType.Code,
+        content: block.content,
+        display: {
+          language: block.language,
+          tokens: Tokenize.tokenize(block.content, block.language),
+        },
+      }
+    case MessageContentType.List:
+      return {
+        type: MessageContentType.List,
+        content: '',
+        items: block.items,
+        ordered: block.ordered,
+        display: {},
+      }
+    default:
+      return {
+        type: MessageContentType.Text,
+        content: block.content,
+        display: {},
+      }
   }
 }
 
-const createMessageContentCodeViewModel = (part: CodeMessageContent): MessageBlockViewModel => {
-  const tokens = Tokenize.tokenize(part.content, part.language || 'text')
-  return {
-    type: MessageContentType.Code,
-    content: part.content,
-    display: {
-      language: part.language,
-      tokens,
-    },
-  }
+const createMessageContentTextViewModel = async (part: TextMessageContent): Promise<MessageBlockViewModel[]> => {
+  const formattedBlocks = FormatMessage.formatMessage(part.content)
+  return formattedBlocks.map(formatBlock)
 }
 
-const createMessageContentTextViewModel = (part: TextMessageContent): MessageBlockViewModel => {
-  return {
-    type: MessageContentType.Text,
-    content: part.content,
-    display: {},
-  }
-}
-
-const createMessageContentListViewModel = (part: ListMessageContent): MessageBlockViewModel => {
-  return {
-    type: MessageContentType.List,
-    content: '',
-    items: part.items,
-    display: {},
-  }
-}
-
-export const createMessageContentViewModel = async (part: MessageContent, webView: any): Promise<MessageBlockViewModel> => {
+export const createMessageContentViewModel = async (part: MessageContent, webView: any): Promise<MessageBlockViewModel[]> => {
   if (part.type === MessageContentType.Image) {
     return createMessageContentImageViewModel(part, webView)
-  }
-  if (part.type === MessageContentType.Code) {
-    return createMessageContentCodeViewModel(part)
-  }
-  if (part.type === MessageContentType.List) {
-    return createMessageContentListViewModel(part)
   }
   return createMessageContentTextViewModel(part)
 }

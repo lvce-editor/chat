@@ -161,6 +161,7 @@ test('formats mixed list and code blocks', () => {
     {
       type: MessageContentType.List,
       items: ['Item 3', 'Item 4'],
+      ordered: false,
     },
   ])
 })

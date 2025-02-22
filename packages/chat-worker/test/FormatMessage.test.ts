@@ -279,3 +279,77 @@ test('formats checkbox list items', () => {
     },
   ])
 })
+
+test.skip('formats nested lists', () => {
+  const text = '1. First level\n   - Second level A\n   - Second level B\n2. Back to first'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: [
+        {
+          content: 'First level',
+          children: [
+            {
+              type: MessageContentType.List,
+              items: [{ content: 'Second level A' }, { content: 'Second level B' }],
+              ordered: false,
+            },
+          ],
+        },
+        {
+          content: 'Back to first',
+        },
+      ],
+      ordered: true,
+    },
+  ])
+})
+
+test.skip('formats deeply nested lists', () => {
+  const text = '1. Level 1\n   - Level 2\n     1. Level 3\n        - Level 4\n2. Back to 1'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: [
+        {
+          content: 'Level 1',
+          children: [
+            {
+              type: MessageContentType.List,
+              items: [
+                {
+                  content: 'Level 2',
+                  children: [
+                    {
+                      type: MessageContentType.List,
+                      items: [
+                        {
+                          content: 'Level 3',
+                          children: [
+                            {
+                              type: MessageContentType.List,
+                              items: [{ content: 'Level 4' }],
+                              ordered: false,
+                            },
+                          ],
+                        },
+                      ],
+                      ordered: true,
+                    },
+                  ],
+                },
+              ],
+              ordered: false,
+            },
+          ],
+        },
+        {
+          content: 'Back to 1',
+        },
+      ],
+      ordered: true,
+    },
+  ])
+})

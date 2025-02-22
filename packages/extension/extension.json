@@ -48,6 +48,9 @@
   "secretAccess": [
     {
       "id": "secrets.claude"
+    },
+    {
+      "id": "secrets.openrouter"
     }
   ]
 }

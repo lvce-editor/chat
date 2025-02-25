@@ -13,7 +13,8 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 // since electron has difficitulies with cache storage and custom procotols
 // the normalized cache api can avoid some issues
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
-  const {rpc} = globalThis
+  // @ts-ignore
+  const { rpc } = globalThis
   const apiKey = await Config.getApiKey(rpc)
   const modelId = await Config.getModelId(rpc)
   const url = Config.getUrl()

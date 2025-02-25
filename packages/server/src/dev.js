@@ -1,7 +1,6 @@
 import { spawn } from 'child_process'
 import { join } from 'path'
 
-// @ts-ignore
 const __dirname = import.meta.dirname
 
 const root = join(__dirname, '..', '..', '..')

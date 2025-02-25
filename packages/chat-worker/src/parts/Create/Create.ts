@@ -6,6 +6,7 @@ import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
+import * as SupportedModelIds from '../SupportedModelIds/SupportedModelIds.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
@@ -17,6 +18,9 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const { rpc } = globalThis
   const apiKey = await Config.getApiKey(rpc)
   const modelId = await Config.getModelId(rpc)
+  if (!SupportedModelIds.supportedModelIds.includes(modelId)) {
+    console.warn(`[chat-worker] model id ${modelId} is not officially supported`)
+  }
   const url = Config.getUrl()
   const anthropicVersion = Config.getAnthropicVersion()
   const maxTokens = Config.getMaxTokens()

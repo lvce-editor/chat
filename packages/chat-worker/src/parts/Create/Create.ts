@@ -4,20 +4,23 @@ import * as ErrorCodes from '../ErrorCodes/ErrorCodes.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
+import * as Config from '../Config/Config.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
+// TODO add caching api for blobs to extension host api
+// since electron has difficitulies with cache storage and custom procotols
+// the normalized cache api can avoid some issues
 export const create = async ({ port, savedState, webViewId, uri, id }) => {
-  const apiKey = await globalThis.rpc.invoke('WebView.getSecret', 'secrets.claude')
-  const modelId = (await globalThis.rpc.invoke('WebView.getSecret', 'claude.modelId')) || 'claude-3-5-haiku-20241022'
-
-  // TODO make these configurable
-  const url = 'https://api.anthropic.com/v1/messages'
-  const anthropicVersion = '2023-06-01'
-  const maxTokens = 1024
-  const cacheName = 'chat-image-cache'
-  const cacheBaseUrl = 'https://example.com'
+  const rpc = globalThis.rpc
+  const apiKey = await Config.getApiKey(rpc)
+  const modelId = await Config.getModelId(rpc)
+  const url = Config.getUrl()
+  const anthropicVersion = Config.getAnthropicVersion()
+  const maxTokens = Config.getMaxTokens()
+  const cacheName = Config.getCacheName()
+  const cacheBaseUrl = Config.getCacheBaseUrl()
 
   const webView: WebView = {
     time: 0,

@@ -6,9 +6,9 @@ import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
+import * as SupportedModelIds from '../SupportedModelIds/SupportedModelIds.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-import * as SupportedModelIds from '../SupportedModelIds/SupportedModelIds.ts'
 
 // TODO add caching api for blobs to extension host api
 // since electron has difficitulies with cache storage and custom procotols

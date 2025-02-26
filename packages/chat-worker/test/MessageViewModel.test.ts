@@ -14,6 +14,7 @@ const mockWebViewStates = {
   get() {
     return {
       port: mockPort,
+      imageUrlCache: new Map(),
     }
   },
 }
@@ -21,7 +22,8 @@ const mockWebViewStates = {
 jest.unstable_mockModule('../src/parts/WebViewStates/WebViewStates.ts', () => mockWebViewStates)
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  mockPort.invoke.mockReset()
+  mockWebViewStates.get().imageUrlCache.clear()
 })
 
 const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel/CreateMessageViewModel.ts')

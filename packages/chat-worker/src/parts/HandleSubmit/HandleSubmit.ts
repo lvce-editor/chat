@@ -1,7 +1,7 @@
 import type { Message } from '../Message/Message.ts'
-import { formatMessagesForApi } from '../FormatMessagesForApi/FormatMessagesForApi.ts'
+import * as FormatMessagesForApi from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
-import { getNewContent } from '../GetNewContent/GetNewContent.ts'
+import * as GetNewContent from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
@@ -9,10 +9,11 @@ import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+
 export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
 
-  const newContent = getNewContent(webView.currentInput, webView.images)
+  const newContent = GetNewContent.getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
     role: MessageRole.Human,
@@ -31,7 +32,7 @@ export const handleSubmit = async (id: number) => {
   })
 
   try {
-    const formattedMessages = await formatMessagesForApi(newMessages)
+    const formattedMessages = await FormatMessagesForApi.formatMessagesForApi(newMessages)
     const response = await GetChatResponse.getChatResponse(
       formattedMessages,
       webView.apiKey,

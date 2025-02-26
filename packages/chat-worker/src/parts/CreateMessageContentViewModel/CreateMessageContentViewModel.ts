@@ -17,7 +17,19 @@ const createMessageContentImageViewModel = async (part: ImageMessageContent, web
       },
     ]
   }
-  const blobUrl = await webView.port.invoke('createObjectUrl', part.file)
+
+  // TODO avoid mutation
+  // Generate a cache key from the file
+  const cacheKey = `${part.fileName}-${part.file.size}-${part.file.lastModified}`
+
+  // Check cache first
+  let blobUrl = webView.imageUrlCache.get(cacheKey)
+
+  if (!blobUrl) {
+    blobUrl = await webView.port.invoke('createObjectUrl', part.file)
+    webView.imageUrlCache.set(cacheKey, blobUrl)
+  }
+
   return [
     {
       type: MessageContentType.Image,

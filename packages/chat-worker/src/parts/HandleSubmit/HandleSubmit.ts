@@ -49,7 +49,10 @@ export const handleSubmit = async (id: number) => {
       content: [
         {
           type: MessageContentType.Text,
-          content: `Error: ${error}`,
+          content:
+            error instanceof TypeError && error.message === 'Failed to fetch'
+              ? 'Error: E_OFFLINE: Unable to connect. Please check your internet connection and try again.'
+              : `Error: ${error}`,
         },
       ],
       webViewId: id,

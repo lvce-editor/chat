@@ -39,6 +39,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     messages: [],
     scrollOffset: 0,
     images: [],
+    imageUrlCache: new Map(),
     cacheName,
     cacheBaseUrl,
     currentInput: '',

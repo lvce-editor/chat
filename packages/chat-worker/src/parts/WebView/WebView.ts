@@ -7,6 +7,7 @@ export interface WebView {
   readonly cacheName: string
   readonly currentInput: string
   readonly images: readonly File[]
+  readonly imageUrlCache: Map<string, string>
   readonly isScrolledToBottom: boolean
   readonly maxTokens: number
   readonly messages: readonly Message[]

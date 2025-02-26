@@ -210,6 +210,9 @@ const rpc = globalThis.lvceRpc({
   createObjectUrl: (blob) => {
     return URL.createObjectURL(blob)
   },
+  revokeObjectUrl: (url) => {
+    URL.revokeObjectURL(url)
+  },
   render,
   focusInput,
 })

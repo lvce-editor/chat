@@ -1,16 +1,18 @@
 import type { Message } from '../Message/Message.ts'
 import type { ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
+import * as ConvertImageToPng from '../ConvertImageToPng/ConvertImageToPng.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as ToBase64 from '../ToBase64/ToBase64.ts'
 
 const formatContentPartImageForApi = async (block: ImageMessageContent) => {
-  const content = await ToBase64.toBase64(block.file)
+  const pngFile = await ConvertImageToPng.convertImageToPng(block.file)
+  const content = await ToBase64.toBase64(pngFile)
   return {
     type: 'image',
     source: {
       type: 'base64',
-      media_type: block.mediaType,
+      media_type: 'image/png',
       data: content,
     },
   }

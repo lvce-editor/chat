@@ -80,3 +80,22 @@ test('handles empty message content error', async () => {
     ),
   )
 })
+
+test('handles unsupported image format error', async () => {
+  const errorResponse = {
+    type: 'error',
+    error: {
+      type: 'invalid_request_error',
+      message: 'Image does not match the provided media type image/png',
+    },
+  }
+
+  const response = new Response(JSON.stringify(errorResponse), {
+    status: 400,
+    statusText: 'Bad Request',
+  })
+
+  await expect(UnwrapApiResponse.unwrapApiResponse(response)).rejects.toThrow(
+    'E_UNSUPPORTED_IMAGE_FORMAT: only png images are supported',
+  )
+})

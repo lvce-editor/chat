@@ -362,14 +362,18 @@ body {
 }
 
 .MessageError {
-  color: #dc2626;
+  color: #f48771;
   padding: 1rem;
   border-radius: 0.5rem;
+  background: #1c1c1c;
+  border: 1px solid #f48771;
+  margin: 0.5rem 0;
 }
 
 .MessageWrapperError {
-  background-color: #fef2f2;
-  border: 1px solid #fee2e2;
+  background: rgba(244, 135, 113, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .MessageCodeTextError {

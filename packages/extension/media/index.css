@@ -463,3 +463,23 @@ body {
   margin: 4px 0;
   line-height: 1.6;
 }
+
+.ModelSelect {
+  padding: 6px;
+  background: var(--ButtonBackground);
+  color: var(--ButtonText);
+  border: 1px solid var(--MessageBorder);
+  border-radius: 3px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.ModelSelect:hover {
+  background: var(--ButtonHoverBackground);
+}
+
+.ModelSelect:focus {
+  outline: none;
+  border-color: var(--ButtonText);
+}

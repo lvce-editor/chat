@@ -1,8 +1,8 @@
 import { test, expect } from '@jest/globals'
-import * as GetRenderCommands from '../src/parts/GetRenderCommands/GetRenderCommands.ts'
-import * as DiffType from '../src/parts/DiffType/DiffType.ts'
-import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import type { WebView } from '../src/parts/WebView/WebView.ts'
+import * as DiffType from '../src/parts/DiffType/DiffType.ts'
+import * as GetRenderCommands from '../src/parts/GetRenderCommands/GetRenderCommands.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 
 test('returns empty array when no diffs', async () => {
   const oldWebView: WebView = {

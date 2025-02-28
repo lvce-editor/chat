@@ -6,6 +6,7 @@ export interface VirtualElement {
   name?: string
   placeholder?: string
   inputType?: string
+  value?: string
   accept?: string
   src?: string
   events?: {

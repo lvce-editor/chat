@@ -2,6 +2,7 @@ import * as Create from '../Create/Create.ts'
 import * as HandleEnter from '../HandleEnter/HandleEnter.ts'
 import * as HandleImageUpload from '../HandleImageUpload/HandleImageUpload.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
+import * as HandleModelSelect from '../HandleModelSelect/HandleModelSelect.ts'
 import * as HandleNewChat from '../HandleNewChat/HandleNewChat.ts'
 import * as HandleRemoveImage from '../HandleRemoveImage/HandleRemoveImage.ts'
 import * as HandleScroll from '../HandleScroll/HandleScroll.ts'
@@ -19,4 +20,5 @@ export const commandMap = {
   handleRemoveImage: WrapCommand.wrapCommand(HandleRemoveImage.handleRemoveImage),
   handleInput: WrapCommand.wrapCommand(HandleInput.handleInput),
   handleEnter: WrapCommand.wrapCommand(HandleEnter.handleEnter),
+  handleModelSelect: WrapCommand.wrapCommand(HandleModelSelect.handleModelSelect),
 }

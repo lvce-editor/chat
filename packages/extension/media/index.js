@@ -67,12 +67,11 @@ const handlers = {
     const dropZone = event.currentTarget.querySelector('.DropZone')
     dropZone?.classList.add('Hidden')
 
-    const file = event.dataTransfer?.files[0]
-    if (!file || !file.type.startsWith('image/')) {
+    const files = event.dataTransfer?.files
+    if (!files) {
       return
     }
-
-    await rpc.invoke('handleImageUpload', file)
+    await rpc.invoke('handleImageUpload', files)
   },
 }
 

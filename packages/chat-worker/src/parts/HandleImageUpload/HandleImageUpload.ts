@@ -2,7 +2,11 @@ import * as SaveImageInCache from '../SaveImageInCache/SaveImageInCache.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleImageUpload = async (id: number, file: File | undefined) => {
+export const handleImageUpload = async (id: number, fileList: FileList) => {
+  if (!fileList) {
+    return
+  }
+  const file = fileList.item(0)
   if (!file) {
     return
   }

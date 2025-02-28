@@ -11,27 +11,54 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
     },
     children: [
       {
-        type: 'select',
-        className: 'ModelSelect',
-        name: 'ModelSelect',
-        events: {
-          change: 'handleModelSelect',
-        },
+        type: 'div',
+        className: 'ControlsWrapper',
         children: [
           {
-            type: 'option',
-            value: 'claude-3-5-haiku-20241022',
-            textContent: 'Claude 3 Haiku',
+            type: 'label',
+            className: 'ImageUploadButton',
+            children: [
+              {
+                type: 'input',
+                className: 'ImageInput',
+                name: 'image',
+                inputType: 'file',
+                accept: 'image/*',
+                events: {
+                  change: 'handleImageUpload',
+                },
+              },
+              {
+                type: 'div',
+                className: 'ImageIcon',
+                textContent: '📷',
+              },
+            ],
           },
           {
-            type: 'option',
-            value: 'claude-3-5-sonnet-20241022',
-            textContent: 'Claude 3 Sonnet',
-          },
-          {
-            type: 'option',
-            value: 'claude-3-opus-20240229',
-            textContent: 'Claude 3 Opus',
+            type: 'select',
+            className: 'ModelSelect',
+            name: 'ModelSelect',
+            events: {
+              change: 'handleModelSelect',
+            },
+            children: [
+              {
+                type: 'option',
+                value: 'claude-3-5-haiku-20241022',
+                textContent: 'Claude 3 Haiku',
+              },
+              {
+                type: 'option',
+                value: 'claude-3-5-sonnet-20241022',
+                textContent: 'Claude 3 Sonnet',
+              },
+              {
+                type: 'option',
+                value: 'claude-3-opus-20240229',
+                textContent: 'Claude 3 Opus',
+              },
+            ],
           },
         ],
       },
@@ -43,27 +70,6 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
             type: 'div',
             className: 'DropZoneText',
             textContent: 'Drop image here',
-          },
-        ],
-      },
-      {
-        type: 'label',
-        className: 'ImageUploadButton',
-        children: [
-          {
-            type: 'input',
-            className: 'ImageInput',
-            name: 'image',
-            inputType: 'file',
-            accept: 'image/*',
-            events: {
-              change: 'handleImageUpload',
-            },
-          },
-          {
-            type: 'div',
-            className: 'ImageIcon',
-            textContent: '📷',
           },
         ],
       },

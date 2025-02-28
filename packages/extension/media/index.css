@@ -465,21 +465,22 @@ body {
 }
 
 .ModelSelect {
-  padding: 6px;
-  background: var(--ButtonBackground);
-  color: var(--ButtonText);
+  padding: 4px 8px;
+  background: var(--MessageHumanBackground);
+  color: var(--TextColor);
   border: 1px solid var(--MessageBorder);
-  border-radius: 3px;
-  font-size: 13px;
-  cursor: pointer;
-  margin-right: 8px;
-}
-
-.ModelSelect:hover {
-  background: var(--ButtonHoverBackground);
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .ModelSelect:focus {
   outline: none;
-  border-color: var(--ButtonText);
+  border-color: var(--ButtonBackground);
+}
+
+.ControlsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
 }

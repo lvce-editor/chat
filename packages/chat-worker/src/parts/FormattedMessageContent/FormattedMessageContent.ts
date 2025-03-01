@@ -13,14 +13,9 @@ export interface FormattedCodeContent extends BaseFormattedContent {
   readonly language: string
 }
 
-export interface ListContentItem {
-  readonly type: number
-  readonly text: string
-}
-
 export interface FormattedListContent extends BaseFormattedContent {
   readonly type: 4
-  readonly items: readonly ListContentItem[]
+  readonly items: readonly string[]
   readonly ordered: boolean
 }
 
@@ -31,14 +26,4 @@ export interface FormattedImageContent extends BaseFormattedContent {
   readonly mediaType: string
 }
 
-export interface FormattedInlineCodeContent extends BaseFormattedContent {
-  readonly type: 5
-  readonly content: string
-}
-
-export type FormattedMessageContent =
-  | FormattedTextContent
-  | FormattedCodeContent
-  | FormattedListContent
-  | FormattedImageContent
-  | FormattedInlineCodeContent
+export type FormattedMessageContent = FormattedTextContent | FormattedCodeContent | FormattedListContent | FormattedImageContent

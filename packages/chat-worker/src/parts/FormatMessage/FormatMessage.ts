@@ -14,10 +14,56 @@ export type FormattedContentInternal =
   | FormattedListContent
   | FormattedInlineCodeContent
 
+const parseInlineCode = (text: string): FormattedContentInternal[] => {
+  const parts: FormattedContentInternal[] = []
+  let current = 0
+  let textContent = ''
+
+  while (current < text.length) {
+    if (text[current] === '`' && text[current - 1] !== '\\') {
+      if (textContent) {
+        parts.push({
+          type: MessageContentType.Text,
+          content: textContent,
+        })
+        textContent = ''
+      }
+
+      current++
+      let codeContent = ''
+
+      while (current < text.length && text[current] !== '`') {
+        codeContent += text[current]
+        current++
+      }
+
+      if (codeContent) {
+        parts.push({
+          type: MessageContentType.InlineCode,
+          content: codeContent,
+        })
+      }
+      current++
+      continue
+    }
+    textContent += text[current]
+    current++
+  }
+
+  if (textContent) {
+    parts.push({
+      type: MessageContentType.Text,
+      content: textContent,
+    })
+  }
+
+  return parts
+}
+
 export const formatMessage = (text: string): readonly FormattedContentInternal[] => {
   const blocks: FormattedContentInternal[] = []
   let state: State = 'Normal'
-  let listItems: string[] = []
+  let listItems: FormattedContentInternal[][] = []
   let codeContent = ''
   let language = ''
 
@@ -32,66 +78,23 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
         if (trimmedLine.startsWith('- ')) {
           state = 'InUnorderedList'
           const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
-          listItems = [content]
+          listItems = [parseInlineCode(content)]
         } else if (/^\d+\.\s/.test(trimmedLine)) {
           state = 'InOrderedList'
-          listItems = [trimmedLine.replace(/^\d+\.\s/, '')]
+          listItems = [parseInlineCode(trimmedLine.replace(/^\d+\.\s/, ''))]
         } else if (trimmedLine.startsWith('```')) {
           state = 'InCodeBlock'
           language = trimmedLine.slice(3).trim()
           codeContent = ''
         } else if (trimmedLine) {
-          let current = 0
-          let textContent = ''
-          const parts: FormattedContentInternal[] = []
-
-          while (current < trimmedLine.length) {
-            if (trimmedLine[current] === '`' && trimmedLine[current - 1] !== '\\') {
-              if (textContent) {
-                parts.push({
-                  type: MessageContentType.Text,
-                  content: textContent,
-                })
-                textContent = ''
-              }
-
-              current++
-              let codeContent = ''
-
-              while (current < trimmedLine.length && trimmedLine[current] !== '`') {
-                codeContent += trimmedLine[current]
-                current++
-              }
-
-              if (codeContent) {
-                parts.push({
-                  type: MessageContentType.Code,
-                  language: 'text',
-                  content: codeContent,
-                })
-              }
-              current++
-              continue
-            }
-            textContent += trimmedLine[current]
-            current++
-          }
-
-          if (textContent) {
-            parts.push({
-              type: MessageContentType.Text,
-              content: textContent,
-            })
-          }
-
-          blocks.push(...parts)
+          blocks.push(...parseInlineCode(trimmedLine))
         }
         break
 
       case 'InUnorderedList':
         if (trimmedLine.startsWith('- ')) {
           const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
-          listItems.push(content)
+          listItems.push(parseInlineCode(content))
         } else {
           blocks.push({
             type: MessageContentType.List,
@@ -106,7 +109,7 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
 
       case 'InOrderedList':
         if (/^\d+\.\s/.test(trimmedLine)) {
-          listItems.push(trimmedLine.replace(/^\d+\.\s/, ''))
+          listItems.push(parseInlineCode(trimmedLine.replace(/^\d+\.\s/, '')))
         } else {
           blocks.push({
             type: MessageContentType.List,

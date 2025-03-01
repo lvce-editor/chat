@@ -438,3 +438,52 @@ test('formats inline code inside lists', () => {
     },
   ])
 })
+
+test('formats inline code inside list items', () => {
+  const text = '- Run `npm install` first\n- Execute `npm start` to begin\n- Open `localhost:3000` in browser'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: [
+        {
+          type: MessageContentType.Text,
+          content: 'Run ',
+        },
+        {
+          type: MessageContentType.InlineCode,
+          content: 'npm install',
+        },
+        {
+          type: MessageContentType.Text,
+          content: ' first',
+        },
+        {
+          type: MessageContentType.Text,
+          content: 'Execute ',
+        },
+        {
+          type: MessageContentType.InlineCode,
+          content: 'npm start',
+        },
+        {
+          type: MessageContentType.Text,
+          content: ' to begin',
+        },
+        {
+          type: MessageContentType.Text,
+          content: 'Open ',
+        },
+        {
+          type: MessageContentType.InlineCode,
+          content: 'localhost:3000',
+        },
+        {
+          type: MessageContentType.Text,
+          content: ' in browser',
+        },
+      ],
+      ordered: false,
+    },
+  ])
+})

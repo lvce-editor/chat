@@ -14,34 +14,6 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
     children: [
       {
         type: 'div',
-        className: ClassNames.ControlsWrapper,
-        children: [
-          {
-            type: 'label',
-            className: ClassNames.ImageUploadButton,
-            children: [
-              {
-                type: 'input',
-                className: ClassNames.ImageInput,
-                name: 'image',
-                inputType: 'file',
-                accept: 'image/*',
-                events: {
-                  change: 'handleImageUpload',
-                },
-              },
-              {
-                type: 'div',
-                className: ClassNames.ImageIcon,
-                textContent: '📷',
-              },
-            ],
-          },
-          getSelectVirtualDom(),
-        ],
-      },
-      {
-        type: 'div',
         className: `${ClassNames.DropZone} ${ClassNames.Hidden}`,
         children: [
           {
@@ -53,34 +25,46 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
       },
       {
         type: 'div',
-        className: blobUrl ? ClassNames.ImagePreviewWrapper : `${ClassNames.ImagePreviewWrapper} ${ClassNames.Hidden}`,
+        className: 'MessageColumns',
         children: [
           {
-            type: 'img',
-            className: ClassNames.ImagePreview,
-            src: blobUrl,
+            type: 'div',
+            className: blobUrl ? ClassNames.ImagePreviewWrapper : `${ClassNames.ImagePreviewWrapper} ${ClassNames.Hidden}`,
+            children: [
+              {
+                type: 'img',
+                className: ClassNames.ImagePreview,
+                src: blobUrl,
+              },
+              {
+                type: 'button',
+                className: ClassNames.RemoveImageButton,
+                textContent: '×',
+                events: {
+                  click: 'handleRemoveImage',
+                },
+              },
+            ],
+          },
+
+          {
+            type: 'textarea',
+            className: ClassNames.Input,
+            name: 'Input',
+            placeholder: 'Message...',
+            events: {
+              keydown: 'handleKeyDown',
+              input: 'handleInput',
+              adjustHeight: 'adjustHeight',
+            },
+            textContent: '',
           },
           {
-            type: 'button',
-            className: ClassNames.RemoveImageButton,
-            textContent: '×',
-            events: {
-              click: 'handleRemoveImage',
-            },
+            type: 'div',
+            className: ClassNames.ControlsWrapper,
+            children: [getSelectVirtualDom()],
           },
         ],
-      },
-      {
-        type: 'textarea',
-        className: ClassNames.Input,
-        name: 'Input',
-        placeholder: 'Message...',
-        events: {
-          keydown: 'handleKeyDown',
-          input: 'handleInput',
-          adjustHeight: 'adjustHeight',
-        },
-        textContent: '',
       },
     ],
   }

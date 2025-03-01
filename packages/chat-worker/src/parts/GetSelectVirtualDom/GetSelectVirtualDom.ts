@@ -3,7 +3,7 @@ import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 export const getSelectVirtualDom = (): VirtualElement => {
   return {
     type: 'select',
-    className: 'ModelSelect',
+    className: 'ModelSelect CompactSelect',
     name: 'ModelSelect',
     events: {
       change: 'handleModelSelect',

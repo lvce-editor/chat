@@ -1,10 +1,11 @@
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { getSelectVirtualDom } from '../GetSelectVirtualDom/GetSelectVirtualDom.ts'
 
 export const createFormContent = (blobUrl: string): VirtualElement => {
   return {
     type: 'div',
-    className: 'FormContent',
+    className: ClassNames.FormContent,
     events: {
       dragover: 'handleDragOver',
       dragleave: 'handleDragLeave',
@@ -13,15 +14,15 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
     children: [
       {
         type: 'div',
-        className: 'ControlsWrapper',
+        className: ClassNames.ControlsWrapper,
         children: [
           {
             type: 'label',
-            className: 'ImageUploadButton',
+            className: ClassNames.ImageUploadButton,
             children: [
               {
                 type: 'input',
-                className: 'ImageInput',
+                className: ClassNames.ImageInput,
                 name: 'image',
                 inputType: 'file',
                 accept: 'image/*',
@@ -31,7 +32,7 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
               },
               {
                 type: 'div',
-                className: 'ImageIcon',
+                className: ClassNames.ImageIcon,
                 textContent: '📷',
               },
             ],
@@ -41,27 +42,27 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
       },
       {
         type: 'div',
-        className: 'DropZone Hidden',
+        className: `${ClassNames.DropZone} ${ClassNames.Hidden}`,
         children: [
           {
             type: 'div',
-            className: 'DropZoneText',
+            className: ClassNames.DropZoneText,
             textContent: 'Drop image here',
           },
         ],
       },
       {
         type: 'div',
-        className: blobUrl ? 'ImagePreviewWrapper' : 'ImagePreviewWrapper Hidden',
+        className: blobUrl ? ClassNames.ImagePreviewWrapper : `${ClassNames.ImagePreviewWrapper} ${ClassNames.Hidden}`,
         children: [
           {
             type: 'img',
-            className: 'ImagePreview',
+            className: ClassNames.ImagePreview,
             src: blobUrl,
           },
           {
             type: 'button',
-            className: 'RemoveImageButton',
+            className: ClassNames.RemoveImageButton,
             textContent: '×',
             events: {
               click: 'handleRemoveImage',
@@ -71,7 +72,7 @@ export const createFormContent = (blobUrl: string): VirtualElement => {
       },
       {
         type: 'textarea',
-        className: 'Input',
+        className: ClassNames.Input,
         name: 'Input',
         placeholder: 'Message...',
         events: {

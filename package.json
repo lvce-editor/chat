@@ -11,6 +11,7 @@
     "dev": "node packages/server/src/dev.js",
     "e2e": "cd packages/e2e && npm run e2e",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "postinstall": "lerna bootstrap --ci",
     "test": "lerna run test",

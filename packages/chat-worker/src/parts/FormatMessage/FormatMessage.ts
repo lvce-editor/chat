@@ -1,4 +1,4 @@
-import { FormattedContentInternal } from '../FormattedContentInternal/FormattedContentInternal.ts'
+import type { FormattedContentInternal } from '../FormattedContentInternal/FormattedContentInternal.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 
 type State = 'Normal' | 'InUnorderedList' | 'InOrderedList' | 'InCodeBlock'

@@ -1,6 +1,6 @@
-import { FormattedContentInternal } from '../FormattedContentInternal/FormattedContentInternal.ts'
-import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
+import type { FormattedContentInternal } from '../FormattedContentInternal/FormattedContentInternal.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
+import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as Tokenize from '../Tokenize/Tokenize.ts'
 
 export const formatBlock = (block: FormattedContentInternal): MessageBlockViewModel => {

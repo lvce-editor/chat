@@ -414,3 +414,27 @@ test.skip('handles escaped backticks in text', () => {
     },
   ])
 })
+
+test('formats inline code inside ordered lists', () => {
+  const text = '1. Install with `yarn add package`\n2. Import using `import { x } from "package"`'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['Install with `yarn add package`', 'Import using `import { x } from "package"`'],
+      ordered: true,
+    },
+  ])
+})
+
+test('formats inline code inside lists', () => {
+  const text = '- Run `npm install`\n- Execute `npm start`\n- Open `localhost:3000`'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.List,
+      items: ['Run `npm install`', 'Execute `npm start`', 'Open `localhost:3000`'],
+      ordered: false,
+    },
+  ])
+})

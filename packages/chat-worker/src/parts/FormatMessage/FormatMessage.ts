@@ -36,10 +36,50 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
           language = trimmedLine.slice(3).trim()
           codeContent = ''
         } else if (trimmedLine) {
-          blocks.push({
-            type: MessageContentType.Text,
-            content: trimmedLine,
-          })
+          let current = 0
+          let textContent = ''
+          const parts: FormattedContentInternal[] = []
+
+          while (current < trimmedLine.length) {
+            if (trimmedLine[current] === '`' && trimmedLine[current - 1] !== '\\') {
+              if (textContent) {
+                parts.push({
+                  type: MessageContentType.Text,
+                  content: textContent,
+                })
+                textContent = ''
+              }
+
+              current++
+              let codeContent = ''
+
+              while (current < trimmedLine.length && trimmedLine[current] !== '`') {
+                codeContent += trimmedLine[current]
+                current++
+              }
+
+              if (codeContent) {
+                parts.push({
+                  type: MessageContentType.Code,
+                  language: 'text',
+                  content: codeContent,
+                })
+              }
+              current++
+              continue
+            }
+            textContent += trimmedLine[current]
+            current++
+          }
+
+          if (textContent) {
+            parts.push({
+              type: MessageContentType.Text,
+              content: textContent,
+            })
+          }
+
+          blocks.push(...parts)
         }
         break
 

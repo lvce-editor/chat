@@ -26,4 +26,14 @@ export interface FormattedImageContent extends BaseFormattedContent {
   readonly mediaType: string
 }
 
-export type FormattedMessageContent = FormattedTextContent | FormattedCodeContent | FormattedListContent | FormattedImageContent
+export interface FormattedInlineCodeContent extends BaseFormattedContent {
+  readonly type: 5
+  readonly content: string
+}
+
+export type FormattedMessageContent =
+  | FormattedTextContent
+  | FormattedCodeContent
+  | FormattedListContent
+  | FormattedImageContent
+  | FormattedInlineCodeContent

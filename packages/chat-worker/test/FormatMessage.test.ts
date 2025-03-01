@@ -353,3 +353,65 @@ test.skip('formats deeply nested lists', () => {
     },
   ])
 })
+
+test('formats inline code', () => {
+  const text = 'The `<!DOCTYPE html>` declaration'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.Text,
+      content: 'The ',
+    },
+    {
+      type: MessageContentType.InlineCode,
+      content: '<!DOCTYPE html>',
+    },
+    {
+      type: MessageContentType.Text,
+      content: ' declaration',
+    },
+  ])
+})
+
+test('formats multiple inline code blocks', () => {
+  const text = 'Use `const` or `let` for variables'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.Text,
+      content: 'Use ',
+    },
+    {
+      type: MessageContentType.InlineCode,
+      content: 'const',
+    },
+    {
+      type: MessageContentType.Text,
+      content: ' or ',
+    },
+    {
+      type: MessageContentType.InlineCode,
+      content: 'let',
+    },
+    {
+      type: MessageContentType.Text,
+      content: ' for variables',
+    },
+  ])
+})
+
+test('handles escaped backticks', () => {
+  const text = 'This \\`not code\\` but `this is code`'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.Text,
+      content: 'This \\`not code\\` but ',
+    },
+    {
+      type: MessageContentType.Code,
+      language: 'text',
+      content: 'this is code',
+    },
+  ])
+})

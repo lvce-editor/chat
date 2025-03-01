@@ -14,6 +14,14 @@ export const formatBlock = (block: FormatMessage.FormattedContentInternal): Mess
           tokens: Tokenize.tokenize(block.content, block.language),
         },
       }
+    case MessageContentType.InlineCode:
+      return {
+        type: MessageContentType.InlineCode,
+        content: block.content,
+        display: {
+          tokens: Tokenize.tokenize(block.content, 'text'),
+        },
+      }
     case MessageContentType.List:
       return {
         type: MessageContentType.List,

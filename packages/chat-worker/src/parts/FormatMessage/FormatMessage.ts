@@ -18,7 +18,7 @@ export type FormattedContentInternal =
 export const formatMessage = (text: string): readonly FormattedContentInternal[] => {
   const blocks: FormattedContentInternal[] = []
   let state: State = 'Normal'
-  let listItems: FormattedContentInternal[][] = []
+  let listItems: FormattedContentInternal[] = []
   let codeContent = ''
   let language = ''
 
@@ -33,10 +33,10 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
         if (trimmedLine.startsWith('- ')) {
           state = 'InUnorderedList'
           const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
-          listItems = [parseInlineCode(content)]
+          listItems = parseInlineCode(content)
         } else if (/^\d+\.\s/.test(trimmedLine)) {
           state = 'InOrderedList'
-          listItems = [parseInlineCode(trimmedLine.replace(/^\d+\.\s/, ''))]
+          listItems = parseInlineCode(trimmedLine.replace(/^\d+\.\s/, ''))
         } else if (trimmedLine.startsWith('```')) {
           state = 'InCodeBlock'
           language = trimmedLine.slice(3).trim()

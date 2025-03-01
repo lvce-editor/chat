@@ -13,9 +13,14 @@ export interface FormattedCodeContent extends BaseFormattedContent {
   readonly language: string
 }
 
+export interface ListContentItem {
+  readonly type: number
+  readonly text: string
+}
+
 export interface FormattedListContent extends BaseFormattedContent {
   readonly type: 4
-  readonly items: readonly string[]
+  readonly items: readonly ListContentItem[]
   readonly ordered: boolean
 }
 

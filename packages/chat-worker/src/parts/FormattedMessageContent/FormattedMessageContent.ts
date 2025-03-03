@@ -19,6 +19,11 @@ export interface FormattedListContent extends BaseFormattedContent {
   readonly ordered: boolean
 }
 
+export interface FormattedInlinCodeContent extends BaseFormattedContent {
+  readonly type: 5
+  readonly text: string
+}
+
 export interface FormattedImageContent extends BaseFormattedContent {
   readonly type: 3
   readonly file: File

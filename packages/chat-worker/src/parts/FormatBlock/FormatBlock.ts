@@ -1,9 +1,9 @@
-import type * as FormatMessage from '../FormatMessage/FormatMessage.ts'
+import type { FormattedContentInternal } from '../FormattedContentInternal/FormattedContentInternal.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as Tokenize from '../Tokenize/Tokenize.ts'
 
-export const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBlockViewModel => {
+export const formatBlock = (block: FormattedContentInternal): MessageBlockViewModel => {
   switch (block.type) {
     case MessageContentType.Code:
       return {
@@ -13,6 +13,12 @@ export const formatBlock = (block: FormatMessage.FormattedContentInternal): Mess
           language: block.language,
           tokens: Tokenize.tokenize(block.content, block.language),
         },
+      }
+    case MessageContentType.InlineCode:
+      return {
+        type: MessageContentType.InlineCode,
+        content: block.text,
+        display: {},
       }
     case MessageContentType.List:
       return {

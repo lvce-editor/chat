@@ -353,3 +353,27 @@ test.skip('formats deeply nested lists', () => {
     },
   ])
 })
+
+test.skip('formats bold text', () => {
+  const text = 'Hello **Northern Australia** and world'
+  const blocks = FormatMessage.formatMessage(text)
+  expect(blocks).toEqual([
+    {
+      type: MessageContentType.Text,
+      content: 'Hello ',
+      display: {},
+    },
+    {
+      type: MessageContentType.Text,
+      content: 'Northern Australia',
+      display: {
+        bold: true,
+      },
+    },
+    {
+      type: MessageContentType.Text,
+      content: ' and world',
+      display: {},
+    },
+  ])
+})

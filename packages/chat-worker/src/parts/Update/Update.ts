@@ -5,6 +5,9 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const update = async (id: number, newWebView: Partial<WebView>) => {
   const oldWebView = WebViewStates.get(id)
+  if (!oldWebView) {
+    throw new Error(`webview ${id} not found`)
+  }
   const updatedWebView: WebView = {
     ...oldWebView,
     ...newWebView,

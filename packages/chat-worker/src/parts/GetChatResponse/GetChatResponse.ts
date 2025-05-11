@@ -1,11 +1,12 @@
 export const getChatResponse = async (
-  formattedMessages: any[],
+  formattedMessages: readonly any[],
   apiKey: string,
   modelId: string,
   url: string,
   anthropicVersion: string,
   stream: boolean,
   maxTokens: number,
+  tools: readonly any[],
 ): Promise<Response> => {
   return fetch(url, {
     method: 'POST',
@@ -19,6 +20,7 @@ export const getChatResponse = async (
       model: modelId,
       max_tokens: maxTokens,
       messages: formattedMessages,
+      tools,
       stream,
     }),
   })

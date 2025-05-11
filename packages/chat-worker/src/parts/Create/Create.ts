@@ -2,6 +2,7 @@ import type { Message } from '../Message/Message.ts'
 import type { WebView } from '../WebView/WebView.ts'
 import * as Config from '../Config/Config.ts'
 import * as ErrorCodes from '../ErrorCodes/ErrorCodes.ts'
+import { getTools } from '../GetTools/GetTools.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
@@ -47,6 +48,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     previewImageUrl: '',
     inputSource: InputSource.Script,
     focused: false,
+    tools: [],
   }
   WebViewStates.set(id, webView)
 
@@ -58,6 +60,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     inputSource: InputSource.Script,
     currentInput: savedState?.currentInput || '',
     focused: savedState?.focused || false,
+    tools: getTools(),
   }
 
   await Update.update(id, newWebView)

@@ -1,10 +1,10 @@
 import type { Message } from '../Message/Message.ts'
+import { execTool } from '../ExecTool/ExecTool.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
-import { execTool } from '../ExecTool/ExecTool.ts'
 
 export const handleApiResponse = async (id: number, body: ReadableStream) => {
   let currentMessage = ''
@@ -73,15 +73,14 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       } else if (chunk?.type === 'content_block_delta') {
         if (inToolUse) {
           toolUseMessage += chunk?.delta?.partial_json
+        } else {
+          controller.enqueue(chunk.delta.text)
         }
-        controller.enqueue(chunk.delta.text)
-      } else if (chunk?.type === 'content_block_stop') {
-        if (inToolUse) {
-          const parsed = JSON.parse(toolUseMessage)
-          await execTool(toolId, parsed)
-          console.log({ parsed })
-          inToolUse = false
-        }
+      } else if (chunk?.type === 'content_block_stop' && inToolUse) {
+        const parsed = JSON.parse(toolUseMessage)
+        await execTool(toolId, parsed)
+        console.log({ parsed })
+        inToolUse = false
       }
     },
   })

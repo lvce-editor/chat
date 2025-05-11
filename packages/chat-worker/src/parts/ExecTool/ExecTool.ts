@@ -4,7 +4,7 @@ const execSimpleBrowserTool = async (params) => {
   if (!params.url) {
     throw new Error('url is required')
   }
-  await Rpc.invoke('Command.execute', 'SimpleBrowser.setUrl', params.url)
+  await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.setUrl', params.url)
 }
 
 export const execTool = async (toolName: string, params: any): Promise<any> => {

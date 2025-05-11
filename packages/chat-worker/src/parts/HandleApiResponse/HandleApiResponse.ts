@@ -79,7 +79,6 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       } else if (chunk?.type === 'content_block_stop' && inToolUse) {
         const parsed = JSON.parse(toolUseMessage)
         await execTool(toolId, parsed)
-        console.log({ parsed })
         inToolUse = false
       }
     },

@@ -32,6 +32,7 @@ test('getChatResponse - successful response', async () => {
     '2023-06-01',
     true,
     2048,
+    [],
   )
 
   expect(result).toBe(mockResponse)
@@ -47,6 +48,7 @@ test('getChatResponse - successful response', async () => {
       model: 'test-model',
       max_tokens: 2048,
       messages: formattedMessages,
+      tools: [],
       stream: true,
     }),
   })
@@ -71,6 +73,7 @@ test('getChatResponse - invalid api key', async () => {
       '2023-06-01',
       true,
       2048,
+      [],
     ),
   ).toBe(mockResponse)
 })
@@ -95,6 +98,7 @@ test('getChatResponse - other error', async () => {
       '2023-06-01',
       true,
       2048,
+      [],
     ),
   ).toBe(mockResponse)
 })
@@ -118,6 +122,7 @@ test('getChatResponse - no response body', async () => {
       '2023-06-01',
       true,
       2048,
+      [],
     ),
   ).toBe(mockResponse)
 })
@@ -150,6 +155,7 @@ test('getChatResponse - handles API error response', async () => {
       '2023-06-01',
       true,
       2048,
+      [],
     ),
   ).toBe(mockResponse)
 })
@@ -175,6 +181,7 @@ test('getChatResponse - handles unparseable error response', async () => {
       '2023-06-01',
       true,
       2048,
+      [],
     ),
   ).toBe(mockResponse)
 })

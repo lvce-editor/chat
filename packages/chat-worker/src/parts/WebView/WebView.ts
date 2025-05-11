@@ -20,4 +20,5 @@ export interface WebView {
   readonly url: string
   readonly inputSource: number
   readonly focused: boolean
+  readonly tools: readonly any[]
 }

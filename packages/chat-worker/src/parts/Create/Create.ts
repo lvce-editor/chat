@@ -9,6 +9,7 @@ import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as SupportedModelIds from '../SupportedModelIds/SupportedModelIds.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
+import { getTools } from '../GetTools/GetTools.ts'
 
 // TODO add caching api for blobs to extension host api
 // since electron has difficitulies with cache storage and custom procotols
@@ -47,6 +48,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     previewImageUrl: '',
     inputSource: InputSource.Script,
     focused: false,
+    tools: [],
   }
   WebViewStates.set(id, webView)
 
@@ -58,6 +60,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     inputSource: InputSource.Script,
     currentInput: savedState?.currentInput || '',
     focused: savedState?.focused || false,
+    tools: getTools(),
   }
 
   await Update.update(id, newWebView)

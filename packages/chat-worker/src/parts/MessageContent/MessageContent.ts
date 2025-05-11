@@ -14,4 +14,16 @@ export interface ImageMessageContent extends BaseMessageContent {
   readonly mediaType: string
 }
 
-export type MessageContent = TextMessageContent | ImageMessageContent
+export interface ToolResultMessageContent extends BaseMessageContent {
+  readonly type: 7
+  readonly tool_use_id: string
+  readonly content: string
+}
+
+export interface ToolUseMessageContent extends BaseMessageContent {
+  readonly type: 8
+  readonly tool_use_id: string
+  readonly input: any
+}
+
+export type MessageContent = TextMessageContent | ImageMessageContent | ToolResultMessageContent | ToolUseMessageContent

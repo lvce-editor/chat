@@ -96,7 +96,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
           controller.enqueue(chunk.delta.text)
         }
       } else if (chunk?.type === 'content_block_stop' && inToolUse) {
-        inToolUse = false
+        // inToolUse = false
       }
     },
   })

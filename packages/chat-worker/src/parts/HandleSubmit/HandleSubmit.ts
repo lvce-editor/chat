@@ -11,7 +11,7 @@ import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-const max = 15 // prevent endless loop
+const max = 5 // prevent endless loop
 let current = 0
 
 export const handleSubmit = async (id: number) => {
@@ -60,7 +60,7 @@ export const handleSubmit = async (id: number) => {
           {
             type: MessageContentType.ToolResult,
             tool_use_id: toolId,
-            content: JSON.stringify(result || ''),
+            content: JSON.stringify(result || null),
           },
         ],
       }

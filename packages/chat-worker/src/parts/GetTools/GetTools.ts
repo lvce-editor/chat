@@ -29,6 +29,20 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'simple_browser_insert_javascript',
+      description: 'Insert JavaScript into the simple browser',
+      input_schema: {
+        type: 'object',
+        properties: {
+          code: {
+            type: 'string',
+            description: 'The javascript code to insert to the simple browser',
+          },
+        },
+        required: ['code'],
+      },
+    },
+    {
       name: 'get_simple_browser_dom_tree',
       description: 'Get the dom html of the simple browser',
       input_schema: {

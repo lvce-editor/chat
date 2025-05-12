@@ -11,7 +11,7 @@ import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-const max = 5 // prevent endless loop
+const max = 25 // prevent endless loop
 let current = 0
 
 export const handleSubmit = async (id: number) => {
@@ -49,6 +49,7 @@ export const handleSubmit = async (id: number) => {
     )
     const body = await UnwrapApiResponse.unwrapApiResponse(response)
     const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)
+    console.log({ toolId, toolName, toolUseMessage })
     if (toolId && toolName) {
       const parsed = JSON.parse(toolUseMessage || '{}')
       const result = await execTool(toolName, parsed)

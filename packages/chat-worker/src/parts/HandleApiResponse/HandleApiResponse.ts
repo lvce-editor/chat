@@ -48,6 +48,23 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
 
     async close() {
       if (inToolUse) {
+        const currentWebView = WebViewStates.get(id)
+        const parsed = JSON.parse(toolUseMessage || '{}')
+        const newMessage: Message = {
+          role: MessageRole.Ai,
+          content: [
+            {
+              type: MessageContentType.ToolUse,
+              tool_use_id: toolId,
+              tool_use_name: toolName,
+              input: parsed,
+            },
+          ],
+          webViewId: id,
+        }
+        await Update.update(id, {
+          messages: [...currentWebView.messages.slice(0, -1), newMessage],
+        })
         return
       }
       const currentWebView = WebViewStates.get(id)

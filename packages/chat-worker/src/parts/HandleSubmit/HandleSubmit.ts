@@ -49,7 +49,7 @@ export const handleSubmit = async (id: number) => {
     )
     const body = await UnwrapApiResponse.unwrapApiResponse(response)
     const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)
-    if (toolId && toolName && toolUseMessage) {
+    if (toolId && toolName) {
       const parsed = JSON.parse(toolUseMessage)
       const result = await execTool(toolName, parsed)
       const currentWebView = WebViewStates.get(id)
@@ -60,6 +60,7 @@ export const handleSubmit = async (id: number) => {
           {
             type: MessageContentType.ToolResult,
             tool_use_id: toolId,
+            tool_use_name: toolName,
             content: JSON.stringify(result || null),
           },
         ],

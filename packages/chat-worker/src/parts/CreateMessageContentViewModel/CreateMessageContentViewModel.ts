@@ -1,4 +1,10 @@
-import type { ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
+import type {
+  ImageMessageContent,
+  MessageContent,
+  TextMessageContent,
+  ToolResultMessageContent,
+  ToolUseMessageContent,
+} from '../MessageContent/MessageContent.ts'
 import type { MessageBlockViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import * as FormatMessage from '../FormatMessage/FormatMessage.ts'
 import * as IsFile from '../IsFile/IsFile.ts'
@@ -72,21 +78,21 @@ const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBloc
   }
 }
 
-const createMessageContentToolResultViewModel = (): readonly MessageBlockViewModel[] => {
+const createMessageContentToolResultViewModel = (part: ToolResultMessageContent): readonly MessageBlockViewModel[] => {
   return [
     {
       type: MessageContentType.Text,
-      content: '(tool-result)',
+      content: `(tool-result) ${part.tool_use_name}`,
       display: {},
     },
   ]
 }
 
-const createMessageContentToolUseViewModel = (): readonly MessageBlockViewModel[] => {
+const createMessageContentToolUseViewModel = (part: ToolUseMessageContent): readonly MessageBlockViewModel[] => {
   return [
     {
       type: MessageContentType.Text,
-      content: '(tool-use)',
+      content: `(tool-use) ${part.tool_use_name}`,
       display: {},
     },
   ]
@@ -105,10 +111,10 @@ export const createMessageContentViewModel = async (
     return createMessageContentImageViewModel(part, webView)
   }
   if (part.type === MessageContentType.ToolResult) {
-    return createMessageContentToolResultViewModel()
+    return createMessageContentToolResultViewModel(part)
   }
   if (part.type === MessageContentType.ToolUse) {
-    return createMessageContentToolUseViewModel()
+    return createMessageContentToolUseViewModel(part)
   }
   return createMessageContentTextViewModel(part)
 }

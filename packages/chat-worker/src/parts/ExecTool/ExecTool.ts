@@ -25,4 +25,5 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'get_simple_browser_dom_tree') {
     return getSimpleBrowserDomTree(params)
   }
+  console.warn(`unsupported tool ${toolName}`)
 }

@@ -17,6 +17,7 @@ export interface ImageMessageContent extends BaseMessageContent {
 export interface ToolResultMessageContent extends BaseMessageContent {
   readonly type: 7
   readonly tool_use_id: string
+  readonly tool_use_name: string
   readonly content: string
 }
 

@@ -23,6 +23,7 @@ export interface ToolResultMessageContent extends BaseMessageContent {
 export interface ToolUseMessageContent extends BaseMessageContent {
   readonly type: 8
   readonly tool_use_id: string
+  readonly tool_use_name: string
   readonly input: any
 }
 

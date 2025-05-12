@@ -61,8 +61,9 @@ export const handleSubmit = async (id: number) => {
           },
         ],
       }
+      const newMessages = [...currentWebView.messages, newMessage]
       await Update.update(id, {
-        messages: [...currentWebView.messages, newMessage],
+        messages: newMessages,
       })
     }
   } catch (error) {

@@ -14,5 +14,14 @@ export const getTools = (): readonly any[] => {
         required: ['url'],
       },
     },
+    {
+      name: 'get_simple_browser_dom_tree',
+      description: 'Get the dom html of the simple browser',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
   ]
 }

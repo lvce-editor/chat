@@ -73,7 +73,23 @@ const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBloc
 }
 
 const createMessageContentToolResultViewModel = (): readonly MessageBlockViewModel[] => {
-  return []
+  return [
+    {
+      type: MessageContentType.Text,
+      content: '(tool-result)',
+      display: {},
+    },
+  ]
+}
+
+const createMessageContentToolUseViewModel = (): readonly MessageBlockViewModel[] => {
+  return [
+    {
+      type: MessageContentType.Text,
+      content: '(tool-use)',
+      display: {},
+    },
+  ]
 }
 
 const createMessageContentTextViewModel = async (part: TextMessageContent): Promise<readonly MessageBlockViewModel[]> => {
@@ -92,7 +108,7 @@ export const createMessageContentViewModel = async (
     return createMessageContentToolResultViewModel()
   }
   if (part.type === MessageContentType.ToolUse) {
-    return createMessageContentToolResultViewModel()
+    return createMessageContentToolUseViewModel()
   }
   return createMessageContentTextViewModel(part)
 }

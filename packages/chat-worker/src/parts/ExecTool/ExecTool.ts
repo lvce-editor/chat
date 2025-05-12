@@ -7,8 +7,16 @@ const execSimpleBrowserTool = async (params) => {
   await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.setUrl', params.url)
 }
 
+const getSimpleBrowserDomTree = async (params) => {
+  const result = await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.getDomTree')
+  return result
+}
+
 export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'set_simple_browser_url') {
     return execSimpleBrowserTool(params)
+  }
+  if (toolName === 'get_simple_browser_dom_tree') {
+    return getSimpleBrowserDomTree(params)
   }
 }

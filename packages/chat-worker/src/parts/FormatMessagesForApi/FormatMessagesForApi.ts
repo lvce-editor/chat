@@ -34,14 +34,14 @@ const formatContentPartTextForApi = (block: TextMessageContent) => {
 const formatContentPartToolResultForApi = (block: ToolResultMessageContent) => {
   return {
     type: 'tool_result',
-    'tool_use.id': block.tool_use_id,
+    tool_use_id: block.tool_use_id,
     content: block.content,
   }
 }
 const formatToolUseForApi = (block: ToolUseMessageContent) => {
   return {
     type: 'tool_use',
-    'tool_use.id': block.tool_use_id,
+    tool_use_id: block.tool_use_id,
     input: block.input,
   }
 }

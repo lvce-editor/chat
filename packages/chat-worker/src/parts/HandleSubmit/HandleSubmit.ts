@@ -11,6 +11,9 @@ import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
+let max = 15 // prevent endless loop
+let current = 0
+
 export const handleSubmit = async (id: number) => {
   const webView = WebViewStates.get(id)
 
@@ -57,7 +60,7 @@ export const handleSubmit = async (id: number) => {
           {
             type: MessageContentType.ToolResult,
             tool_use_id: toolId,
-            content: JSON.stringify(result),
+            content: JSON.stringify(result || ''),
           },
         ],
       }
@@ -65,6 +68,13 @@ export const handleSubmit = async (id: number) => {
       await Update.update(id, {
         messages: newMessages,
       })
+
+      if (++current >= max) {
+        return
+      }
+
+      // continue the conversion with tool result
+      await handleSubmit(id)
     }
   } catch (error) {
     const errorMessage: Message = {

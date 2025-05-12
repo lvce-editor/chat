@@ -41,7 +41,8 @@ const formatContentPartToolResultForApi = (block: ToolResultMessageContent) => {
 const formatToolUseForApi = (block: ToolUseMessageContent) => {
   return {
     type: 'tool_use',
-    tool_use_id: block.tool_use_id,
+    id: block.tool_use_id,
+    name: block.tool_use_name,
     input: block.input,
   }
 }

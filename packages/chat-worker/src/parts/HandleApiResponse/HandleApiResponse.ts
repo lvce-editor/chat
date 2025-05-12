@@ -81,6 +81,7 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
             {
               type: MessageContentType.ToolUse,
               tool_use_id: toolId,
+              tool_use_name: toolName,
               input: {},
             },
           ],

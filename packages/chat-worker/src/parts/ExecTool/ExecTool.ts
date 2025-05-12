@@ -28,6 +28,16 @@ const insertSimpleBrowserCss = async (params) => {
   }
 }
 
+const insertSimpleBrowserJavaScript = async (params) => {
+  if (!params.code) {
+    throw new Error('code is required')
+  }
+  await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.insertJavaScript', params.code)
+  return {
+    type: 'simple-browser-javascript-was-applied',
+  }
+}
+
 export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'set_simple_browser_url') {
     return execSimpleBrowserTool(params)
@@ -37,6 +47,9 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'simple_browser_insert_css') {
     return insertSimpleBrowserCss(params)
+  }
+  if (toolName === 'simple_browser_insert_javascript') {
+    return insertSimpleBrowserJavaScript(params)
   }
   console.warn(`unsupported tool ${toolName}`)
 }

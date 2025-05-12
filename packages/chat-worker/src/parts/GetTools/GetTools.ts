@@ -16,7 +16,8 @@ export const getTools = (): readonly any[] => {
     },
     {
       name: 'simple_browser_insert_css',
-      description: 'Insert Css into the simple browser',
+      description:
+        'Insert Css into the simple browser. Probably best to wrap your javascript code in an iife to not conflict with other code.',
       input_schema: {
         type: 'object',
         properties: {

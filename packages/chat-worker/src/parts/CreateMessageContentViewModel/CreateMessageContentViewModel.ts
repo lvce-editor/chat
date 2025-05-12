@@ -5,7 +5,10 @@ import * as IsFile from '../IsFile/IsFile.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as Tokenize from '../Tokenize/Tokenize.ts'
 
-const createMessageContentImageViewModel = async (part: ImageMessageContent, webView: any): Promise<MessageBlockViewModel[]> => {
+const createMessageContentImageViewModel = async (
+  part: ImageMessageContent,
+  webView: any,
+): Promise<readonly MessageBlockViewModel[]> => {
   if (!IsFile.isFile(part.file)) {
     return [
       {
@@ -69,14 +72,27 @@ const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBloc
   }
 }
 
-const createMessageContentTextViewModel = async (part: TextMessageContent): Promise<MessageBlockViewModel[]> => {
+const createMessageContentToolResultViewModel = (): readonly MessageBlockViewModel[] => {
+  return []
+}
+
+const createMessageContentTextViewModel = async (part: TextMessageContent): Promise<readonly MessageBlockViewModel[]> => {
   const formattedBlocks = FormatMessage.formatMessage(part.content)
   return formattedBlocks.map(formatBlock)
 }
 
-export const createMessageContentViewModel = async (part: MessageContent, webView: any): Promise<MessageBlockViewModel[]> => {
+export const createMessageContentViewModel = async (
+  part: MessageContent,
+  webView: any,
+): Promise<readonly MessageBlockViewModel[]> => {
   if (part.type === MessageContentType.Image) {
     return createMessageContentImageViewModel(part, webView)
+  }
+  if (part.type === MessageContentType.ToolResult) {
+    return createMessageContentToolResultViewModel()
+  }
+  if (part.type === MessageContentType.ToolUse) {
+    return createMessageContentToolResultViewModel()
   }
   return createMessageContentTextViewModel(part)
 }

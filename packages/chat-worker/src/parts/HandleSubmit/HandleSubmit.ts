@@ -1,4 +1,5 @@
 import type { Message } from '../Message/Message.ts'
+import { execTool } from '../ExecTool/ExecTool.ts'
 import * as FormatMessagesForApi from '../FormatMessagesForApi/FormatMessagesForApi.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
 import * as GetNewContent from '../GetNewContent/GetNewContent.ts'
@@ -44,7 +45,26 @@ export const handleSubmit = async (id: number) => {
       webView.tools,
     )
     const body = await UnwrapApiResponse.unwrapApiResponse(response)
-    await HandleApiResponse.handleApiResponse(id, body)
+    const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)
+    if (toolId && toolName && toolUseMessage) {
+      const parsed = JSON.parse(toolUseMessage)
+      const result = await execTool(toolName, parsed)
+      const currentWebView = WebViewStates.get(id)
+      const newMessage: Message = {
+        webViewId: id,
+        role: MessageRole.Human,
+        content: [
+          {
+            type: MessageContentType.ToolResult,
+            tool_use_id: toolId,
+            content: JSON.stringify(result),
+          },
+        ],
+      }
+      await Update.update(id, {
+        messages: [...currentWebView.messages, newMessage],
+      })
+    }
   } catch (error) {
     const errorMessage: Message = {
       role: MessageRole.Ai,

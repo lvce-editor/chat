@@ -1,5 +1,11 @@
 import type { Message } from '../Message/Message.ts'
-import type { ImageMessageContent, MessageContent, TextMessageContent } from '../MessageContent/MessageContent.ts'
+import type {
+  ImageMessageContent,
+  MessageContent,
+  TextMessageContent,
+  ToolResultMessageContent,
+  ToolUseMessageContent,
+} from '../MessageContent/MessageContent.ts'
 import * as ConvertImageToPng from '../ConvertImageToPng/ConvertImageToPng.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
@@ -25,9 +31,30 @@ const formatContentPartTextForApi = (block: TextMessageContent) => {
   }
 }
 
+const formatContentPartToolResultForApi = (block: ToolResultMessageContent) => {
+  return {
+    type: 'tool_result',
+    tool_use_id: block.tool_use_id,
+    content: block.content,
+  }
+}
+const formatToolUseForApi = (block: ToolUseMessageContent) => {
+  return {
+    type: 'tool_use',
+    tool_use_id: block.tool_use_id,
+    input: block.input,
+  }
+}
+
 const formatContentPartForApi = (block: MessageContent) => {
   if (block.type === MessageContentType.Image) {
     return formatContentPartImageForApi(block)
+  }
+  if (block.type === MessageContentType.ToolResult) {
+    return formatContentPartToolResultForApi(block)
+  }
+  if (block.type === MessageContentType.ToolUse) {
+    return formatToolUseForApi(block)
   }
   return formatContentPartTextForApi(block)
 }

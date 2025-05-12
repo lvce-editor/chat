@@ -15,6 +15,12 @@ export const parseMessage = (message: Message): ParsedMessage => {
         },
       ]
     }
+    if (content.type === MessageContentType.ToolResult) {
+      return []
+    }
+    if (content.type === MessageContentType.ToolUse) {
+      return []
+    }
     return FormatMessage.formatMessage(content.content)
   })
 

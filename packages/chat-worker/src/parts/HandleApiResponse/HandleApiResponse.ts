@@ -1,16 +1,16 @@
 import type { Message } from '../Message/Message.ts'
-import { execTool } from '../ExecTool/ExecTool.ts'
 import * as GetChatResponseStream from '../GetChatResponseStream/GetChatResponseStream.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const handleApiResponse = async (id: number, body: ReadableStream) => {
+export const handleApiResponse = async (id: number, body: ReadableStream): Promise<any> => {
   let currentMessage = ''
   let toolUseMessage = ''
   let inToolUse = false
   let toolId = ''
+  let toolName = ''
 
   const acc = new WritableStream({
     async start() {
@@ -47,6 +47,9 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
     },
 
     async close() {
+      if (inToolUse) {
+        return
+      }
       const currentWebView = WebViewStates.get(id)
       const newMessage: Message = {
         role: MessageRole.Ai,
@@ -69,7 +72,23 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
       if (chunk?.type === 'content_block_start' && chunk?.content_block?.type === 'tool_use') {
         // TODO handle tool use
         inToolUse = true
-        toolId = chunk?.content_block?.name
+        toolName = chunk?.content_block?.name
+        toolId = chunk?.content_block?.id
+        const currentWebView = WebViewStates.get(id)
+        const newMessage: Message = {
+          role: MessageRole.Ai,
+          content: [
+            {
+              type: MessageContentType.ToolUse,
+              tool_use_id: toolId,
+              input: {},
+            },
+          ],
+          webViewId: id,
+        }
+        await Update.update(id, {
+          messages: [...currentWebView.messages, newMessage],
+        })
       } else if (chunk?.type === 'content_block_delta') {
         if (inToolUse) {
           toolUseMessage += chunk?.delta?.partial_json
@@ -77,8 +96,6 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
           controller.enqueue(chunk.delta.text)
         }
       } else if (chunk?.type === 'content_block_stop' && inToolUse) {
-        const parsed = JSON.parse(toolUseMessage)
-        await execTool(toolId, parsed)
         inToolUse = false
       }
     },
@@ -86,4 +103,9 @@ export const handleApiResponse = async (id: number, body: ReadableStream) => {
 
   const stream = GetChatResponseStream.getChatResponseStream(body)
   await stream.pipeThrough(messageStream).pipeTo(acc)
+  return {
+    toolId,
+    toolName,
+    toolUseMessage,
+  }
 }

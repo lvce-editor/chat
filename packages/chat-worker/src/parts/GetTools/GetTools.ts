@@ -37,7 +37,7 @@ export const getTools = (): readonly any[] => {
         properties: {
           code: {
             type: 'string',
-            description: 'The javascript code to insert to the simple browser',
+            description: 'The javascript code to insert to the simple browser. This property is required',
           },
         },
         required: ['code'],
@@ -93,7 +93,12 @@ export const getTools = (): readonly any[] => {
       description: 'Get the dom html of the simple browser',
       input_schema: {
         type: 'object',
-        properties: {},
+        properties: {
+          maxLength: {
+            type: 'number',
+            description: 'The max length of html code to query',
+          },
+        },
         required: [],
       },
     },

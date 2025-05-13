@@ -12,9 +12,10 @@ const execSimpleBrowserTool = async (params) => {
 
 const getSimpleBrowserDomTree = async (params) => {
   const result = await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.getDomTree')
+  const sliced = result.slice(0, 10_000)
   return {
     type: 'simple-browser-dom',
-    html: result,
+    html: sliced,
   }
 }
 

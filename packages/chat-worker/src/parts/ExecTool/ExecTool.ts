@@ -44,6 +44,13 @@ const layoutToggleSideBar = async () => {
   }
 }
 
+const layoutTogglePanel = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.togglePanel')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
 const helpShowAbout = async () => {
   await Rpc.invoke('WebView.executeExternalCommand', 'About.showAbout')
   return {
@@ -89,6 +96,9 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'quickpick_open_recent') {
     return quickPickOpenRecent()
+  }
+  if (toolName === 'layout_toggle_panel') {
+    return layoutTogglePanel()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

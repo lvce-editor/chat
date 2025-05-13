@@ -51,6 +51,20 @@ const helpShowAbout = async () => {
   }
 }
 
+const explorerCollapseAll = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.collapseAll')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const quickPickOpenRecent = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'QuickPick.openRecent')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
 export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'set_simple_browser_url') {
     return execSimpleBrowserTool(params)
@@ -69,6 +83,12 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'help_show_about') {
     return helpShowAbout()
+  }
+  if (toolName === 'explorer_collapse_all') {
+    return explorerCollapseAll()
+  }
+  if (toolName === 'quickpick_open_recent') {
+    return quickPickOpenRecent()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

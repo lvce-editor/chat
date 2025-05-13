@@ -53,6 +53,15 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'layout_toggle_panel',
+      description: 'Toggle the panel',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'help_show_about',
       description: 'Show About info',
       input_schema: {

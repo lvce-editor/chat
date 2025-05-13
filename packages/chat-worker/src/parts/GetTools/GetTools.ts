@@ -62,6 +62,24 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'explorer_collapse_all',
+      description: 'Collapse all files in explorer',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
+      name: 'quickpick_open_recent',
+      description: 'open recent items quickpick',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'get_simple_browser_dom_tree',
       description: 'Get the dom html of the simple browser',
       input_schema: {

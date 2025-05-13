@@ -37,6 +37,19 @@ const insertSimpleBrowserJavaScript = async (params) => {
     type: 'simple-browser-javascript-was-applied',
   }
 }
+const layoutToggleSideBar = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.toggleSideBar')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const helpShowAbout = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'About.showAbout')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
 
 export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'set_simple_browser_url') {
@@ -50,6 +63,12 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'simple_browser_insert_javascript') {
     return insertSimpleBrowserJavaScript(params)
+  }
+  if (toolName === 'layout_toggle_side_bar') {
+    return layoutToggleSideBar()
+  }
+  if (toolName === 'help_show_about') {
+    return helpShowAbout()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

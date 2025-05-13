@@ -44,6 +44,24 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'layout_toggle_side_bar',
+      description: 'Toggle the side bar',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
+      name: 'help_show_about',
+      description: 'Show About info',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'get_simple_browser_dom_tree',
       description: 'Get the dom html of the simple browser',
       input_schema: {

@@ -11,7 +11,7 @@ import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-const max = 25 // prevent endless loop
+const max = 50 // prevent endless loop
 let current = 0
 
 export const handleSubmit = async (id: number) => {

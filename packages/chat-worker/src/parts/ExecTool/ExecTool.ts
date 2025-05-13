@@ -37,6 +37,40 @@ const insertSimpleBrowserJavaScript = async (params) => {
     type: 'simple-browser-javascript-was-applied',
   }
 }
+const layoutToggleSideBar = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.toggleSideBar')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const layoutTogglePanel = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.togglePanel')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const helpShowAbout = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'About.showAbout')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const explorerCollapseAll = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.collapseAll')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const quickPickOpenRecent = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'QuickPick.openRecent')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
 
 export const execTool = async (toolName: string, params: any): Promise<any> => {
   if (toolName === 'set_simple_browser_url') {
@@ -50,6 +84,21 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'simple_browser_insert_javascript') {
     return insertSimpleBrowserJavaScript(params)
+  }
+  if (toolName === 'layout_toggle_side_bar') {
+    return layoutToggleSideBar()
+  }
+  if (toolName === 'help_show_about') {
+    return helpShowAbout()
+  }
+  if (toolName === 'explorer_collapse_all') {
+    return explorerCollapseAll()
+  }
+  if (toolName === 'quickpick_open_recent') {
+    return quickPickOpenRecent()
+  }
+  if (toolName === 'layout_toggle_panel') {
+    return layoutTogglePanel()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

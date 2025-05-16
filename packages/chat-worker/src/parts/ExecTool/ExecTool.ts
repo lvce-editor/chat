@@ -1,17 +1,18 @@
+import { executeExternalCommand } from '../ExecuteExternalCommand/ExecuteExternalCommand.ts'
 import * as Rpc from '../Rpc/Rpc.ts'
 
 const execSimpleBrowserTool = async (params) => {
   if (!params.url) {
     throw new Error('url is required')
   }
-  await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.setUrl', params.url)
+  await executeExternalCommand('SimpleBrowser.setUrl', params.url)
   return {
     type: 'navigation-successful',
   }
 }
 
 const getSimpleBrowserDomTree = async (params) => {
-  const result = await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.getDomTree')
+  const result = await executeExternalCommand('SimpleBrowser.getDomTree')
   const limit = params?.maxLength || 10_000
   const sliced = result.slice(0, limit)
   return {
@@ -24,7 +25,7 @@ const insertSimpleBrowserCss = async (params) => {
   if (!params.css) {
     throw new Error('css is required')
   }
-  await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.insertCss', params.css)
+  await executeExternalCommand('SimpleBrowser.insertCss', params.css)
   return {
     type: 'simple-browser-css-was-applied',
   }
@@ -34,20 +35,34 @@ const insertSimpleBrowserJavaScript = async (params) => {
   if (!params.code) {
     throw new Error('code is required')
   }
-  await Rpc.invoke('WebView.executeExternalCommand', 'SimpleBrowser.insertJavaScript', params.code)
+  await executeExternalCommand('SimpleBrowser.insertJavaScript', params.code)
   return {
     type: 'simple-browser-javascript-was-applied',
   }
 }
 const layoutToggleSideBar = async () => {
-  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.toggleSideBar')
+  await executeExternalCommand('Layout.toggleSideBar')
   return {
     type: 'command-executed-successfully',
   }
 }
 
 const layoutTogglePanel = async () => {
-  await Rpc.invoke('WebView.executeExternalCommand', 'Layout.togglePanel')
+  await executeExternalCommand('Layout.togglePanel')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const layoutShowSourceControl = async () => {
+  await executeExternalCommand('SideBar.openViewlet', 'Source Control')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const layoutShowSearch = async () => {
+  await executeExternalCommand('SideBar.openViewlet', 'Search')
   return {
     type: 'command-executed-successfully',
   }
@@ -101,6 +116,12 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'layout_toggle_panel') {
     return layoutTogglePanel()
+  }
+  if (toolName === 'layout_show_source_control') {
+    return layoutShowSourceControl()
+  }
+  if (toolName === 'layout_show_search') {
+    return layoutShowSearch()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

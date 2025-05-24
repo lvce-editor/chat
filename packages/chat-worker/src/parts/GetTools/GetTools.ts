@@ -98,6 +98,37 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'explorer_new_file',
+      description: 'Bring the explorer in a mode to create a new file',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
+      name: 'explorer_update_editing_value',
+      description: 'Update the editing value in the explorer. Can only be called when the explorer is in new file mode',
+      input_schema: {
+        type: 'object',
+        properties: {
+          value: {
+            type: 'string',
+          },
+        },
+        required: ['value'],
+      },
+    },
+    {
+      name: 'explorer_accept_edit',
+      description: 'Finish creating a new file in the explorer',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'quickpick_open_recent',
       description: 'open recent items quickpick',
       input_schema: {

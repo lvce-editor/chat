@@ -81,6 +81,24 @@ const explorerCollapseAll = async () => {
     type: 'command-executed-successfully',
   }
 }
+const explorerNewFile = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.newFile')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+const explorerUpdateEditingValue = async ({ value }: { value: string }) => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.updateEditingValue', value)
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+const explorerAcceptEdit = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.acceptEdit')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
 
 const quickPickOpenRecent = async () => {
   await Rpc.invoke('WebView.executeExternalCommand', 'QuickPick.openRecent')
@@ -122,6 +140,15 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'layout_show_search') {
     return layoutShowSearch()
+  }
+  if (toolName === 'explorer_new_file') {
+    return explorerNewFile()
+  }
+  if (toolName === 'explorer_update_editing_value') {
+    return explorerUpdateEditingValue(params)
+  }
+  if (toolName === 'explorer_accept_edit') {
+    return explorerAcceptEdit()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

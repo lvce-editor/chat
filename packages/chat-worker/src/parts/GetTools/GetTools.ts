@@ -129,6 +129,24 @@ export const getTools = (): readonly any[] => {
       },
     },
     {
+      name: 'explorer_focus_next',
+      description: 'Focus next file in the explorer',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
+      name: 'explorer_focus_previous',
+      description: 'Focus previous file in the explorer',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'quickpick_open_recent',
       description: 'open recent items quickpick',
       input_schema: {

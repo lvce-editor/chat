@@ -100,6 +100,20 @@ const explorerAcceptEdit = async () => {
   }
 }
 
+const explorerFocusNext = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.focusNext')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
+const explorerFocusPrevious = async () => {
+  await Rpc.invoke('WebView.executeExternalCommand', 'Explorer.focusPrevious')
+  return {
+    type: 'command-executed-successfully',
+  }
+}
+
 const quickPickOpenRecent = async () => {
   await Rpc.invoke('WebView.executeExternalCommand', 'QuickPick.openRecent')
   return {
@@ -149,6 +163,12 @@ export const execTool = async (toolName: string, params: any): Promise<any> => {
   }
   if (toolName === 'explorer_accept_edit') {
     return explorerAcceptEdit()
+  }
+  if (toolName === 'explorer_focus_next') {
+    return explorerFocusNext()
+  }
+  if (toolName === 'explorer_focus_previous') {
+    return explorerFocusPrevious()
   }
   console.warn(`unsupported tool ${toolName}`)
 }

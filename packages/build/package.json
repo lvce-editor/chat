@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {},
   "keywords": [],
-  "author": "",
   "license": "MIT",
   "devDependencies": {
     "@lvce-editor/package-extension": "^1.5.0",

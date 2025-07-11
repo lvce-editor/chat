@@ -3,7 +3,6 @@
   "version": "0.0.0-dev",
   "description": "",
   "license": "MIT",
-  "author": "",
   "type": "module",
   "scripts": {
     "build": "node packages/build/src/build.js",

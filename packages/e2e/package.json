@@ -9,9 +9,8 @@
   },
   "type": "module",
   "keywords": [],
-  "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "^2.17.0"
+    "@lvce-editor/test-with-playwright": "^2.22.0"
   }
 }

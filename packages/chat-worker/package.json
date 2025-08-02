@@ -38,10 +38,10 @@
     }
   },
   "devDependencies": {
-    "@jest/globals": "^30.0.4",
+    "@jest/globals": "^30.0.5",
     "@lvce-editor/extension-host-sub-worker": "^3.14.0",
-    "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.4",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "ts-jest": "^29.4.0"
   }
 }

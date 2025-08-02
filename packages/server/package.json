@@ -8,9 +8,9 @@
   "type": "module",
   "description": "",
   "dependencies": {
-    "@lvce-editor/server": "^0.55.6"
+    "@lvce-editor/server": "^0.56.11"
   },
   "devDependencies": {
-    "@types/node": "^22.13.2"
+    "@types/node": "^24.1.0"
   }
 }

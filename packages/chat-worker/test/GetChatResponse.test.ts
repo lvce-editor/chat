@@ -139,7 +139,7 @@ test('getChatResponse - handles API error response', async () => {
   const mockResponse = {
     ok: false,
     status: 400,
-    json: () => Promise.resolve(errorResponse),
+    json: () => errorResponse,
   }
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)

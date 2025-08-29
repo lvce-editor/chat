@@ -1,7 +1,6 @@
 {
   "name": "e2e",
   "version": "0.0.0-dev",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "e2e": "node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=../extension --test-path=.",
@@ -11,6 +10,6 @@
   "keywords": [],
   "license": "MIT",
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "^2.23.0"
+    "@lvce-editor/test-with-playwright": "^3.4.0"
   }
 }

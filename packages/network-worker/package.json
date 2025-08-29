@@ -1,7 +1,6 @@
 {
   "name": "networl-worker",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "main": "src/networkWorkerMain.ts",
@@ -38,8 +37,8 @@
     }
   },
   "devDependencies": {
-    "@jest/globals": "^30.0.5",
-    "jest": "^30.0.5",
-    "ts-jest": "^29.4.0"
+    "@jest/globals": "^30.1.1",
+    "jest": "^30.1.1",
+    "ts-jest": "^29.4.1"
   }
 }

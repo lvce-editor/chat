@@ -6,9 +6,8 @@
   "keywords": [],
   "license": "MIT",
   "type": "module",
-  "description": "",
   "dependencies": {
-    "@lvce-editor/server": "^0.56.11"
+    "@lvce-editor/server": "^0.58.2"
   },
   "devDependencies": {
     "@types/node": "^24.1.0"

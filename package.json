@@ -1,7 +1,6 @@
 {
   "name": "builtin.chat-monorepo",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -24,7 +23,7 @@
   },
   "devDependencies": {
     "@lerna/legacy-package-management": "^8.2.4",
-    "@lvce-editor/eslint-config": "^1.59.0",
+    "@lvce-editor/eslint-config": "^1.60.0",
     "eslint": "^9.34.0",
     "lerna": "^8.2.3",
     "prettier": "^3.6.2",

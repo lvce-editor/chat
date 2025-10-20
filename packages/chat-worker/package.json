@@ -1,7 +1,6 @@
 {
   "name": "chat-worker",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "main": "src/chatWorkerMain.ts",

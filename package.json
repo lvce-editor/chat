@@ -1,7 +1,6 @@
 {
   "name": "builtin.chat-monorepo",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -11,8 +10,8 @@
     "e2e": "cd packages/e2e && npm run e2e",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
     "format": "prettier --write .",
-    "lint": "eslint .",
     "postinstall": "lerna bootstrap --ci",
+    "lint": "eslint .",
     "test": "lerna run test",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "type-check": "tsc -b"
@@ -24,10 +23,10 @@
   },
   "devDependencies": {
     "@lerna/legacy-package-management": "^8.2.4",
-    "@lvce-editor/eslint-config": "^1.55.0",
-    "eslint": "^9.32.0",
+    "@lvce-editor/eslint-config": "^1.68.0",
+    "eslint": "^9.37.0",
     "lerna": "^8.2.3",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }

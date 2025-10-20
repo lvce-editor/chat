@@ -6,7 +6,6 @@
   "keywords": [],
   "license": "MIT",
   "type": "module",
-  "description": "",
   "dependencies": {
     "@lvce-editor/server": "^0.56.11"
   },

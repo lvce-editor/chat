@@ -1,7 +1,6 @@
 {
   "name": "networl-worker",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "main": "src/networkWorkerMain.ts",

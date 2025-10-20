@@ -1,7 +1,6 @@
 {
   "name": "builtin.chat-monorepo",
   "version": "0.0.0-dev",
-  "description": "",
   "license": "MIT",
   "type": "module",
   "scripts": {

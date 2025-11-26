@@ -1,3 +1,5 @@
+import * as Models from '../Models/Models.ts'
+
 // TODO make all of these configurable
 
 export const getApiKey = async (rpc: any): Promise<string> => {
@@ -6,7 +8,7 @@ export const getApiKey = async (rpc: any): Promise<string> => {
 }
 
 export const getModelId = async (rpc: any): Promise<string> => {
-  const modelId = (await rpc.invoke('WebView.getSecret', 'claude.modelId')) || 'claude-3-5-haiku-20241022'
+  const modelId = (await rpc.invoke('WebView.getSecret', 'claude.modelId')) || Models.defaultId
   return modelId
 }
 

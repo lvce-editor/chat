@@ -1,5 +1,18 @@
 export const models = [
   {
+    name: 'Claude 4.5',
+    id: `claude-sonnet-4-5-20250929`,
+  },
+  {
+    name: 'Claude 4.5 Haiku',
+    id: 'claude-haiku-4-5-20251001',
+    default: true,
+  },
+  {
+    name: 'Claude 4.5 Opus',
+    id: 'claude-opus-4-5-20251101',
+  },
+  {
     name: 'Claude 3.7 Sonnet',
     id: 'claude-3-7-sonnet-20250219',
   },
@@ -24,3 +37,5 @@ export const models = [
     id: 'claude-3-haiku-20240307',
   },
 ]
+
+export const defaultId = models.find((model) => model.default)?.id || ''

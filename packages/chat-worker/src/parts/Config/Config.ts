@@ -1,4 +1,5 @@
 // TODO make all of these configurable
+import * as Models from '../Models/Models.ts'
 
 export const getApiKey = async (rpc: any): Promise<string> => {
   const apiKey = await rpc.invoke('WebView.getSecret', 'secrets.claude')

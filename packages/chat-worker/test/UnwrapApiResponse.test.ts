@@ -10,7 +10,7 @@ test('handles API error response', async () => {
     },
   }
 
-  const response = new Response(JSON.stringify(errorResponse), {
+  const response = Response.json(errorResponse, {
     status: 400,
     statusText: 'Bad Request',
   })
@@ -69,7 +69,7 @@ test('handles empty message content error', async () => {
     },
   }
 
-  const response = new Response(JSON.stringify(errorResponse), {
+  const response = Response.json(errorResponse, {
     status: 400,
     statusText: 'Bad Request',
   })
@@ -90,7 +90,7 @@ test('handles unsupported image format error', async () => {
     },
   }
 
-  const response = new Response(JSON.stringify(errorResponse), {
+  const response = Response.json(errorResponse, {
     status: 400,
     statusText: 'Bad Request',
   })

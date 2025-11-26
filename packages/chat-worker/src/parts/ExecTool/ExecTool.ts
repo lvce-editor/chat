@@ -121,7 +121,17 @@ const quickPickOpenRecent = async () => {
   }
 }
 
-export const execTool = async (toolName: string, params: any): Promise<any> => {
+const getModelInfo = (modelId: string, modelName: string) => {
+  return {
+    modelId,
+    modelName,
+  }
+}
+
+export const execTool = async (toolName: string, params: any, modelId: string, modelName: string): Promise<any> => {
+  if (toolName === 'get_model_version_info') {
+    return getModelInfo(modelId, modelName)
+  }
   if (toolName === 'set_simple_browser_url') {
     return execSimpleBrowserTool(params)
   }

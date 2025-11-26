@@ -51,7 +51,7 @@ export const handleSubmit = async (id: number) => {
     const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)
     if (toolId && toolName) {
       const parsed = JSON.parse(toolUseMessage || '{}')
-      const result = await execTool(toolName, parsed)
+      const result = await execTool(toolName, parsed, webView.modelId, webView.modelName)
       const currentWebView = WebViewStates.get(id)
       const newMessage: Message = {
         webViewId: id,

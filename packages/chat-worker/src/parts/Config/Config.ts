@@ -10,6 +10,14 @@ export const getModelId = async (rpc: any): Promise<string> => {
   return modelId
 }
 
+export const getModelName = async (modelId: string): Promise<string> => {
+  const match = Models.models.find((item) => item.id === modelId)
+  if (!match) {
+    return ''
+  }
+  return match.name
+}
+
 export const getUrl = (): string => {
   const url = 'https://api.anthropic.com/v1/messages'
   return url

@@ -19,6 +19,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const { rpc } = globalThis
   const apiKey = await Config.getApiKey(rpc)
   const modelId = await Config.getModelId(rpc)
+  const modelName = await Config.getModelName(modelId)
   if (!SupportedModelIds.supportedModelIds.includes(modelId)) {
     console.warn(`[chat-worker] model id ${modelId} is not officially supported`)
   }
@@ -49,6 +50,7 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
     inputSource: InputSource.Script,
     focused: false,
     tools: [],
+    modelName,
   }
   WebViewStates.set(id, webView)
 

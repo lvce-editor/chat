@@ -1,6 +1,7 @@
 import * as Models from '../Models/Models.ts'
 
 // TODO make all of these configurable
+import * as Models from '../Models/Models.ts'
 
 export const getApiKey = async (rpc: any): Promise<string> => {
   const apiKey = await rpc.invoke('WebView.getSecret', 'secrets.claude')
@@ -10,6 +11,14 @@ export const getApiKey = async (rpc: any): Promise<string> => {
 export const getModelId = async (rpc: any): Promise<string> => {
   const modelId = (await rpc.invoke('WebView.getSecret', 'claude.modelId')) || Models.defaultId
   return modelId
+}
+
+export const getModelName = async (modelId: string): Promise<string> => {
+  const match = Models.models.find((item) => item.id === modelId)
+  if (!match) {
+    return ''
+  }
+  return match.name
 }
 
 export const getUrl = (): string => {

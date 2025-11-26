@@ -1,6 +1,15 @@
 export const getTools = (): readonly any[] => {
   return [
     {
+      name: 'get_model_version_info',
+      description: 'Get Info about currently used language model and its version',
+      input_schema: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    {
       name: 'set_simple_browser_url',
       description: 'Set the url of the simple browser',
       input_schema: {

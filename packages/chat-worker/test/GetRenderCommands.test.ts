@@ -26,6 +26,7 @@ test('returns empty array when no diffs', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const newWebView: WebView = {
     anthropicVersion: '',
@@ -48,6 +49,7 @@ test('returns empty array when no diffs', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const diffs: number[] = []
 
@@ -77,6 +79,7 @@ test('returns render command for DOM diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const newWebView: WebView = {
     anthropicVersion: '',
@@ -99,6 +102,7 @@ test('returns render command for DOM diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const diffs = [DiffType.Dom]
 
@@ -128,6 +132,7 @@ test('returns setValue command for input value diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const newWebView: WebView = {
     anthropicVersion: '',
@@ -150,6 +155,7 @@ test('returns setValue command for input value diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const diffs = [DiffType.InputValue]
 
@@ -179,6 +185,7 @@ test('returns focus command for focus diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const newWebView: WebView = {
     anthropicVersion: '',
@@ -201,6 +208,7 @@ test('returns focus command for focus diff', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const diffs = [DiffType.Focus]
 
@@ -230,6 +238,7 @@ test('returns multiple commands for multiple diffs', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const newWebView: WebView = {
     anthropicVersion: '',
@@ -252,6 +261,7 @@ test('returns multiple commands for multiple diffs', async () => {
     time: 0,
     url: '',
     tools: [],
+    modelName: '',
   }
   const diffs = [DiffType.Dom, DiffType.InputValue, DiffType.Focus]
 

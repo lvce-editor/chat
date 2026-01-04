@@ -25,16 +25,16 @@ test('parses event stream data', async () => {
 
   expect(chunks).toEqual([
     {
-      type: 'content_block_delta',
       delta: {
         text: 'Hello',
       },
+      type: 'content_block_delta',
     },
     {
-      type: 'content_block_delta',
       delta: {
         text: ' World',
       },
+      type: 'content_block_delta',
     },
   ])
 })
@@ -68,16 +68,16 @@ data: {"type":"content_block_delta","delta":{"text":" World"}}\n\n`
 
   expect(chunks).toEqual([
     {
-      type: 'content_block_delta',
       delta: {
         text: 'Hello',
       },
+      type: 'content_block_delta',
     },
     {
-      type: 'content_block_delta',
       delta: {
         text: ' World',
       },
+      type: 'content_block_delta',
     },
   ])
 })

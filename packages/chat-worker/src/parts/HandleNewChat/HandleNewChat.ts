@@ -12,12 +12,12 @@ export const handleNewChat = async (id: number) => {
   }
 
   await Update.update(id, {
-    messages: [],
     currentInput: '',
+    focused: true,
     images: [],
     imageUrlCache: new Map(),
-    previewImageUrl: '',
-    focused: true,
     inputSource: InputSource.Script,
+    messages: [],
+    previewImageUrl: '',
   })
 }

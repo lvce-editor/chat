@@ -40,9 +40,9 @@ beforeEach(() => {
 
 test.skip('handles offline error', async () => {
   mockWebViewStates.get.mockReturnValue({
-    messages: [],
     currentInput: 'test message',
     images: [],
+    messages: [],
   })
 
   // @ts-ignore
@@ -53,23 +53,23 @@ test.skip('handles offline error', async () => {
   expect(mockUpdate.update).toHaveBeenCalledWith(1, {
     messages: [
       {
-        role: MessageRole.Human,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'test message',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Human,
         webViewId: 1,
       },
       {
-        role: MessageRole.Ai,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'Error: E_OFFLINE: Unable to connect. Please check your internet connection and try again.',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -78,9 +78,9 @@ test.skip('handles offline error', async () => {
 
 test.skip('handles other network errors', async () => {
   mockWebViewStates.get.mockReturnValue({
-    messages: [],
     currentInput: 'test message',
     images: [],
+    messages: [],
   })
 
   // @ts-ignore
@@ -91,23 +91,23 @@ test.skip('handles other network errors', async () => {
   expect(mockUpdate.update).toHaveBeenCalledWith(1, {
     messages: [
       {
-        role: MessageRole.Human,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'test message',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Human,
         webViewId: 1,
       },
       {
-        role: MessageRole.Ai,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'Error: Error: Some other error',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],

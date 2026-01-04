@@ -17,14 +17,14 @@ test('formats text content for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: MessageRole.Human,
-      webViewId: 1,
       content: [
         {
-          type: MessageContentType.Text,
           content: 'Hello world',
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Human,
+      webViewId: 1,
     },
   ]
 
@@ -32,13 +32,13 @@ test('formats text content for api', async () => {
 
   expect(result).toEqual([
     {
-      role: 'user',
       content: [
         {
-          type: 'text',
           text: 'Hello world',
+          type: 'text',
         },
       ],
+      role: 'user',
     },
   ])
 })
@@ -47,14 +47,14 @@ test('formats code content for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: MessageRole.Human,
-      webViewId: 1,
       content: [
         {
-          type: MessageContentType.Text,
           content: 'const x = 1;',
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Human,
+      webViewId: 1,
     },
   ]
 
@@ -62,13 +62,13 @@ test('formats code content for api', async () => {
 
   expect(result).toEqual([
     {
-      role: 'user',
       content: [
         {
-          type: 'text',
           text: 'const x = 1;',
+          type: 'text',
         },
       ],
+      role: 'user',
     },
   ])
 })
@@ -81,16 +81,16 @@ test('formats image content for api', async () => {
 
   const messages: readonly Message[] = [
     {
-      role: MessageRole.Human,
-      webViewId: 1,
       content: [
         {
-          type: MessageContentType.Image,
           file: new File(['test'], 'test.png', { type: 'image/png' }),
-          mediaType: 'image/png',
           fileName: 'test.png',
+          mediaType: 'image/png',
+          type: MessageContentType.Image,
         },
       ],
+      role: MessageRole.Human,
+      webViewId: 1,
     },
   ]
 
@@ -98,17 +98,17 @@ test('formats image content for api', async () => {
 
   expect(result).toEqual([
     {
-      role: 'user',
       content: [
         {
-          type: 'image',
           source: {
-            type: 'base64',
-            media_type: 'image/png',
             data: mockBase64,
+            media_type: 'image/png',
+            type: 'base64',
           },
+          type: 'image',
         },
       ],
+      role: 'user',
     },
   ])
 })
@@ -121,24 +121,24 @@ test('formats mixed content for api', async () => {
 
   const messages: readonly Message[] = [
     {
-      role: MessageRole.Human,
-      webViewId: 1,
       content: [
         {
-          type: MessageContentType.Text,
           content: 'Here is an image:',
-        },
-        {
-          type: MessageContentType.Image,
-          file: new File(['test'], 'test.png', { type: 'image/png' }),
-          mediaType: 'image/png',
-          fileName: 'test.png',
-        },
-        {
           type: MessageContentType.Text,
+        },
+        {
+          file: new File(['test'], 'test.png', { type: 'image/png' }),
+          fileName: 'test.png',
+          mediaType: 'image/png',
+          type: MessageContentType.Image,
+        },
+        {
           content: 'console.log("hello")',
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Human,
+      webViewId: 1,
     },
   ]
 
@@ -146,25 +146,25 @@ test('formats mixed content for api', async () => {
 
   expect(result).toEqual([
     {
-      role: 'user',
       content: [
         {
-          type: 'text',
           text: 'Here is an image:',
-        },
-        {
-          type: 'image',
-          source: {
-            type: 'base64',
-            media_type: 'image/png',
-            data: mockBase64,
-          },
-        },
-        {
           type: 'text',
+        },
+        {
+          source: {
+            data: mockBase64,
+            media_type: 'image/png',
+            type: 'base64',
+          },
+          type: 'image',
+        },
+        {
           text: 'console.log("hello")',
+          type: 'text',
         },
       ],
+      role: 'user',
     },
   ])
 })
@@ -173,14 +173,14 @@ test('formats AI messages for api', async () => {
   const { formatMessagesForApi } = await import('../src/parts/FormatMessagesForApi/FormatMessagesForApi.ts')
   const messages: readonly Message[] = [
     {
-      role: MessageRole.Ai,
-      webViewId: 1,
       content: [
         {
-          type: MessageContentType.Text,
           content: 'Hello, I am an AI',
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Ai,
+      webViewId: 1,
     },
   ]
 
@@ -188,13 +188,13 @@ test('formats AI messages for api', async () => {
 
   expect(result).toEqual([
     {
-      role: 'assistant',
       content: [
         {
-          type: 'text',
           text: 'Hello, I am an AI',
+          type: 'text',
         },
       ],
+      role: 'assistant',
     },
   ])
 })

@@ -6,205 +6,205 @@ import * as RenderMessage from '../src/parts/RenderMessage/RenderMessage.ts'
 
 test('renders human message with text content', () => {
   const viewModel: MessageViewModel = {
-    role: MessageRole.Human,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Text,
         content: 'Hello world',
         display: {},
+        type: MessageContentType.Text,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   }
 
   const result = RenderMessage.renderMessage(viewModel)
 
   expect(result).toEqual({
-    type: 'div',
-    className: 'MessageWrapper MessageWrapperHuman',
     children: [
       {
-        type: 'div',
-        className: 'MessageHuman',
         children: [
           {
-            type: 'p',
             textContent: 'Hello world',
+            type: 'p',
           },
         ],
+        className: 'MessageHuman',
+        type: 'div',
       },
     ],
+    className: 'MessageWrapper MessageWrapperHuman',
+    type: 'div',
   })
 })
 
 test('renders AI message with code block', () => {
   const viewModel: MessageViewModel = {
-    role: MessageRole.Ai,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
         },
+        type: MessageContentType.Code,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   }
 
   const result = RenderMessage.renderMessage(viewModel)
 
   expect(result).toEqual({
-    type: 'div',
-    className: 'MessageWrapper MessageWrapperAi',
     children: [
       {
-        type: 'div',
-        className: 'MessageAi',
         children: [
           {
-            type: 'pre',
-            className: 'CodeBlock language-javascript',
             children: [
               {
-                type: 'code',
-                className: 'CodeText',
                 children: [
                   {
                     children: ['const x = 1;'],
                     type: 'span',
                   },
                 ],
+                className: 'CodeText',
+                type: 'code',
               },
             ],
+            className: 'CodeBlock language-javascript',
+            type: 'pre',
           },
         ],
+        className: 'MessageAi',
+        type: 'div',
       },
     ],
+    className: 'MessageWrapper MessageWrapperAi',
+    type: 'div',
   })
 })
 
 test('renders message with image block', () => {
   const viewModel: MessageViewModel = {
-    role: MessageRole.Human,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:123',
         },
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   }
 
   const result = RenderMessage.renderMessage(viewModel)
 
   expect(result).toEqual({
-    type: 'div',
-    className: 'MessageWrapper MessageWrapperHuman',
     children: [
       {
-        type: 'div',
-        className: 'MessageHuman',
         children: [
           {
-            type: 'div',
-            className: 'ImageBlock',
             children: [
               {
-                type: 'img',
                 className: 'MessageImage',
                 src: 'blob:123',
+                type: 'img',
               },
             ],
+            className: 'ImageBlock',
+            type: 'div',
           },
         ],
+        className: 'MessageHuman',
+        type: 'div',
       },
     ],
+    className: 'MessageWrapper MessageWrapperHuman',
+    type: 'div',
   })
 })
 
 test('renders message with mixed content types', () => {
   const viewModel: MessageViewModel = {
-    role: MessageRole.Ai,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Text,
         content: 'Here is some code:',
         display: {},
+        type: MessageContentType.Text,
       },
       {
-        type: MessageContentType.Code,
         content: 'console.log("hello");',
         display: {
           language: 'javascript',
         },
+        type: MessageContentType.Code,
       },
       {
-        type: MessageContentType.Text,
         content: 'And here is an image:',
         display: {},
+        type: MessageContentType.Text,
       },
       {
-        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:123',
         },
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   }
 
   const result = RenderMessage.renderMessage(viewModel)
 
   expect(result).toEqual({
-    type: 'div',
-    className: 'MessageWrapper MessageWrapperAi',
     children: [
       {
-        type: 'div',
-        className: 'MessageAi',
         children: [
           {
-            type: 'p',
             textContent: 'Here is some code:',
+            type: 'p',
           },
           {
-            type: 'pre',
-            className: 'CodeBlock language-javascript',
             children: [
               {
-                type: 'code',
-                className: 'CodeText',
                 children: [
                   {
                     children: ['console.log("hello");'],
                     type: 'span',
                   },
                 ],
+                className: 'CodeText',
+                type: 'code',
               },
             ],
+            className: 'CodeBlock language-javascript',
+            type: 'pre',
           },
           {
-            type: 'p',
             textContent: 'And here is an image:',
+            type: 'p',
           },
           {
-            type: 'div',
-            className: 'ImageBlock',
             children: [
               {
-                type: 'img',
                 className: 'MessageImage',
                 src: 'blob:123',
+                type: 'img',
               },
             ],
+            className: 'ImageBlock',
+            type: 'div',
           },
         ],
+        className: 'MessageAi',
+        type: 'div',
       },
     ],
+    className: 'MessageWrapper MessageWrapperAi',
+    type: 'div',
   })
 })

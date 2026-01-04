@@ -6,32 +6,32 @@ import * as MessageContentType from '../MessageContentType/MessageContentType.ts
 import * as MessageRole from '../MessageRole/MessageRole.ts'
 
 export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
-  const { role, blocks } = viewModel
+  const { blocks, role } = viewModel
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
-    type: 'div',
     className: isError ? ClassNames.MessageError : (role === MessageRole.Human ? ClassNames.MessageHuman : ClassNames.MessageAi),
+    type: 'div',
   }
 
   const wrappedMessage: VirtualElement = {
-    type: 'div',
+    children: [messageElement],
     className: isError
       ? ClassNames.MessageWrapperError
       : `${ClassNames.MessageWrapper} ${role === MessageRole.Human ? ClassNames.MessageWrapperHuman : ClassNames.MessageWrapperAi}`,
-    children: [messageElement],
+    type: 'div',
   }
 
   const blocksHtml = blocks.map((block) => {
     if (block.type === MessageContentType.List) {
       const items = block.items || []
       return {
-        type: block.ordered ? 'ol' : 'ul',
-        className: ClassNames.MessageList,
         children: items.map((item) => ({
-          type: 'li',
           className: ClassNames.MessageListItem,
           textContent: item,
+          type: 'li',
         })),
+        className: ClassNames.MessageList,
+        type: block.ordered ? 'ol' : 'ul',
       }
     }
     if (block.type === MessageContentType.Code) {
@@ -40,20 +40,20 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
     if (block.type === MessageContentType.Image) {
       // TODO create view model that creates object urls for images
       return {
-        type: 'div',
-        className: ClassNames.ImageBlock,
         children: [
           {
-            type: 'img',
             className: ClassNames.MessageImage,
             src: block.display.blobUrl,
+            type: 'img',
           },
         ],
+        className: ClassNames.ImageBlock,
+        type: 'div',
       }
     }
     return {
-      type: 'p',
       textContent: block.content,
+      type: 'p',
     }
   })
 

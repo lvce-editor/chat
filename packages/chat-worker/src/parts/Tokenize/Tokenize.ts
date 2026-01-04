@@ -8,27 +8,27 @@ import * as TokenizeTypeScript from '../TokenizeTypeScript/TokenizeTypeScript.ts
 
 export const tokenize = (code: string, language: string): readonly Token[] => {
   switch (language.toLowerCase()) {
-    case 'html':
-      return TokenizeHtml.tokenizeHtml(code)
-    case 'python':
-      return TokenizePython.tokenizePython(code)
     case 'css':
       return TokenizeCss.tokenizeCss(code)
-    case 'json':
-      return TokenizeJson.tokenizeJson(code)
-    case 'toml':
-      return TokenizeToml.tokenizeToml(code)
-    case 'typescript':
+    case 'html':
+      return TokenizeHtml.tokenizeHtml(code)
     case 'javascript':
     case 'jsx':
     case 'tsx':
+    case 'typescript':
       return TokenizeTypeScript.tokenizeTypeScript(code)
+    case 'json':
+      return TokenizeJson.tokenizeJson(code)
+    case 'python':
+      return TokenizePython.tokenizePython(code)
+    case 'toml':
+      return TokenizeToml.tokenizeToml(code)
     default:
       // For unsupported languages, just return the code as plain text
       return [
         {
-          type: 'text',
           text: code,
+          type: 'text',
         },
       ]
   }

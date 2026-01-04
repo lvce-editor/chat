@@ -18,11 +18,11 @@ const createMessageContentImageViewModel = async (
   if (!IsFile.isFile(part.file)) {
     return [
       {
-        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: '#',
         },
+        type: MessageContentType.Image,
       },
     ]
   }
@@ -41,11 +41,11 @@ const createMessageContentImageViewModel = async (
 
   return [
     {
-      type: MessageContentType.Image,
       content: '',
       display: {
         blobUrl,
       },
+      type: MessageContentType.Image,
     },
   ]
 }
@@ -54,26 +54,26 @@ const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBloc
   switch (block.type) {
     case MessageContentType.Code:
       return {
-        type: MessageContentType.Code,
         content: block.content,
         display: {
           language: block.language,
           tokens: Tokenize.tokenize(block.content, block.language),
         },
+        type: MessageContentType.Code,
       }
     case MessageContentType.List:
       return {
-        type: MessageContentType.List,
         content: '',
+        display: {},
         items: block.items,
         ordered: block.ordered,
-        display: {},
+        type: MessageContentType.List,
       }
     default:
       return {
-        type: MessageContentType.Text,
         content: block.content,
         display: {},
+        type: MessageContentType.Text,
       }
   }
 }
@@ -81,9 +81,9 @@ const formatBlock = (block: FormatMessage.FormattedContentInternal): MessageBloc
 const createMessageContentToolResultViewModel = (part: ToolResultMessageContent): readonly MessageBlockViewModel[] => {
   return [
     {
-      type: MessageContentType.Text,
       content: `(tool-result) ${part.tool_use_name}`,
       display: {},
+      type: MessageContentType.Text,
     },
   ]
 }
@@ -91,9 +91,9 @@ const createMessageContentToolResultViewModel = (part: ToolResultMessageContent)
 const createMessageContentToolUseViewModel = (part: ToolUseMessageContent): readonly MessageBlockViewModel[] => {
   return [
     {
-      type: MessageContentType.Text,
       content: `(tool-use) ${part.tool_use_name}`,
       display: {},
+      type: MessageContentType.Text,
     },
   ]
 }

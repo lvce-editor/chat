@@ -6,12 +6,12 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 export const saveState = (id: number): SavedState => {
   const actualId = id || Id.id
   const webView = WebViewStates.get(actualId)
-  const { messages, scrollOffset, currentInput, focused, inputSource } = webView
+  const { currentInput, focused, inputSource, messages, scrollOffset } = webView
   return {
-    messages: serializeMessages(messages),
-    scrollOffset,
     currentInput,
     focused,
     inputSource,
+    messages: serializeMessages(messages),
+    scrollOffset,
   }
 }

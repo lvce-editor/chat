@@ -10,42 +10,42 @@ export const render = async (webView: WebView): Promise<VirtualElement> => {
   const messageVDoms = viewModels.map(renderMessage)
 
   return {
-    type: 'div',
-    className: 'App',
     children: [
       {
-        type: 'div',
-        className: 'Header',
         children: [
           {
-            type: 'button',
             className: 'NewChatButton',
-            textContent: 'New Chat',
             events: {
               click: 'handleNewChat',
             },
+            textContent: 'New Chat',
+            type: 'button',
           },
         ],
+        className: 'Header',
+        type: 'div',
       },
       {
-        type: 'div',
-        className: 'ContentWrapper',
         children: [
           {
-            type: 'div',
-            className: 'Output',
             children: messageVDoms,
+            className: 'Output',
+            type: 'div',
           },
         ],
+        className: 'ContentWrapper',
+        type: 'div',
       },
       {
-        type: 'form',
+        children: [createFormContent(webView.previewImageUrl)],
         className: 'Form',
         events: {
           submit: 'handleSubmit',
         },
-        children: [createFormContent(webView.previewImageUrl)],
+        type: 'form',
       },
     ],
+    className: 'App',
+    type: 'div',
   }
 }

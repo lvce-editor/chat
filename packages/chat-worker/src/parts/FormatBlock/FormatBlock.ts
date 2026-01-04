@@ -7,26 +7,26 @@ export const formatBlock = (block: FormatMessage.FormattedContentInternal): Mess
   switch (block.type) {
     case MessageContentType.Code:
       return {
-        type: MessageContentType.Code,
         content: block.content,
         display: {
           language: block.language,
           tokens: Tokenize.tokenize(block.content, block.language),
         },
+        type: MessageContentType.Code,
       }
     case MessageContentType.List:
       return {
-        type: MessageContentType.List,
         content: '',
+        display: {},
         items: block.items,
         ordered: block.ordered,
-        display: {},
+        type: MessageContentType.List,
       }
     default:
       return {
-        type: MessageContentType.Text,
         content: block.content,
         display: {},
+        type: MessageContentType.Text,
       }
   }
 }

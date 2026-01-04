@@ -38,8 +38,8 @@ test.skip('handles api response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(1, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -48,13 +48,13 @@ test.skip('handles api response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(2, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'Hello',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -63,13 +63,13 @@ test.skip('handles api response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(3, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [
           {
-            type: MessageContentType.Text,
             content: 'Hello World',
+            type: MessageContentType.Text,
           },
         ],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -93,8 +93,8 @@ test.skip('handles empty response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(1, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -103,8 +103,8 @@ test.skip('handles empty response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(2, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -130,8 +130,8 @@ test.skip('handles invalid json response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(1, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],
@@ -140,8 +140,8 @@ test.skip('handles invalid json response', async () => {
   expect(mockUpdate.update).toHaveBeenNthCalledWith(2, 1, {
     messages: [
       {
-        role: MessageRole.Ai,
         content: [],
+        role: MessageRole.Ai,
         webViewId: 1,
       },
     ],

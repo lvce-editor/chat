@@ -7,8 +7,8 @@ test('formats plain text', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Hello, world!',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -18,9 +18,9 @@ test('formats single code block', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'javascript',
       content: 'const x = 1;',
+      language: 'javascript',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -30,17 +30,17 @@ test('formats mixed content', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Here is some code:',
-    },
-    {
-      type: MessageContentType.Code,
-      language: 'javascript',
-      content: 'const x = 1;',
-    },
-    {
       type: MessageContentType.Text,
+    },
+    {
+      content: 'const x = 1;',
+      language: 'javascript',
+      type: MessageContentType.Code,
+    },
+    {
       content: 'And here is more text.',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -50,9 +50,9 @@ test('handles code block without language', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'text',
       content: 'plain text',
+      language: 'text',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -62,18 +62,18 @@ test('handles multiple code blocks', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'javascript',
       content: 'const x = 1;',
-    },
-    {
-      type: MessageContentType.Text,
-      content: 'Some text',
-    },
-    {
+      language: 'javascript',
       type: MessageContentType.Code,
-      language: 'python',
+    },
+    {
+      content: 'Some text',
+      type: MessageContentType.Text,
+    },
+    {
       content: 'print("hello")',
+      language: 'python',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -83,13 +83,13 @@ test('handles partial code block at end', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Here is some code:',
+      type: MessageContentType.Text,
     },
     {
-      type: MessageContentType.Code,
-      language: 'javascript',
       content: 'const x = 1;',
+      language: 'javascript',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -99,9 +99,9 @@ test.skip('handles code block without newline', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'javascript',
       content: 'const x = 1;',
+      language: 'javascript',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -117,9 +117,9 @@ test('formats list items', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['Item 1', 'Item 2', 'Item 3'],
       ordered: false,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -129,17 +129,17 @@ test('formats mixed list and text content', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Here is a list:',
+      type: MessageContentType.Text,
     },
     {
-      type: MessageContentType.List,
       items: ['Item 1', 'Item 2'],
       ordered: false,
+      type: MessageContentType.List,
     },
     {
-      type: MessageContentType.Text,
       content: 'And some text after.',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -149,19 +149,19 @@ test('formats mixed list and code blocks', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['Item 1', 'Item 2'],
       ordered: false,
-    },
-    {
-      type: MessageContentType.Code,
-      language: 'javascript',
-      content: 'const x = 1;',
-    },
-    {
       type: MessageContentType.List,
+    },
+    {
+      content: 'const x = 1;',
+      language: 'javascript',
+      type: MessageContentType.Code,
+    },
+    {
       items: ['Item 3', 'Item 4'],
       ordered: false,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -171,9 +171,9 @@ test('formats code block with list inside', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'markdown',
       content: '- Item 1\n- Item 2',
+      language: 'markdown',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -183,18 +183,18 @@ test('formats multiple code blocks with different languages', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'javascript',
       content: 'const x = 1;',
-    },
-    {
-      type: MessageContentType.Text,
-      content: 'Some text',
-    },
-    {
+      language: 'javascript',
       type: MessageContentType.Code,
-      language: 'python',
+    },
+    {
+      content: 'Some text',
+      type: MessageContentType.Text,
+    },
+    {
       content: 'def hello():\n    print("hi")',
+      language: 'python',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -204,9 +204,9 @@ test('formats code block with empty lines', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Code,
-      language: 'python',
       content: 'def hello():\n\n    print("hi")',
+      language: 'python',
+      type: MessageContentType.Code,
     },
   ])
 })
@@ -216,9 +216,9 @@ test('formats ordered list', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['First item', 'Second item', 'Third item'],
       ordered: true,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -228,18 +228,18 @@ test('formats mixed ordered and unordered lists', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['First ordered', 'Second ordered'],
       ordered: true,
-    },
-    {
-      type: MessageContentType.Text,
-      content: 'Some text',
-    },
-    {
       type: MessageContentType.List,
+    },
+    {
+      content: 'Some text',
+      type: MessageContentType.Text,
+    },
+    {
       items: ['First unordered', 'Second unordered'],
       ordered: false,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -249,9 +249,9 @@ test('handles single ordered list item', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['Single item'],
       ordered: true,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -261,9 +261,9 @@ test('handles ordered list with irregular numbers', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['First', 'Second', 'Third'],
       ordered: true,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -273,9 +273,9 @@ test('formats checkbox list items', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: ['Task 1', 'Task 2', 'Task 3'],
       ordered: false,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -285,23 +285,23 @@ test.skip('formats nested lists', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: [
         {
-          content: 'First level',
           children: [
             {
-              type: MessageContentType.List,
               items: [{ content: 'Second level A' }, { content: 'Second level B' }],
               ordered: false,
+              type: MessageContentType.List,
             },
           ],
+          content: 'First level',
         },
         {
           content: 'Back to first',
         },
       ],
       ordered: true,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -311,45 +311,45 @@ test.skip('formats deeply nested lists', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.List,
       items: [
         {
-          content: 'Level 1',
           children: [
             {
-              type: MessageContentType.List,
               items: [
                 {
-                  content: 'Level 2',
                   children: [
                     {
-                      type: MessageContentType.List,
                       items: [
                         {
-                          content: 'Level 3',
                           children: [
                             {
-                              type: MessageContentType.List,
                               items: [{ content: 'Level 4' }],
                               ordered: false,
+                              type: MessageContentType.List,
                             },
                           ],
+                          content: 'Level 3',
                         },
                       ],
                       ordered: true,
+                      type: MessageContentType.List,
                     },
                   ],
+                  content: 'Level 2',
                 },
               ],
               ordered: false,
+              type: MessageContentType.List,
             },
           ],
+          content: 'Level 1',
         },
         {
           content: 'Back to 1',
         },
       ],
       ordered: true,
+      type: MessageContentType.List,
     },
   ])
 })
@@ -359,21 +359,21 @@ test.skip('formats bold text', () => {
   const blocks = FormatMessage.formatMessage(text)
   expect(blocks).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Hello ',
       display: {},
+      type: MessageContentType.Text,
     },
     {
-      type: MessageContentType.Text,
       content: 'Northern Australia',
       display: {
         bold: true,
       },
+      type: MessageContentType.Text,
     },
     {
-      type: MessageContentType.Text,
       content: ' and world',
       display: {},
+      type: MessageContentType.Text,
     },
   ])
 })

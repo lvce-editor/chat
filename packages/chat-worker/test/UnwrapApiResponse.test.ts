@@ -3,11 +3,11 @@ import * as UnwrapApiResponse from '../src/parts/UnwrapApiResponse/UnwrapApiResp
 
 test('handles API error response', async () => {
   const errorResponse = {
-    type: 'error',
     error: {
-      type: 'invalid_request_error',
       message: "'claude-3-5-haiku-20241022' does not support image input.",
+      type: 'invalid_request_error',
     },
+    type: 'error',
   }
 
   const response = Response.json(errorResponse, {
@@ -62,11 +62,11 @@ test.skip('returns response body for successful response', async () => {
 
 test('handles empty message content error', async () => {
   const errorResponse = {
-    type: 'error',
     error: {
-      type: 'invalid_request_error',
       message: 'messages.2: all messages must have non-empty content except for the optional final assistant message',
+      type: 'invalid_request_error',
     },
+    type: 'error',
   }
 
   const response = Response.json(errorResponse, {
@@ -83,11 +83,11 @@ test('handles empty message content error', async () => {
 
 test('handles unsupported image format error', async () => {
   const errorResponse = {
-    type: 'error',
     error: {
-      type: 'invalid_request_error',
       message: 'Image does not match the provided media type image/png',
+      type: 'invalid_request_error',
     },
+    type: 'error',
   }
 
   const response = Response.json(errorResponse, {

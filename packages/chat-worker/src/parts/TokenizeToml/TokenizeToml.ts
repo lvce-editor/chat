@@ -15,7 +15,7 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Comment, text })
+      tokens.push({ text, type: TokenType.Comment })
       continue
     }
 
@@ -31,7 +31,7 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Keyword, text })
+      tokens.push({ text, type: TokenType.Keyword })
       continue
     }
 
@@ -55,7 +55,7 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.String, text })
+      tokens.push({ text, type: TokenType.String })
       continue
     }
 
@@ -66,7 +66,7 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Number, text })
+      tokens.push({ text, type: TokenType.Number })
       continue
     }
 
@@ -75,7 +75,7 @@ export const tokenizeToml = (code: string): readonly Token[] => {
       const possibleBool = code.slice(current, current + 5).toLowerCase()
       if (possibleBool.startsWith('true') || possibleBool.startsWith('false')) {
         const text = possibleBool.startsWith('true') ? 'true' : 'false'
-        tokens.push({ type: TokenType.Keyword, text })
+        tokens.push({ text, type: TokenType.Keyword })
         current += text.length
         continue
       }
@@ -88,13 +88,13 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Property, text })
+      tokens.push({ text, type: TokenType.Property })
       continue
     }
 
     // Handle operators (=)
     if (char === '=') {
-      tokens.push({ type: TokenType.Operator, text: char })
+      tokens.push({ text: char, type: TokenType.Operator })
       current++
       continue
     }
@@ -106,12 +106,12 @@ export const tokenizeToml = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Whitespace, text })
+      tokens.push({ text, type: TokenType.Whitespace })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: TokenType.Text, text: char })
+    tokens.push({ text: char, type: TokenType.Text })
     current++
   }
 

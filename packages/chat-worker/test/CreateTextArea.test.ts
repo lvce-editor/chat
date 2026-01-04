@@ -5,13 +5,13 @@ test('creates textarea virtual dom', () => {
   const result = CreateTextArea.createTextArea()
 
   expect(result).toEqual({
-    type: 'textarea',
     className: 'Input',
-    name: 'Input',
-    placeholder: 'Send a message...',
     events: {
       input: 'handleInput',
       keydown: 'handleKeyDown',
     },
+    name: 'Input',
+    placeholder: 'Send a message...',
+    type: 'textarea',
   })
 })

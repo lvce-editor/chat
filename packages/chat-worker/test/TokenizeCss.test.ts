@@ -9,29 +9,29 @@ test('tokenizes basic CSS', () => {
 }`
   const tokens = TokenizeCss.tokenizeCss(code)
   expect(tokens).toEqual([
-    { type: TokenType.Selector, text: '.header' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Delimiter, text: '{' },
-    { type: TokenType.Whitespace, text: '\n  ' },
-    { type: TokenType.Property, text: 'color' },
-    { type: TokenType.Delimiter, text: ':' },
+    { text: '.header', type: TokenType.Selector },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: '{', type: TokenType.Delimiter },
+    { text: '\n  ', type: TokenType.Whitespace },
+    { text: 'color', type: TokenType.Property },
+    { text: ':', type: TokenType.Delimiter },
     {
       text: ' ',
       type: 'Whitespace',
     },
-    { type: TokenType.Value, text: 'red' },
-    { type: TokenType.Delimiter, text: ';' },
-    { type: TokenType.Whitespace, text: '\n  ' },
-    { type: TokenType.Property, text: 'font-size' },
-    { type: TokenType.Delimiter, text: ':' },
+    { text: 'red', type: TokenType.Value },
+    { text: ';', type: TokenType.Delimiter },
+    { text: '\n  ', type: TokenType.Whitespace },
+    { text: 'font-size', type: TokenType.Property },
+    { text: ':', type: TokenType.Delimiter },
     {
       text: ' ',
       type: 'Whitespace',
     },
-    { type: TokenType.Value, text: '16px' },
-    { type: TokenType.Delimiter, text: ';' },
-    { type: TokenType.Whitespace, text: '\n' },
-    { type: TokenType.Delimiter, text: '}' },
+    { text: '16px', type: TokenType.Value },
+    { text: ';', type: TokenType.Delimiter },
+    { text: '\n', type: TokenType.Whitespace },
+    { text: '}', type: TokenType.Delimiter },
   ])
 })
 
@@ -39,21 +39,21 @@ test('tokenizes CSS comments', () => {
   const code = '/* Header styles */\n.header { color: blue; }'
   const tokens = TokenizeCss.tokenizeCss(code)
   expect(tokens).toEqual([
-    { type: TokenType.Comment, text: '/* Header styles */' },
-    { type: TokenType.Whitespace, text: '\n' },
-    { type: TokenType.Selector, text: '.header' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Delimiter, text: '{' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Property, text: 'color' },
-    { type: TokenType.Delimiter, text: ':' },
+    { text: '/* Header styles */', type: TokenType.Comment },
+    { text: '\n', type: TokenType.Whitespace },
+    { text: '.header', type: TokenType.Selector },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: '{', type: TokenType.Delimiter },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: 'color', type: TokenType.Property },
+    { text: ':', type: TokenType.Delimiter },
     {
       text: ' ',
       type: 'Whitespace',
     },
-    { type: TokenType.Value, text: 'blue' },
-    { type: TokenType.Delimiter, text: ';' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Delimiter, text: '}' },
+    { text: 'blue', type: TokenType.Value },
+    { text: ';', type: TokenType.Delimiter },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: '}', type: TokenType.Delimiter },
   ])
 })

@@ -46,7 +46,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Comment, text })
+      tokens.push({ text, type: TokenType.Comment })
       continue
     }
 
@@ -66,7 +66,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: TokenType.String, text })
+      tokens.push({ text, type: TokenType.String })
       continue
     }
 
@@ -77,7 +77,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Number, text })
+      tokens.push({ text, type: TokenType.Number })
       continue
     }
 
@@ -90,7 +90,7 @@ export const tokenizePython = (code: string): readonly Token[] => {
       }
 
       const type = keywords.has(text) ? TokenType.Keyword : TokenType.Identifier
-      tokens.push({ type, text })
+      tokens.push({ text, type })
       continue
     }
 
@@ -105,13 +105,13 @@ export const tokenizePython = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: TokenType.Operator, text })
+      tokens.push({ text, type: TokenType.Operator })
       continue
     }
 
     // Handle delimiters
     if (isDelimiter(char)) {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       current++
       continue
     }
@@ -123,12 +123,12 @@ export const tokenizePython = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Whitespace, text })
+      tokens.push({ text, type: TokenType.Whitespace })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: TokenType.Text, text: char })
+    tokens.push({ text: char, type: TokenType.Text })
     current++
   }
 

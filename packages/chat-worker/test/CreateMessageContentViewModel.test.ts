@@ -6,8 +6,8 @@ import * as TokenType from '../src/parts/TokenType/TokenType.ts'
 
 test('creates view model for code block with tokens', async () => {
   const part: MessageContent = {
-    type: MessageContentType.Text,
     content: '```python\ndef hello():\n    print("Hello")\n```',
+    type: MessageContentType.Text,
   }
 
   const [result] = await CreateMessageContentViewModel.createMessageContentViewModel(part, {})
@@ -16,16 +16,16 @@ test('creates view model for code block with tokens', async () => {
   expect(result.content).toBe('def hello():\n    print("Hello")')
   expect(result.display.language).toBe('python')
   expect(result.display.tokens).toEqual([
-    { type: TokenType.Keyword, text: 'def' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Identifier, text: 'hello' },
-    { type: TokenType.Text, text: '(' },
-    { type: TokenType.Text, text: ')' },
-    { type: TokenType.Text, text: ':' },
-    { type: TokenType.Whitespace, text: '\n    ' },
-    { type: TokenType.Identifier, text: 'print' },
-    { type: TokenType.Text, text: '(' },
-    { type: TokenType.String, text: '"Hello"' },
-    { type: TokenType.Text, text: ')' },
+    { text: 'def', type: TokenType.Keyword },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: 'hello', type: TokenType.Identifier },
+    { text: '(', type: TokenType.Text },
+    { text: ')', type: TokenType.Text },
+    { text: ':', type: TokenType.Text },
+    { text: '\n    ', type: TokenType.Whitespace },
+    { text: 'print', type: TokenType.Identifier },
+    { text: '(', type: TokenType.Text },
+    { text: '"Hello"', type: TokenType.String },
+    { text: ')', type: TokenType.Text },
   ])
 })

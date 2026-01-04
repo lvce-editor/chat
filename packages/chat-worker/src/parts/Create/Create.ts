@@ -14,7 +14,7 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 // TODO add caching api for blobs to extension host api
 // since electron has difficitulies with cache storage and custom procotols
 // the normalized cache api can avoid some issues
-export const create = async ({ port, savedState, webViewId, uri, id }) => {
+export const create = async ({ id, port, savedState, uri, webViewId }) => {
   // @ts-ignore
   const { rpc } = globalThis
   const apiKey = await Config.getApiKey(rpc)
@@ -30,38 +30,38 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
   const cacheBaseUrl = Config.getCacheBaseUrl()
 
   const webView: WebView = {
-    time: 0,
-    port,
-    apiKey,
-    modelId,
-    url,
     anthropicVersion,
-    stream: true,
-    maxTokens,
-    messages: [],
-    scrollOffset: 0,
+    apiKey,
+    cacheBaseUrl,
+    cacheName,
+    currentInput: '',
+    focused: false,
     images: [],
     imageUrlCache: new Map(),
-    cacheName,
-    cacheBaseUrl,
-    currentInput: '',
-    isScrolledToBottom: false,
-    previewImageUrl: '',
     inputSource: InputSource.Script,
-    focused: false,
-    tools: [],
+    isScrolledToBottom: false,
+    maxTokens,
+    messages: [],
+    modelId,
     modelName,
+    port,
+    previewImageUrl: '',
+    scrollOffset: 0,
+    stream: true,
+    time: 0,
+    tools: [],
+    url,
   }
   WebViewStates.set(id, webView)
 
   const restoredMessages = await RestoreMessages.restoreMessages(id, cacheName, cacheBaseUrl, savedState)
 
   const newWebView: Partial<WebView> = {
-    messages: restoredMessages,
-    scrollOffset: savedState?.scrollOffset || 0,
-    inputSource: InputSource.Script,
     currentInput: savedState?.currentInput || '',
     focused: savedState?.focused || false,
+    inputSource: InputSource.Script,
+    messages: restoredMessages,
+    scrollOffset: savedState?.scrollOffset || 0,
     tools: getTools(),
   }
 
@@ -73,13 +73,13 @@ export const create = async ({ port, savedState, webViewId, uri, id }) => {
 
   if (!apiKey) {
     const errorMessage: Message = {
-      role: MessageRole.Ai,
       content: [
         {
-          type: MessageContentType.Text,
           content: `Error: ${ErrorCodes.E_MISSING_API_KEY}: Missing API Key`,
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Ai,
       webViewId: id,
     }
     await Update.update(id, {

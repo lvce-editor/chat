@@ -23,6 +23,53 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
     const trimmedLine = line.trim()
 
     switch (state) {
+      case 'InCodeBlock':
+        if (trimmedLine === '```') {
+          blocks.push({
+            content: codeContent.trim(),
+            language: language || 'text',
+            type: MessageContentType.Code,
+          })
+          state = 'Normal'
+        } else {
+          if (codeContent) {
+            codeContent += '\n'
+          }
+          codeContent += line
+        }
+        break
+
+      case 'InOrderedList':
+        if (/^\d+\.\s/.test(trimmedLine)) {
+          listItems.push(trimmedLine.replace(/^\d+\.\s/, ''))
+        } else {
+          blocks.push({
+            items: listItems,
+            ordered: true,
+            type: MessageContentType.List,
+          })
+          listItems = []
+          state = 'Normal'
+          i-- // Reprocess this line in Normal state
+        }
+        break
+
+      case 'InUnorderedList':
+        if (trimmedLine.startsWith('- ')) {
+          const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
+          listItems.push(content)
+        } else {
+          blocks.push({
+            items: listItems,
+            ordered: false,
+            type: MessageContentType.List,
+          })
+          listItems = []
+          state = 'Normal'
+          i-- // Reprocess this line in Normal state
+        }
+        break
+
       case 'Normal':
         if (trimmedLine.startsWith('- ')) {
           state = 'InUnorderedList'
@@ -37,56 +84,9 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
           codeContent = ''
         } else if (trimmedLine) {
           blocks.push({
-            type: MessageContentType.Text,
             content: trimmedLine,
+            type: MessageContentType.Text,
           })
-        }
-        break
-
-      case 'InUnorderedList':
-        if (trimmedLine.startsWith('- ')) {
-          const content = trimmedLine.slice(2).replace(/\[[ x]\]\s*/, '')
-          listItems.push(content)
-        } else {
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: false,
-          })
-          listItems = []
-          state = 'Normal'
-          i-- // Reprocess this line in Normal state
-        }
-        break
-
-      case 'InOrderedList':
-        if (/^\d+\.\s/.test(trimmedLine)) {
-          listItems.push(trimmedLine.replace(/^\d+\.\s/, ''))
-        } else {
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: true,
-          })
-          listItems = []
-          state = 'Normal'
-          i-- // Reprocess this line in Normal state
-        }
-        break
-
-      case 'InCodeBlock':
-        if (trimmedLine === '```') {
-          blocks.push({
-            type: MessageContentType.Code,
-            language: language || 'text',
-            content: codeContent.trim(),
-          })
-          state = 'Normal'
-        } else {
-          if (codeContent) {
-            codeContent += '\n'
-          }
-          codeContent += line
         }
         break
     }
@@ -95,23 +95,23 @@ export const formatMessage = (text: string): readonly FormattedContentInternal[]
       switch (state) {
         case 'InCodeBlock':
           blocks.push({
-            type: MessageContentType.Code,
-            language: language || 'text',
             content: codeContent.trim(),
-          })
-          break
-        case 'InUnorderedList':
-          blocks.push({
-            type: MessageContentType.List,
-            items: listItems,
-            ordered: false,
+            language: language || 'text',
+            type: MessageContentType.Code,
           })
           break
         case 'InOrderedList':
           blocks.push({
-            type: MessageContentType.List,
             items: listItems,
             ordered: true,
+            type: MessageContentType.List,
+          })
+          break
+        case 'InUnorderedList':
+          blocks.push({
+            items: listItems,
+            ordered: false,
+            type: MessageContentType.List,
           })
           break
       }

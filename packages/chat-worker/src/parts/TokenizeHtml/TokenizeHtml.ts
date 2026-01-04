@@ -18,13 +18,13 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: TokenType.Tag, text })
+      tokens.push({ text, type: TokenType.Tag })
       continue
     }
 
     // Handle tag endings
     if (char === '>') {
-      tokens.push({ type: TokenType.Tag, text: char })
+      tokens.push({ text: char, type: TokenType.Tag })
       current++
       continue
     }
@@ -39,11 +39,11 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
       }
 
       if (current < code.length && code[current] === '=') {
-        tokens.push({ type: TokenType.Attribute, text })
-        tokens.push({ type: TokenType.Operator, text: '=' })
+        tokens.push({ text, type: TokenType.Attribute })
+        tokens.push({ text: '=', type: TokenType.Operator })
         current++
       } else {
-        tokens.push({ type: TokenType.Text, text })
+        tokens.push({ text, type: TokenType.Text })
       }
       continue
     }
@@ -59,7 +59,7 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
       }
 
       text += code[current]
-      tokens.push({ type: TokenType.String, text })
+      tokens.push({ text, type: TokenType.String })
       current++
       continue
     }
@@ -73,12 +73,12 @@ export const tokenizeHtml = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: TokenType.Whitespace, text })
+      tokens.push({ text, type: TokenType.Whitespace })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: TokenType.Text, text: char })
+    tokens.push({ text: char, type: TokenType.Text })
     current++
   }
 

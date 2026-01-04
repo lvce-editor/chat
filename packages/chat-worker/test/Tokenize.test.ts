@@ -6,15 +6,15 @@ test('tokenizes HTML code', () => {
   const code = '<div class="test">Hello</div>'
   const result = Tokenize.tokenize(code, 'html')
   expect(result).toEqual([
-    { type: TokenType.Tag, text: '<div' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Attribute, text: 'class' },
-    { type: TokenType.Operator, text: '=' },
-    { type: TokenType.String, text: '"test"' },
-    { type: TokenType.Tag, text: '>' },
-    { type: TokenType.Text, text: 'Hello' },
-    { type: TokenType.Tag, text: '</div' },
-    { type: TokenType.Tag, text: '>' },
+    { text: '<div', type: TokenType.Tag },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: 'class', type: TokenType.Attribute },
+    { text: '=', type: TokenType.Operator },
+    { text: '"test"', type: TokenType.String },
+    { text: '>', type: TokenType.Tag },
+    { text: 'Hello', type: TokenType.Text },
+    { text: '</div', type: TokenType.Tag },
+    { text: '>', type: TokenType.Tag },
   ])
 })
 
@@ -22,22 +22,22 @@ test.skip('tokenizes Python code', () => {
   const code = 'def hello(name):\n    print("Hello, " + name)'
   const result = Tokenize.tokenize(code, 'python')
   expect(result).toEqual([
-    { type: TokenType.Keyword, text: 'def' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Identifier, text: 'hello' },
-    { type: TokenType.Delimiter, text: '(' },
-    { type: TokenType.Identifier, text: 'name' },
-    { type: TokenType.Delimiter, text: ')' },
-    { type: TokenType.Delimiter, text: ':' },
-    { type: TokenType.Whitespace, text: '\n    ' },
-    { type: TokenType.Identifier, text: 'print' },
-    { type: TokenType.Delimiter, text: '(' },
-    { type: TokenType.String, text: '"Hello, "' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Operator, text: '+' },
-    { type: TokenType.Whitespace, text: ' ' },
-    { type: TokenType.Identifier, text: 'name' },
-    { type: TokenType.Delimiter, text: ')' },
+    { text: 'def', type: TokenType.Keyword },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: 'hello', type: TokenType.Identifier },
+    { text: '(', type: TokenType.Delimiter },
+    { text: 'name', type: TokenType.Identifier },
+    { text: ')', type: TokenType.Delimiter },
+    { text: ':', type: TokenType.Delimiter },
+    { text: '\n    ', type: TokenType.Whitespace },
+    { text: 'print', type: TokenType.Identifier },
+    { text: '(', type: TokenType.Delimiter },
+    { text: '"Hello, "', type: TokenType.String },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: '+', type: TokenType.Operator },
+    { text: ' ', type: TokenType.Whitespace },
+    { text: 'name', type: TokenType.Identifier },
+    { text: ')', type: TokenType.Delimiter },
   ])
 })
 
@@ -46,8 +46,8 @@ test('handles unsupported language', () => {
   const result = Tokenize.tokenize(code, 'unsupported')
   expect(result).toEqual([
     {
-      type: 'text',
       text: 'some random code',
+      type: 'text',
     },
   ])
 })

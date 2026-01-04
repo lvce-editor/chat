@@ -12,16 +12,16 @@ beforeEach(() => {
 test('getChatResponse - successful response', async () => {
   const mockStream = new ReadableStream()
   const mockResponse = {
-    ok: true,
     body: mockStream,
+    ok: true,
   }
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
   const formattedMessages = [
-    { role: 'user', content: 'Hello' },
-    { role: 'assistant', content: 'Hi there!' },
-    { role: 'user', content: 'How are you?' },
+    { content: 'Hello', role: 'user' },
+    { content: 'Hi there!', role: 'assistant' },
+    { content: 'How are you?', role: 'user' },
   ]
 
   const result = await GetChatResponse.getChatResponse(
@@ -37,20 +37,20 @@ test('getChatResponse - successful response', async () => {
 
   expect(result).toBe(mockResponse)
   expect(mockFetch).toHaveBeenCalledWith('https://test.url', {
-    method: 'POST',
-    headers: {
-      'x-api-key': 'test-api-key',
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
     body: JSON.stringify({
-      model: 'test-model',
       max_tokens: 2048,
       messages: formattedMessages,
-      tools: [],
+      model: 'test-model',
       stream: true,
+      tools: [],
     }),
+    headers: {
+      'anthropic-dangerous-direct-browser-access': 'true',
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+      'x-api-key': 'test-api-key',
+    },
+    method: 'POST',
   })
 })
 
@@ -62,7 +62,7 @@ test('getChatResponse - invalid api key', async () => {
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
-  const formattedMessages = [{ role: 'user', content: 'test message' }]
+  const formattedMessages = [{ content: 'test message', role: 'user' }]
 
   expect(
     await GetChatResponse.getChatResponse(
@@ -87,7 +87,7 @@ test('getChatResponse - other error', async () => {
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
-  const formattedMessages = [{ role: 'user', content: 'test message' }]
+  const formattedMessages = [{ content: 'test message', role: 'user' }]
 
   expect(
     await GetChatResponse.getChatResponse(
@@ -105,13 +105,13 @@ test('getChatResponse - other error', async () => {
 
 test('getChatResponse - no response body', async () => {
   const mockResponse = {
-    ok: true,
     body: null,
+    ok: true,
   }
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
-  const formattedMessages = [{ role: 'user', content: 'test message' }]
+  const formattedMessages = [{ content: 'test message', role: 'user' }]
 
   expect(
     await GetChatResponse.getChatResponse(
@@ -129,22 +129,22 @@ test('getChatResponse - no response body', async () => {
 
 test('getChatResponse - handles API error response', async () => {
   const errorResponse = {
-    type: 'error',
     error: {
-      type: 'invalid_request_error',
       message: "'claude-3-5-haiku-20241022' does not support image input.",
+      type: 'invalid_request_error',
     },
+    type: 'error',
   }
 
   const mockResponse = {
+    json: () => errorResponse,
     ok: false,
     status: 400,
-    json: () => errorResponse,
   }
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
-  const formattedMessages = [{ role: 'user', content: 'test message' }]
+  const formattedMessages = [{ content: 'test message', role: 'user' }]
 
   expect(
     await GetChatResponse.getChatResponse(
@@ -162,15 +162,15 @@ test('getChatResponse - handles API error response', async () => {
 
 test('getChatResponse - handles unparseable error response', async () => {
   const mockResponse = {
+    json: () => Promise.reject(new Error('Invalid JSON')),
     ok: false,
     status: 400,
     statusText: 'Bad Request',
-    json: () => Promise.reject(new Error('Invalid JSON')),
   }
   // @ts-ignore
   mockFetch.mockResolvedValue(mockResponse)
 
-  const formattedMessages = [{ role: 'user', content: 'test message' }]
+  const formattedMessages = [{ content: 'test message', role: 'user' }]
 
   expect(
     await GetChatResponse.getChatResponse(

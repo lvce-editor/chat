@@ -1,15 +1,15 @@
 export interface VirtualElement {
-  type: string
-  className?: string
-  children?: readonly (VirtualElement | string)[]
-  textContent?: string
-  name?: string
-  placeholder?: string
-  inputType?: string
-  value?: string
   accept?: string
-  src?: string
+  children?: readonly (VirtualElement | string)[]
+  className?: string
   events?: {
     [key: string]: string
   }
+  inputType?: string
+  name?: string
+  placeholder?: string
+  src?: string
+  textContent?: string
+  type: string
+  value?: string
 }

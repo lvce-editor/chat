@@ -35,7 +35,7 @@ export const tokenizeJson = (code: string): readonly Token[] => {
         current++
       }
 
-      tokens.push({ type: TokenType.String, text })
+      tokens.push({ text, type: TokenType.String })
       state = stateStack.pop() || 'initial'
       continue
     }
@@ -81,7 +81,7 @@ export const tokenizeJson = (code: string): readonly Token[] => {
         }
       }
 
-      tokens.push({ type: TokenType.Number, text })
+      tokens.push({ text, type: TokenType.Number })
       state = stateStack.pop() || 'initial'
       continue
     }
@@ -97,9 +97,9 @@ export const tokenizeJson = (code: string): readonly Token[] => {
       }
 
       if (text === 'true' || text === 'false' || text === 'null') {
-        tokens.push({ type: TokenType.Keyword, text })
+        tokens.push({ text, type: TokenType.Keyword })
       } else {
-        tokens.push({ type: TokenType.Text, text })
+        tokens.push({ text, type: TokenType.Text })
       }
       state = stateStack.pop() || 'initial'
       continue
@@ -107,7 +107,7 @@ export const tokenizeJson = (code: string): readonly Token[] => {
 
     // Handle delimiters
     if (isDelimiter(char)) {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       current++
       continue
     }
@@ -119,12 +119,12 @@ export const tokenizeJson = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Whitespace, text })
+      tokens.push({ text, type: TokenType.Whitespace })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: TokenType.Text, text: char })
+    tokens.push({ text: char, type: TokenType.Text })
     current++
   }
 

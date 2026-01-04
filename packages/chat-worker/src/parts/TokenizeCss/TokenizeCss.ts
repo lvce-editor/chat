@@ -47,13 +47,13 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         text += '/'
         current++
       }
-      tokens.push({ type: TokenType.Comment, text })
+      tokens.push({ text, type: TokenType.Comment })
       continue
     }
 
     // Handle opening block
     if (char === '{') {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       stateStack.push(state)
       state = 'inBlock'
       current++
@@ -62,7 +62,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
 
     // Handle closing block
     if (char === '}') {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       state = stateStack.pop() || 'initial'
       current++
       continue
@@ -75,7 +75,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Selector, text })
+      tokens.push({ text, type: TokenType.Selector })
       state = 'inSelector'
       continue
     }
@@ -88,16 +88,16 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         current++
       }
       if (properties.has(text)) {
-        tokens.push({ type: TokenType.Property, text })
+        tokens.push({ text, type: TokenType.Property })
       } else {
-        tokens.push({ type: TokenType.Identifier, text })
+        tokens.push({ text, type: TokenType.Identifier })
       }
       continue
     }
 
     // Handle values
     if (char === ':') {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       current++
 
       // Skip whitespace after colon
@@ -107,7 +107,7 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         current++
       }
       if (whitespace) {
-        tokens.push({ type: TokenType.Whitespace, text: whitespace })
+        tokens.push({ text: whitespace, type: TokenType.Whitespace })
       }
 
       // Capture value
@@ -117,14 +117,14 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         current++
       }
       if (text) {
-        tokens.push({ type: TokenType.Value, text: text.trim() })
+        tokens.push({ text: text.trim(), type: TokenType.Value })
       }
       continue
     }
 
     // Handle delimiters
     if (isDelimiter(char)) {
-      tokens.push({ type: TokenType.Delimiter, text: char })
+      tokens.push({ text: char, type: TokenType.Delimiter })
       current++
       continue
     }
@@ -136,12 +136,12 @@ export const tokenizeCss = (code: string): readonly Token[] => {
         text += code[current]
         current++
       }
-      tokens.push({ type: TokenType.Whitespace, text })
+      tokens.push({ text, type: TokenType.Whitespace })
       continue
     }
 
     // Handle any other characters
-    tokens.push({ type: TokenType.Text, text: char })
+    tokens.push({ text: char, type: TokenType.Text })
     current++
   }
 

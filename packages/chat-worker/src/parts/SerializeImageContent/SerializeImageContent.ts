@@ -4,8 +4,8 @@ import * as MessageContentType from '../MessageContentType/MessageContentType.ts
 
 export const serializeImageContent = (content: ImageMessageContent): SavedContent => {
   return {
-    type: MessageContentType.Image,
-    mediaType: content.mediaType,
     fileName: content.fileName,
+    mediaType: content.mediaType,
+    type: MessageContentType.Image,
   }
 }

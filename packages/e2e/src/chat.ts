@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat'
 
-export const test: Test = async ({ Main, Locator, expect, WebView }) => {
+export const test: Test = async ({ expect, Locator, Main, WebView }) => {
   // act
   await Main.openUri('test://example.chat')
 

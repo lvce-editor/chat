@@ -11,8 +11,8 @@ test('returns text content when only text input provided', () => {
   const result = GetNewContent.getNewContent('Hello world', [])
   expect(result).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Hello world',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -22,10 +22,10 @@ test('returns image content when only images provided', () => {
   const result = GetNewContent.getNewContent('', [mockFile])
   expect(result).toEqual([
     {
-      type: MessageContentType.Image,
       file: mockFile,
-      mediaType: 'image/png',
       fileName: 'test.png',
+      mediaType: 'image/png',
+      type: MessageContentType.Image,
     },
   ])
 })
@@ -35,14 +35,14 @@ test('returns both image and text content when both provided', () => {
   const result = GetNewContent.getNewContent('Hello world', [mockFile])
   expect(result).toEqual([
     {
-      type: MessageContentType.Image,
       file: mockFile,
-      mediaType: 'image/png',
       fileName: 'test.png',
+      mediaType: 'image/png',
+      type: MessageContentType.Image,
     },
     {
-      type: MessageContentType.Text,
       content: 'Hello world',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -53,20 +53,20 @@ test('handles multiple images', () => {
   const result = GetNewContent.getNewContent('Hello world', [mockFile1, mockFile2])
   expect(result).toEqual([
     {
-      type: MessageContentType.Image,
       file: mockFile1,
-      mediaType: 'image/png',
       fileName: 'test1.png',
-    },
-    {
-      type: MessageContentType.Image,
-      file: mockFile2,
       mediaType: 'image/png',
-      fileName: 'test2.png',
+      type: MessageContentType.Image,
     },
     {
-      type: MessageContentType.Text,
+      file: mockFile2,
+      fileName: 'test2.png',
+      mediaType: 'image/png',
+      type: MessageContentType.Image,
+    },
+    {
       content: 'Hello world',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -76,8 +76,8 @@ test('creates text content from input', () => {
 
   expect(result).toEqual([
     {
-      type: MessageContentType.Text,
       content: 'Hello',
+      type: MessageContentType.Text,
     },
   ])
 })
@@ -88,10 +88,10 @@ test('creates image content from files', () => {
 
   expect(result).toEqual([
     {
-      type: MessageContentType.Image,
       file,
-      mediaType: 'image/png',
       fileName: 'test.png',
+      mediaType: 'image/png',
+      type: MessageContentType.Image,
     },
   ])
 })
@@ -102,14 +102,14 @@ test('creates mixed content from input and files', () => {
 
   expect(result).toEqual([
     {
-      type: MessageContentType.Image,
       file,
-      mediaType: 'image/png',
       fileName: 'test.png',
+      mediaType: 'image/png',
+      type: MessageContentType.Image,
     },
     {
-      type: MessageContentType.Text,
       content: 'Hello',
+      type: MessageContentType.Text,
     },
   ])
 })

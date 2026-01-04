@@ -20,18 +20,18 @@ export const handleSubmit = async (id: number) => {
   const newContent = GetNewContent.getNewContent(webView.currentInput, webView.images)
 
   const message: Message = {
-    role: MessageRole.Human,
     content: newContent,
+    role: MessageRole.Human,
     webViewId: id,
   }
 
   const newMessages = [...webView.messages, message]
 
   await Update.update(id, {
-    messages: newMessages,
-    images: [],
     currentInput: '',
+    images: [],
     inputSource: InputSource.Script,
+    messages: newMessages,
     previewImageUrl: '',
   })
 
@@ -54,16 +54,16 @@ export const handleSubmit = async (id: number) => {
       const result = await execTool(toolName, parsed, webView.modelId, webView.modelName)
       const currentWebView = WebViewStates.get(id)
       const newMessage: Message = {
-        webViewId: id,
-        role: MessageRole.Human,
         content: [
           {
-            type: MessageContentType.ToolResult,
+            content: JSON.stringify(result || null),
             tool_use_id: toolId,
             tool_use_name: toolName,
-            content: JSON.stringify(result || null),
+            type: MessageContentType.ToolResult,
           },
         ],
+        role: MessageRole.Human,
+        webViewId: id,
       }
       const newMessages = [...currentWebView.messages, newMessage]
       await Update.update(id, {
@@ -79,16 +79,16 @@ export const handleSubmit = async (id: number) => {
     }
   } catch (error) {
     const errorMessage: Message = {
-      role: MessageRole.Ai,
       content: [
         {
-          type: MessageContentType.Text,
           content:
             error instanceof TypeError && error.message === 'Failed to fetch'
               ? 'Error: E_OFFLINE: Unable to connect. Please check your internet connection and try again.'
               : `Error: ${error}`,
+          type: MessageContentType.Text,
         },
       ],
+      role: MessageRole.Ai,
       webViewId: id,
     }
 

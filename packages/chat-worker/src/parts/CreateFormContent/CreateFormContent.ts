@@ -4,68 +4,68 @@ import { getSelectVirtualDom } from '../GetSelectVirtualDom/GetSelectVirtualDom.
 
 export const createFormContent = (blobUrl: string): VirtualElement => {
   return {
-    type: 'div',
-    className: ClassNames.FormContent,
-    events: {
-      dragover: 'handleDragOver',
-      dragleave: 'handleDragLeave',
-      drop: 'handleDrop',
-    },
     children: [
       {
-        type: 'div',
-        className: `${ClassNames.DropZone} ${ClassNames.Hidden}`,
         children: [
           {
-            type: 'div',
             className: ClassNames.DropZoneText,
             textContent: 'Drop image here',
+            type: 'div',
           },
         ],
+        className: `${ClassNames.DropZone} ${ClassNames.Hidden}`,
+        type: 'div',
       },
       {
-        type: 'div',
-        className: 'MessageColumns',
         children: [
           {
-            type: 'div',
-            className: blobUrl ? ClassNames.ImagePreviewWrapper : `${ClassNames.ImagePreviewWrapper} ${ClassNames.Hidden}`,
             children: [
               {
-                type: 'img',
                 className: ClassNames.ImagePreview,
                 src: blobUrl,
+                type: 'img',
               },
               {
-                type: 'button',
                 className: ClassNames.RemoveImageButton,
-                textContent: '×',
                 events: {
                   click: 'handleRemoveImage',
                 },
+                textContent: '×',
+                type: 'button',
               },
             ],
+            className: blobUrl ? ClassNames.ImagePreviewWrapper : `${ClassNames.ImagePreviewWrapper} ${ClassNames.Hidden}`,
+            type: 'div',
           },
 
           {
-            type: 'textarea',
             className: ClassNames.Input,
+            events: {
+              adjustHeight: 'adjustHeight',
+              input: 'handleInput',
+              keydown: 'handleKeyDown',
+            },
             name: 'Input',
             placeholder: 'Message...',
-            events: {
-              keydown: 'handleKeyDown',
-              input: 'handleInput',
-              adjustHeight: 'adjustHeight',
-            },
             textContent: '',
+            type: 'textarea',
           },
           {
-            type: 'div',
-            className: ClassNames.ControlsWrapper,
             children: [getSelectVirtualDom()],
+            className: ClassNames.ControlsWrapper,
+            type: 'div',
           },
         ],
+        className: 'MessageColumns',
+        type: 'div',
       },
     ],
+    className: ClassNames.FormContent,
+    events: {
+      dragleave: 'handleDragLeave',
+      dragover: 'handleDragOver',
+      drop: 'handleDrop',
+    },
+    type: 'div',
   }
 }

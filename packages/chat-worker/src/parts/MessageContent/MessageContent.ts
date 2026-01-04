@@ -3,29 +3,29 @@ interface BaseMessageContent {
 }
 
 export interface TextMessageContent extends BaseMessageContent {
-  readonly type: 1 // Text
   readonly content: string
+  readonly type: 1 // Text
 }
 
 export interface ImageMessageContent extends BaseMessageContent {
-  readonly type: 3 // Image
   readonly file: File
   readonly fileName: string
   readonly mediaType: string
+  readonly type: 3 // Image
 }
 
 export interface ToolResultMessageContent extends BaseMessageContent {
-  readonly type: 7
+  readonly content: string
   readonly tool_use_id: string
   readonly tool_use_name: string
-  readonly content: string
+  readonly type: 7
 }
 
 export interface ToolUseMessageContent extends BaseMessageContent {
-  readonly type: 8
+  readonly input: any
   readonly tool_use_id: string
   readonly tool_use_name: string
-  readonly input: any
+  readonly type: 8
 }
 
 export type MessageContent = TextMessageContent | ImageMessageContent | ToolResultMessageContent | ToolUseMessageContent

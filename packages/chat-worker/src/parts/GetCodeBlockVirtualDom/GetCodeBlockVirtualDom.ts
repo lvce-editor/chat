@@ -5,17 +5,17 @@ import * as TokensToVdom from '../TokensToVdom/TokensToVdom.ts'
 export const getCodeBlockVirtualDom = (block: MessageBlockViewModel, isError: boolean): VirtualElement => {
   const codeContent = block.display.tokens
     ? TokensToVdom.tokensToVDOM(block.display.tokens)
-    : [{ type: 'span', children: [block.content] }]
+    : [{ children: [block.content], type: 'span' }]
 
   return {
-    type: 'pre',
-    className: `CodeBlock language-${block.display.language}`,
     children: [
       {
-        type: 'code',
-        className: isError ? 'MessageCodeTextError' : 'CodeText',
         children: codeContent,
+        className: isError ? 'MessageCodeTextError' : 'CodeText',
+        type: 'code',
       },
     ],
+    className: `CodeBlock language-${block.display.language}`,
+    type: 'pre',
   }
 }

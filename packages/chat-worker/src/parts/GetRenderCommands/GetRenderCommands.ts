@@ -33,11 +33,11 @@ export const getRenderCommands = async (
       case DiffType.Dom:
         renderCommands.push(await getRenderCommandsDom(oldWebView, newWebView))
         break
-      case DiffType.InputValue:
-        renderCommands.push(getRenderCommandsValue(oldWebView, newWebView))
-        break
       case DiffType.Focus:
         renderCommands.push(getRenderCommandsFocus(oldWebView, newWebView))
+        break
+      case DiffType.InputValue:
+        renderCommands.push(getRenderCommandsValue(oldWebView, newWebView))
         break
       default:
         break

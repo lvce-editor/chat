@@ -4,7 +4,7 @@ import * as MessageContentType from '../MessageContentType/MessageContentType.ts
 
 export const serializeTextContent = (content: TextMessageContent): SavedContent => {
   return {
-    type: MessageContentType.Text,
     content: content.content,
+    type: MessageContentType.Text,
   }
 }

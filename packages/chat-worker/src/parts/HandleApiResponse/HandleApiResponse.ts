@@ -13,6 +13,43 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
   let toolName = ''
 
   const acc = new WritableStream({
+    async close() {
+      if (inToolUse) {
+        const currentWebView = WebViewStates.get(id)
+        const parsed = JSON.parse(toolUseMessage || '{}')
+        const newMessage: Message = {
+          content: [
+            {
+              input: parsed,
+              tool_use_id: toolId,
+              tool_use_name: toolName,
+              type: MessageContentType.ToolUse,
+            },
+          ],
+          role: MessageRole.Ai,
+          webViewId: id,
+        }
+        await Update.update(id, {
+          messages: [...currentWebView.messages.slice(0, -1), newMessage],
+        })
+        return
+      }
+      const currentWebView = WebViewStates.get(id)
+      const newMessage: Message = {
+        content: [
+          {
+            content: currentMessage,
+            type: MessageContentType.Text,
+          },
+        ],
+        role: MessageRole.Ai,
+        webViewId: id,
+      }
+      await Update.update(id, {
+        messages: [...currentWebView.messages.slice(0, -1), newMessage],
+      })
+    },
+
     async start() {
       const currentWebView = WebViewStates.get(id)
 
@@ -20,8 +57,8 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
         messages: [
           ...currentWebView.messages,
           {
-            role: MessageRole.Ai,
             content: [],
+            role: MessageRole.Ai,
             webViewId: id,
           },
         ],
@@ -32,50 +69,13 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
       currentMessage += message
       const currentWebView = WebViewStates.get(id)
       const newMessage: Message = {
-        role: MessageRole.Ai,
         content: [
           {
-            type: MessageContentType.Text,
             content: currentMessage,
+            type: MessageContentType.Text,
           },
         ],
-        webViewId: id,
-      }
-      await Update.update(id, {
-        messages: [...currentWebView.messages.slice(0, -1), newMessage],
-      })
-    },
-
-    async close() {
-      if (inToolUse) {
-        const currentWebView = WebViewStates.get(id)
-        const parsed = JSON.parse(toolUseMessage || '{}')
-        const newMessage: Message = {
-          role: MessageRole.Ai,
-          content: [
-            {
-              type: MessageContentType.ToolUse,
-              tool_use_id: toolId,
-              tool_use_name: toolName,
-              input: parsed,
-            },
-          ],
-          webViewId: id,
-        }
-        await Update.update(id, {
-          messages: [...currentWebView.messages.slice(0, -1), newMessage],
-        })
-        return
-      }
-      const currentWebView = WebViewStates.get(id)
-      const newMessage: Message = {
         role: MessageRole.Ai,
-        content: [
-          {
-            type: MessageContentType.Text,
-            content: currentMessage,
-          },
-        ],
         webViewId: id,
       }
       await Update.update(id, {
@@ -93,15 +93,15 @@ export const handleApiResponse = async (id: number, body: ReadableStream): Promi
         toolId = chunk?.content_block?.id
         const currentWebView = WebViewStates.get(id)
         const newMessage: Message = {
-          role: MessageRole.Ai,
           content: [
             {
-              type: MessageContentType.ToolUse,
+              input: {},
               tool_use_id: toolId,
               tool_use_name: toolName,
-              input: {},
+              type: MessageContentType.ToolUse,
             },
           ],
+          role: MessageRole.Ai,
           webViewId: id,
         }
         await Update.update(id, {

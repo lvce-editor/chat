@@ -3,19 +3,19 @@ interface SavedMessageContent {
 }
 
 interface SavedTextContent extends SavedMessageContent {
-  readonly type: 1
   readonly content: string
+  readonly type: 1
 }
 
 interface SavedImageContent extends SavedMessageContent {
-  readonly type: 3
   readonly fileName: string
   readonly mediaType: string
+  readonly type: 3
 }
 
 export type SavedContent = SavedTextContent | SavedImageContent
 
 export interface SavedMessage {
-  readonly role: number
   readonly content: readonly SavedContent[]
+  readonly role: number
 }

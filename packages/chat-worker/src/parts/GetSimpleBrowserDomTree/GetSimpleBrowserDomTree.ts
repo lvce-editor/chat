@@ -5,8 +5,8 @@ const getSimpleBrowserDomTree = async (params) => {
   const limit = params?.maxLength || 10_000;
   const sliced = result.slice(0, limit);
   return {
-    type: 'simple-browser-dom',
     html: sliced,
+    type: 'simple-browser-dom',
   };
 };
 

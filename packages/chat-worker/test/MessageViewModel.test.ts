@@ -13,8 +13,8 @@ const mockPort = {
 const mockWebViewStates = {
   get() {
     return {
-      port: mockPort,
       imageUrlCache: new Map(),
+      port: mockPort,
     }
   },
 }
@@ -30,58 +30,58 @@ const CreateMessageViewModel = await import('../src/parts/CreateMessageViewModel
 
 test('creates view model for text content', async () => {
   const message: Message = {
-    role: MessageRole.Human,
-    webViewId: 1,
     content: [
       {
-        type: MessageContentType.Text,
         content: 'Hello',
+        type: MessageContentType.Text,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   }
 
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: MessageRole.Human,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Text,
         content: 'Hello',
         display: {},
+        type: MessageContentType.Text,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   })
 })
 
 test('creates view model for code content', async () => {
   const message: Message = {
-    role: MessageRole.Ai,
-    webViewId: 1,
     content: [
       {
-        type: MessageContentType.Text,
         content: '```javascript\nconst x = 1;\n```',
+        type: MessageContentType.Text,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   }
 
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: MessageRole.Ai,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
           tokens: expect.anything(),
         },
+        type: MessageContentType.Code,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   })
 })
 
@@ -91,32 +91,32 @@ test('creates view model for image content', async () => {
   const file = new File(['test'], 'test.png', { type: 'image/png' })
 
   const message: Message = {
-    role: MessageRole.Human,
-    webViewId: 1,
     content: [
       {
-        type: MessageContentType.Image,
         file,
         fileName: 'test.png',
         mediaType: 'image/png',
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   }
 
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: MessageRole.Human,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:test-url',
         },
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Human,
+    webViewId: 1,
   })
 })
 
@@ -126,77 +126,77 @@ test('creates view model for mixed content', async () => {
   const file = new File(['test'], 'test.png', { type: 'image/png' })
 
   const message: Message = {
-    role: MessageRole.Ai,
-    webViewId: 1,
     content: [
       {
-        type: MessageContentType.Text,
         content: 'Hello\n```javascript\nconst x = 1;\n```',
+        type: MessageContentType.Text,
       },
       {
-        type: MessageContentType.Image,
         file,
         fileName: 'test.png',
         mediaType: 'image/png',
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   }
 
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: MessageRole.Ai,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.Text,
         content: 'Hello',
         display: {},
+        type: MessageContentType.Text,
       },
       {
-        type: MessageContentType.Code,
         content: 'const x = 1;',
         display: {
           language: 'javascript',
           tokens: expect.anything(),
         },
+        type: MessageContentType.Code,
       },
       {
-        type: MessageContentType.Image,
         content: '',
         display: {
           blobUrl: 'blob:test-url',
         },
+        type: MessageContentType.Image,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   })
 })
 
 test('creates view model for list content', async () => {
   const message: Message = {
-    role: MessageRole.Ai,
-    webViewId: 1,
     content: [
       {
-        type: MessageContentType.Text,
         content: '- First item\n- Second item',
+        type: MessageContentType.Text,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   }
 
   const result = await CreateMessageViewModel.createMessageViewModel(message)
 
   expect(result).toEqual({
-    role: MessageRole.Ai,
-    webViewId: 1,
     blocks: [
       {
-        type: MessageContentType.List,
         content: '',
+        display: {},
         items: ['First item', 'Second item'],
         ordered: false,
-        display: {},
+        type: MessageContentType.List,
       },
     ],
+    role: MessageRole.Ai,
+    webViewId: 1,
   })
 })

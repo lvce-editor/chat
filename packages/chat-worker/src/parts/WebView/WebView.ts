@@ -6,8 +6,10 @@ export interface WebView {
   readonly cacheBaseUrl: string
   readonly cacheName: string
   readonly currentInput: string
+  readonly focused: boolean
   readonly images: readonly File[]
   readonly imageUrlCache: Map<string, string>
+  readonly inputSource: number
   readonly isScrolledToBottom: boolean
   readonly maxTokens: number
   readonly messages: readonly Message[]
@@ -18,8 +20,6 @@ export interface WebView {
   readonly scrollOffset: number
   readonly stream: boolean
   readonly time: number
-  readonly url: string
-  readonly inputSource: number
-  readonly focused: boolean
   readonly tools: readonly any[]
+  readonly url: string
 }

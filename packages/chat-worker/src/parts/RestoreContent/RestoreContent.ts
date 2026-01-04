@@ -15,7 +15,7 @@ export const restoreContent = async (
     return savedContent
   }
   return {
-    type: MessageContentType.Text,
     content: '',
+    type: MessageContentType.Text,
   }
 }

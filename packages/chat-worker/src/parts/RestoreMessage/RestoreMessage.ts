@@ -19,11 +19,11 @@ export const restoreMessage = async (
   }
   return {
     ...savedMessage,
-    webViewId: id,
     content: await Promise.all(
       savedMessage.content.map((content) => {
         return RestoreContent.restoreContent(id, cacheName, cacheBaseUrl, content)
       }),
     ),
+    webViewId: id,
   }
 }

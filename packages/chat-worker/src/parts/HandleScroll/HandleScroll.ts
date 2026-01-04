@@ -6,7 +6,7 @@ export const handleScroll = async (id: number, scrollOffset: number) => {
   const isScrolledToBottom = await webView.port.invoke('checkIsBottom')
 
   await Update.update(id, {
-    scrollOffset,
     isScrolledToBottom,
+    scrollOffset,
   })
 }

@@ -8,10 +8,10 @@ export const parseMessage = (message: Message): ParsedMessage => {
     if (content.type === MessageContentType.Image) {
       return [
         {
-          type: MessageContentType.Image,
           file: content.file,
           fileName: content.fileName,
           mediaType: content.mediaType,
+          type: MessageContentType.Image,
         },
       ]
     }
@@ -25,8 +25,8 @@ export const parseMessage = (message: Message): ParsedMessage => {
   })
 
   return {
+    blocks,
     role: message.role,
     webViewId: message.webViewId,
-    blocks,
   }
 }

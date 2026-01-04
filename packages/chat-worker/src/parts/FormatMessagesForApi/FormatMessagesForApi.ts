@@ -15,35 +15,35 @@ const formatContentPartImageForApi = async (block: ImageMessageContent) => {
   const pngFile = await ConvertImageToPng.convertImageToPng(block.file)
   const content = await ToBase64.toBase64(pngFile)
   return {
-    type: 'image',
     source: {
-      type: 'base64',
-      media_type: 'image/png',
       data: content,
+      media_type: 'image/png',
+      type: 'base64',
     },
+    type: 'image',
   }
 }
 
 const formatContentPartTextForApi = (block: TextMessageContent) => {
   return {
-    type: 'text',
     text: block.content,
+    type: 'text',
   }
 }
 
 const formatContentPartToolResultForApi = (block: ToolResultMessageContent) => {
   return {
-    type: 'tool_result',
-    tool_use_id: block.tool_use_id,
     content: block.content,
+    tool_use_id: block.tool_use_id,
+    type: 'tool_result',
   }
 }
 const formatToolUseForApi = (block: ToolUseMessageContent) => {
   return {
-    type: 'tool_use',
     id: block.tool_use_id,
-    name: block.tool_use_name,
     input: block.input,
+    name: block.tool_use_name,
+    type: 'tool_use',
   }
 }
 
@@ -78,7 +78,7 @@ export const formatMessagesForApi = async (messages: readonly Message[]) => {
 
 const formatMessageForApi = async (message: Message) => {
   return {
-    role: message.role === MessageRole.Human ? 'user' : 'assistant',
     content: await formatContentsForApi(message.content),
+    role: message.role === MessageRole.Human ? 'user' : 'assistant',
   }
 }

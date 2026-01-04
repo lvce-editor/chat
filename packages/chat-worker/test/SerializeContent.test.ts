@@ -5,41 +5,41 @@ import * as SerializeContent from '../src/parts/SerializeContent/SerializeConten
 
 test('serializes text content', () => {
   const content: MessageContent = {
-    type: MessageContentType.Text,
     content: 'Hello world',
+    type: MessageContentType.Text,
   }
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: MessageContentType.Text,
     content: 'Hello world',
+    type: MessageContentType.Text,
   })
 })
 
 test('serializes image content', () => {
   const content: MessageContent = {
-    type: MessageContentType.Image,
     file: new File(['test'], 'test.png', { type: 'image/png' }),
     fileName: 'test.png',
     mediaType: 'image/png',
+    type: MessageContentType.Image,
   }
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: MessageContentType.Image,
     fileName: 'test.png',
     mediaType: 'image/png',
+    type: MessageContentType.Image,
   })
 })
 
 test('handles unknown content type', () => {
   const content: MessageContent = {
+    data: 'test',
     // @ts-ignore - Testing invalid input
     type: 'unknown',
-    data: 'test',
   }
   // @ts-ignore - Testing invalid input
   const result = SerializeContent.serializeContent(content)
   expect(result).toEqual({
-    type: 'unknown',
     data: 'test',
+    type: 'unknown',
   })
 })

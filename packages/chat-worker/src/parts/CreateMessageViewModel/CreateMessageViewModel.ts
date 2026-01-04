@@ -8,8 +8,8 @@ export const createMessageViewModel = async (message: Message): Promise<MessageV
   const blockArrays = await Promise.all(message.content.map((part) => createMessageContentViewModel(part, webView)))
 
   return {
+    blocks: blockArrays.flat(),
     role: message.role,
     webViewId: message.webViewId,
-    blocks: blockArrays.flat(),
   }
 }

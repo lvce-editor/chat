@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-nested-ternary */
 import type { MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'

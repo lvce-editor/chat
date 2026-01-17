@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-nested-ternary */
 import type { MessageViewModel } from '../MessageViewModel/MessageViewModel.ts'
 import type { VirtualElement } from '../VirtualDom/VirtualDom.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
@@ -9,7 +10,7 @@ export const renderMessage = (viewModel: MessageViewModel): VirtualElement => {
   const { blocks, role } = viewModel
   const isError = blocks.some((block) => block.content.startsWith('Error:'))
   const messageElement: VirtualElement = {
-    className: isError ? ClassNames.MessageError : (role === MessageRole.Human ? ClassNames.MessageHuman : ClassNames.MessageAi),
+    className: isError ? ClassNames.MessageError : role === MessageRole.Human ? ClassNames.MessageHuman : ClassNames.MessageAi,
     type: 'div',
   }
 

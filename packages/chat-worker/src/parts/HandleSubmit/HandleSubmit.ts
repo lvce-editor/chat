@@ -46,6 +46,7 @@ export const handleSubmit = async (id: number) => {
       webView.stream,
       webView.maxTokens,
       webView.tools,
+      webView.modelProvider,
     )
     const body = await UnwrapApiResponse.unwrapApiResponse(response)
     const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)

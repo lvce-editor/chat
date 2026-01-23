@@ -17,13 +17,14 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 export const create = async ({ id, port, savedState, uri, webViewId }) => {
   // @ts-ignore
   const { rpc } = globalThis
-  const apiKey = await Config.getApiKey(rpc)
+  const modelProvider = await Config.getModelProvider(rpc)
+  const apiKey = modelProvider === 'openrouter' ? await Config.getOpenRouterApiKey(rpc) : await Config.getApiKey(rpc)
   const modelId = await Config.getModelId(rpc)
   const modelName = await Config.getModelName(modelId)
   if (!SupportedModelIds.supportedModelIds.includes(modelId)) {
     console.warn(`[chat-worker] model id ${modelId} is not officially supported`)
   }
-  const url = Config.getUrl()
+  const url = Config.getUrl(modelProvider)
   const anthropicVersion = Config.getAnthropicVersion()
   const maxTokens = Config.getMaxTokens()
   const cacheName = Config.getCacheName()
@@ -44,6 +45,7 @@ export const create = async ({ id, port, savedState, uri, webViewId }) => {
     messages: [],
     modelId,
     modelName,
+    modelProvider,
     port,
     previewImageUrl: '',
     scrollOffset: 0,

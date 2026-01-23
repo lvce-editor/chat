@@ -33,6 +33,7 @@ test('getChatResponse - successful response', async () => {
     true,
     2048,
     [],
+    'anthropic',
   )
 
   expect(result).toBe(mockResponse)
@@ -74,6 +75,7 @@ test('getChatResponse - invalid api key', async () => {
       true,
       2048,
       [],
+      'anthropic',
     ),
   ).toBe(mockResponse)
 })
@@ -182,6 +184,54 @@ test('getChatResponse - handles unparseable error response', async () => {
       true,
       2048,
       [],
+      'anthropic',
     ),
   ).toBe(mockResponse)
+})
+
+test('getChatResponse - openrouter format', async () => {
+  const mockStream = new ReadableStream()
+  const mockResponse = {
+    body: mockStream,
+    ok: true,
+  }
+  // @ts-ignore
+  mockFetch.mockResolvedValue(mockResponse)
+
+  const formattedMessages = [
+    { content: 'Hello', role: 'user' },
+    { content: 'Hi there!', role: 'assistant' },
+  ]
+
+  const result = await GetChatResponse.getChatResponse(
+    formattedMessages,
+    'test-openrouter-key',
+    'openrouter:model',
+    'https://openrouter.ai/api/v1/chat/completions',
+    '2023-06-01',
+    true,
+    2048,
+    [],
+    'openrouter',
+  )
+
+  expect(result).toBe(mockResponse)
+  expect(mockFetch).toHaveBeenCalledWith('https://openrouter.ai/api/v1/chat/completions', {
+    body: JSON.stringify({
+      max_tokens: 2048,
+      messages: [
+        { content: 'Hello', role: 'user' },
+        { content: 'Hi there!', role: 'assistant' },
+      ],
+      model: 'openrouter:model',
+      stream: true,
+    }),
+    headers: {
+      Authorization: 'Bearer test-openrouter-key',
+      'HTTP-Referer': 'https://github.com/lvce-editor/chat',
+      'X-Title': 'LVCE Chat',
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+  })
 })

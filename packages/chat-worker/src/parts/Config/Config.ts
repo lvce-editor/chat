@@ -7,6 +7,16 @@ export const getApiKey = async (rpc: any): Promise<string> => {
   return apiKey
 }
 
+export const getOpenRouterApiKey = async (rpc: any): Promise<string> => {
+  const apiKey = await rpc.invoke('WebView.getSecret', 'secrets.openrouter')
+  return apiKey
+}
+
+export const getModelProvider = async (rpc: any): Promise<string> => {
+  const modelProvider = (await rpc.invoke('WebView.getSecret', 'chat.modelProvider')) || 'anthropic'
+  return modelProvider
+}
+
 export const getModelId = async (rpc: any): Promise<string> => {
   const modelId = (await rpc.invoke('WebView.getSecret', 'claude.modelId')) || Models.defaultId
   return modelId
@@ -20,9 +30,11 @@ export const getModelName = async (modelId: string): Promise<string> => {
   return match.name
 }
 
-export const getUrl = (): string => {
-  const url = 'https://api.anthropic.com/v1/messages'
-  return url
+export const getUrl = (modelProvider: string): string => {
+  if (modelProvider === 'openrouter') {
+    return 'https://openrouter.ai/api/v1/chat/completions'
+  }
+  return 'https://api.anthropic.com/v1/messages'
 }
 
 export const getAnthropicVersion = (): string => {

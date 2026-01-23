@@ -15,6 +15,7 @@ export interface WebView {
   readonly messages: readonly Message[]
   readonly modelId: string
   readonly modelName: string
+  readonly modelProvider: string
   readonly port: any
   readonly previewImageUrl: string
   readonly scrollOffset: number

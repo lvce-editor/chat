@@ -7,7 +7,33 @@ export const getChatResponse = async (
   stream: boolean,
   maxTokens: number,
   tools: readonly any[],
+  modelProvider: string,
 ): Promise<Response> => {
+  if (modelProvider === 'openrouter') {
+    // OpenRouter format
+    const openRouterMessages = formattedMessages.map((msg: any) => ({
+      content: msg.content,
+      role: msg.role === 'assistant' ? 'assistant' : 'user',
+    }))
+
+    return fetch(url, {
+      body: JSON.stringify({
+        max_tokens: maxTokens,
+        messages: openRouterMessages,
+        model: modelId,
+        stream,
+      }),
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://github.com/lvce-editor/chat',
+        'X-Title': 'LVCE Chat',
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+    })
+  }
+
+  // Anthropic format (original)
   return fetch(url, {
     body: JSON.stringify({
       max_tokens: maxTokens,

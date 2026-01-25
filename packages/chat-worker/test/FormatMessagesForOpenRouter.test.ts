@@ -85,6 +85,8 @@ test('formats image content for OpenRouter api with data URL', async () => {
       content: [
         {
           file: mockFile,
+          fileName: 'test.png',
+          mediaType: 'image/png',
           type: MessageContentType.Image,
         },
       ],

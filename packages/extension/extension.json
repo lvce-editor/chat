@@ -51,6 +51,15 @@
     },
     {
       "id": "secrets.openrouter"
+    },
+    {
+      "id": "ai.provider"
+    },
+    {
+      "id": "claude.modelId"
+    },
+    {
+      "id": "openrouter.modelId"
     }
   ]
 }

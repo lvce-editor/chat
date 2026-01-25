@@ -1,4 +1,5 @@
 import type { Message } from '../Message/Message.ts'
+import type { Provider } from '../Provider/Provider.ts'
 
 export interface WebView {
   readonly anthropicVersion: string
@@ -15,8 +16,13 @@ export interface WebView {
   readonly messages: readonly Message[]
   readonly modelId: string
   readonly modelName: string
+  readonly openRouterApiKey: string
+  readonly openRouterModelId: string
+  readonly openRouterModelName: string
+  readonly openRouterUrl: string
   readonly port: any
   readonly previewImageUrl: string
+  readonly provider: Provider
   readonly scrollOffset: number
   readonly stream: boolean
   readonly time: number

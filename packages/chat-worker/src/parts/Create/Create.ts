@@ -6,6 +6,7 @@ import { getTools } from '../GetTools/GetTools.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
+import * as Provider from '../Provider/Provider.ts'
 import * as RestoreMessages from '../RestoreMessages/RestoreMessages.ts'
 import * as SupportedModelIds from '../SupportedModelIds/SupportedModelIds.ts'
 import * as Update from '../Update/Update.ts'
@@ -17,13 +18,18 @@ import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 export const create = async ({ id, port, savedState, uri, webViewId }) => {
   // @ts-ignore
   const { rpc } = globalThis
+  const provider = await Config.getProvider(rpc)
   const apiKey = await Config.getApiKey(rpc)
   const modelId = await Config.getModelId(rpc)
   const modelName = await Config.getModelName(modelId)
+  const openRouterApiKey = await Config.getOpenRouterApiKey(rpc)
+  const openRouterModelId = await Config.getOpenRouterModelId(rpc)
+  const openRouterModelName = await Config.getOpenRouterModelName(openRouterModelId)
   if (!SupportedModelIds.supportedModelIds.includes(modelId)) {
     console.warn(`[chat-worker] model id ${modelId} is not officially supported`)
   }
   const url = Config.getUrl()
+  const openRouterUrl = Config.getOpenRouterUrl()
   const anthropicVersion = Config.getAnthropicVersion()
   const maxTokens = Config.getMaxTokens()
   const cacheName = Config.getCacheName()
@@ -44,8 +50,13 @@ export const create = async ({ id, port, savedState, uri, webViewId }) => {
     messages: [],
     modelId,
     modelName,
+    openRouterApiKey,
+    openRouterModelId,
+    openRouterModelName,
+    openRouterUrl,
     port,
     previewImageUrl: '',
+    provider,
     scrollOffset: 0,
     stream: true,
     time: 0,
@@ -71,11 +82,15 @@ export const create = async ({ id, port, savedState, uri, webViewId }) => {
     await port.invoke('focusInput')
   }
 
-  if (!apiKey) {
+  const isMissingApiKey =
+    (provider === Provider.Anthropic && !apiKey) || (provider === Provider.OpenRouter && !openRouterApiKey)
+
+  if (isMissingApiKey) {
+    const providerName = provider === Provider.Anthropic ? 'Anthropic' : 'OpenRouter'
     const errorMessage: Message = {
       content: [
         {
-          content: `Error: ${ErrorCodes.E_MISSING_API_KEY}: Missing API Key`,
+          content: `Error: ${ErrorCodes.E_MISSING_API_KEY}: Missing ${providerName} API Key`,
           type: MessageContentType.Text,
         },
       ],

@@ -1,7 +1,7 @@
 export const models = [
   {
     default: true,
-    id: 'xiaomi/mimo-vl-7b-rl:free',
+    id: 'xiaomi/mimo-v2-flash:free',
     name: 'Xiaomi MiMO v2 Flash (Free)',
   },
   {

@@ -6,6 +6,7 @@ import * as Provider from '../Provider/Provider.ts'
 
 export const getProvider = async (rpc: any): Promise<Provider.Provider> => {
   const provider = (await rpc.invoke('WebView.getSecret', 'ai.provider')) || Provider.defaultProvider
+  console.log({ provider })
   return provider as Provider.Provider
 }
 

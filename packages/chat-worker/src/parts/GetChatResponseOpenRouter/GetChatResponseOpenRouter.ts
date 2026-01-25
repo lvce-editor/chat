@@ -1,3 +1,21 @@
+const convertToolsToOpenAiFormat = (tools: readonly any[]): any[] => {
+  return tools.map((tool) => {
+    // If already in OpenAI format, return as is
+    if (tool.type === 'function' && tool.function) {
+      return tool
+    }
+    // Convert from Anthropic format to OpenAI format
+    return {
+      type: 'function',
+      function: {
+        name: tool.name,
+        description: tool.description,
+        parameters: tool.input_schema,
+      },
+    }
+  })
+}
+
 export const getChatResponseOpenRouter = async (
   formattedMessages: readonly any[],
   apiKey: string,
@@ -14,7 +32,7 @@ export const getChatResponseOpenRouter = async (
     stream,
   }
   if (tools.length > 0) {
-    body.tools = tools
+    body.tools = convertToolsToOpenAiFormat(tools)
   }
   return fetch(url, {
     body: JSON.stringify(body),

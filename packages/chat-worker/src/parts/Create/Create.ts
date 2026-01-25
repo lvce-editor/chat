@@ -82,8 +82,7 @@ export const create = async ({ id, port, savedState, uri, webViewId }) => {
     await port.invoke('focusInput')
   }
 
-  const isMissingApiKey =
-    (provider === Provider.Anthropic && !apiKey) || (provider === Provider.OpenRouter && !openRouterApiKey)
+  const isMissingApiKey = (provider === Provider.Anthropic && !apiKey) || (provider === Provider.OpenRouter && !openRouterApiKey)
 
   if (isMissingApiKey) {
     const providerName = provider === Provider.Anthropic ? 'Anthropic' : 'OpenRouter'

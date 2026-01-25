@@ -23,10 +23,7 @@ test('parses OpenRouter event stream data', async () => {
     chunks.push(value)
   }
 
-  expect(chunks).toEqual([
-    { choices: [{ delta: { content: 'Hello' } }] },
-    { choices: [{ delta: { content: ' World' } }] },
-  ])
+  expect(chunks).toEqual([{ choices: [{ delta: { content: 'Hello' } }] }, { choices: [{ delta: { content: ' World' } }] }])
 })
 
 test('ignores non-data lines in OpenRouter stream', async () => {
@@ -52,10 +49,7 @@ test('ignores non-data lines in OpenRouter stream', async () => {
     chunks.push(value)
   }
 
-  expect(chunks).toEqual([
-    { choices: [{ delta: { content: 'Hello' } }] },
-    { choices: [{ delta: { content: ' World' } }] },
-  ])
+  expect(chunks).toEqual([{ choices: [{ delta: { content: 'Hello' } }] }, { choices: [{ delta: { content: ' World' } }] }])
 })
 
 test('handles [DONE] marker in OpenRouter stream', async () => {

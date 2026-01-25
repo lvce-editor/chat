@@ -1,12 +1,16 @@
 import type { Message } from '../Message/Message.ts'
 import { execTool } from '../ExecTool/ExecTool.ts'
 import * as FormatMessagesForApi from '../FormatMessagesForApi/FormatMessagesForApi.ts'
+import * as FormatMessagesForOpenRouter from '../FormatMessagesForOpenRouter/FormatMessagesForOpenRouter.ts'
 import * as GetChatResponse from '../GetChatResponse/GetChatResponse.ts'
+import * as GetChatResponseOpenRouter from '../GetChatResponseOpenRouter/GetChatResponseOpenRouter.ts'
 import * as GetNewContent from '../GetNewContent/GetNewContent.ts'
 import * as HandleApiResponse from '../HandleApiResponse/HandleApiResponse.ts'
+import * as HandleOpenRouterResponse from '../HandleOpenRouterResponse/HandleOpenRouterResponse.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as MessageContentType from '../MessageContentType/MessageContentType.ts'
 import * as MessageRole from '../MessageRole/MessageRole.ts'
+import * as Provider from '../Provider/Provider.ts'
 import * as UnwrapApiResponse from '../UnwrapApiResponse/UnwrapApiResponse.ts'
 import * as Update from '../Update/Update.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
@@ -36,22 +40,53 @@ export const handleSubmit = async (id: number) => {
   })
 
   try {
-    const formattedMessages = await FormatMessagesForApi.formatMessagesForApi(newMessages)
-    const response = await GetChatResponse.getChatResponse(
-      formattedMessages,
-      webView.apiKey,
-      webView.modelId,
-      webView.url,
-      webView.anthropicVersion,
-      webView.stream,
-      webView.maxTokens,
-      webView.tools,
-    )
-    const body = await UnwrapApiResponse.unwrapApiResponse(response)
-    const { toolId, toolName, toolUseMessage } = await HandleApiResponse.handleApiResponse(id, body)
+    let toolId: string
+    let toolName: string
+    let toolUseMessage: string
+    let modelId: string
+    let modelName: string
+
+    if (webView.provider === Provider.OpenRouter) {
+      const formattedMessages = await FormatMessagesForOpenRouter.formatMessagesForOpenRouter(newMessages)
+      const response = await GetChatResponseOpenRouter.getChatResponseOpenRouter(
+        formattedMessages,
+        webView.openRouterApiKey,
+        webView.openRouterModelId,
+        webView.openRouterUrl,
+        webView.stream,
+        webView.maxTokens,
+        webView.tools,
+      )
+      const body = await UnwrapApiResponse.unwrapApiResponse(response)
+      const result = await HandleOpenRouterResponse.handleOpenRouterResponse(id, body)
+      toolId = result.toolId
+      toolName = result.toolName
+      toolUseMessage = result.toolUseMessage
+      modelId = webView.openRouterModelId
+      modelName = webView.openRouterModelName
+    } else {
+      const formattedMessages = await FormatMessagesForApi.formatMessagesForApi(newMessages)
+      const response = await GetChatResponse.getChatResponse(
+        formattedMessages,
+        webView.apiKey,
+        webView.modelId,
+        webView.url,
+        webView.anthropicVersion,
+        webView.stream,
+        webView.maxTokens,
+        webView.tools,
+      )
+      const body = await UnwrapApiResponse.unwrapApiResponse(response)
+      const result = await HandleApiResponse.handleApiResponse(id, body)
+      toolId = result.toolId
+      toolName = result.toolName
+      toolUseMessage = result.toolUseMessage
+      modelId = webView.modelId
+      modelName = webView.modelName
+    }
     if (toolId && toolName) {
       const parsed = JSON.parse(toolUseMessage || '{}')
-      const result = await execTool(toolName, parsed, webView.modelId, webView.modelName)
+      const result = await execTool(toolName, parsed, modelId, modelName)
       const currentWebView = WebViewStates.get(id)
       const newMessage: Message = {
         content: [

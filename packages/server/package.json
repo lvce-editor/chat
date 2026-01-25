@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@lvce-editor/server": "^0.70.23"
+    "@lvce-editor/server": "^0.70.27"
   },
   "devDependencies": {
     "@types/node": "^24.1.0"

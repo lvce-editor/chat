@@ -6,12 +6,12 @@ const convertToolsToOpenAiFormat = (tools: readonly any[]): any[] => {
     }
     // Convert from Anthropic format to OpenAI format
     return {
-      type: 'function',
       function: {
-        name: tool.name,
         description: tool.description,
+        name: tool.name,
         parameters: tool.input_schema,
       },
+      type: 'function',
     }
   })
 }

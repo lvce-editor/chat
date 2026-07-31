@@ -3,6 +3,8 @@
   "name": "Chat View",
   "description": "Chat View",
   "browser": "src/chatMain.ts",
+  "isolated": true,
+  "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"],
   "activation": ["onWebView:builtin.chat-view"],
   "languages": [],
   "rpc": [
@@ -10,15 +12,13 @@
       "id": "builtin.chat.chat-worker",
       "type": "web-worker-2",
       "name": "Chat Worker",
-      "url": "../chat-worker/dist/chatWorkerMain.js",
-      "contentSecurityPolicy": ["default-src 'none'"]
+      "url": "../chat-worker/dist/chatWorkerMain.js"
     },
     {
       "id": "builtin.chat.network-worker",
       "type": "web-worker-2",
       "name": "Chat Network Worker",
-      "url": "../network-worker/dist/networkWorkerMain.js",
-      "contentSecurityPolicy": ["default-src 'none'"]
+      "url": "../network-worker/dist/networkWorkerMain.js"
     }
   ],
   "webViews": [

@@ -2,7 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat'
 
-export const test: Test = async ({ expect, Locator, Main, WebView }) => {
+export const test: Test = async ({ expect, Extension, Locator, Main, WebView }) => {
+  await Extension.activateByEvent('onWebView:builtin.chat-view', '', 2)
+
   // act
   await Main.openUri('test://example.chat')
 
